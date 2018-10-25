@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+
+{%block main_content%}
+  {%if indexes is defined%}
+  <h2>{%trans%}Indexes on the server{%endtrans%}</h2>
+  {% if is_granted('ROLE_INDEX_MANAGER') %}
+  <ul class="actions">
+    {% if is_granted('ROLE_ADMIN') %}
+    <li><a href="{{path('index-add')}}" class="index-add">{{'Add a new index'|trans}}</a></li>
+    {% endif %}
+    <li><a href="{{path('synonyms-list')}}" class="synonyms-list">{{'See synonyms dictionaries'|trans}}</a></li>
+  </ul>
+  {% endif %}
+  {%if indexes|length > 0%}
+    <table id="index-table">
+      <thead>
+        <tr>
+          <th>{{'Index name'|trans}}</th>
+          <th>{{'Index size'|trans}}</th>
+          <th>{{'Mappings'|trans}}</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%set class='even'%}
+        {%for index_name, stat in indexes%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{index_name}}</td>
+            <td class="numeric">{{stat.size}}</td>
+            <td>
+              {%if stat.mappings is defined%}
+              <ul>
+              {%for mapping in stat.mappings%}
+                <li class="index-mapping">
+                  <a href="{{path('index-edit-mapping', {'index_name': index_name, 'mapping_name': mapping.name})}}">{{mapping.name}}</a>
+                  <div class="mapping-stat"><ul><li>0<span> documents</span></li><li>0<span> fields</span></li></ul></div>
+                </li>
+              {%endfor%}
+              </ul>
+              {%endif%}
+            </td>
+            <td class="actions">
+              <ul>
+                {% if is_granted('ROLE_INDEX_MANAGER') %}
+                <li><a href="{{path('index-edit', {'index_name': index_name})}}" class="index-edit-settings">{{'Edit settings'|trans}}</a></li>
+                <li><a href="{{path('index-add-mapping', {'index_name': index_name})}}" class="index-add-mapping">{{'Add mapping'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{path('index-delete', {'index_name': index_name})}}" class="index-delete action-delete">{{'Delete index'|trans}}</a></li>
+                {% endif %}
+              </ul>
+            </td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+  {%endif%}
+  {%if form is defined%}
+    {{form(form)}}
+  {%endif%}
+  <script type="text/javascript">
+    var __index_analyzers = [];
+    var __field_types = [];
+    var __date_formats = [];
+  {%if analyzers is defined%}
+    {%for analyzer in analyzers%}
+    __index_analyzers.push('{{analyzer}}');
+    {%endfor%}
+  {%endif%}
+    {%if fieldTypes is defined%}
+    {%for fieldType in fieldTypes%}
+    __field_types.push('{{fieldType}}');
+    {%endfor%}
+  {%endif%}
+  {%if serverVersion is defined%}
+    __elastic_server_version = {{ serverVersion }};
+  {%endif%}
+  {%if dateFormats is defined%}
+    {%for dateFormat in dateFormats%}
+    __date_formats.push('{{dateFormat}}');
+    {%endfor%}
+  {%endif%}
+  </script>
+{%endblock%}

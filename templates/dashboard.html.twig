@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{%block main_content%}
+  {% if server_info != null and info is defined %}
+    <p class="server-version">
+      <strong>{%trans%}Server version{%endtrans%}:</strong>
+      <span>{{server_info.version.number}}</span>
+    </p>
+    <h2>{%trans%}Indexes on the server{%endtrans%}</h2>
+    {%if info|length > 0%}
+      <table>
+        <thead>
+        <tr>
+          <th>{{'Index name'|trans}}</th>
+          <th>{{'Index size'|trans}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%set class='even'%}
+        {%for index_name, stat in info%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{index_name}}</td>
+            <td class="numeric">{{stat.size}}</td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No index found in server</p>
+    {%endif%}
+  {% else %}
+    <p>{{ 'Elastic server is unavailable. Please check your settings'|trans }}</p>
+  {% endif %}
+
+{%endblock%}

@@ -1,0 +1,63 @@
+.search-page.with-aggregations .search-results{
+  float:none;
+  width:100%;
+  padding-left:0;
+}
+.search-page.with-aggregations .aggregations{
+  float:none;
+  width:100%;
+  max-width:none;
+  display:block;
+}
+.search-page.with-aggregations .aggregations .agg-wrapper{
+  display:none;
+}
+.search-page.with-aggregations .pager{
+  padding-left:0;
+}
+header{
+  display:table-row;
+  width:100%;
+}
+header #logo{
+  margin-right: 0;
+  width:15%;
+  padding-right:10px;
+  float:none;
+  display:table-cell;
+  vertical-align: middle;
+}
+header #logo img{
+  width:100%;
+  height:auto;
+  float:none;
+}
+#search-page-form{
+  width:85%;
+  float:none;
+  display:table-cell;
+  vertical-align: middle;
+}
+#search-page-form input[type="text"]{
+  width:72%;
+  min-width:0;
+  margin:0 3% 0 0;
+  float:left;
+}
+#search-page-form input[type="submit"]{
+  float:left;
+  width:25%;
+}
+.search-page.with-aggregations .aggregations h2{
+  font-weight:normal;
+  margin:0 0 10px 0;
+  font-size:18px;
+  border:1px solid #ececec;
+  border-radius: 5px;
+  padding:8px;
+  color:#aaa;
+}
+.search-page.with-aggregations .aggregations h2:before{
+  content:"+";
+  padding-right:5px;
+}

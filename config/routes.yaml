@@ -1,0 +1,295 @@
+test:
+  path:     /test
+  controller: App\Controller\TestController::testAction
+homepage:
+  path:     /
+  controller: App\Controller\DashboardController::indexAction
+login:
+  path:     /login
+  controller: App\Controller\SecurityController::loginAction
+logout:
+  path:     /logout
+  controller: App\Controller\SecurityController::logoutAction
+
+ct_search_client_homepage:
+  path: /search-client/search
+  controller: App\Controller\DashboardController::indexAction
+ct_search_client_mlt:
+  path: /search-client/mlt
+  controller: App\Controller\DashboardController::indexAction
+analytics:
+  path: /analytics
+  controller: App\Controller\DashboardController::indexAction
+analytics-compiler:
+  path: /analytics/compile
+  controller: App\Controller\DashboardController::indexAction
+autopromotes:
+  path: /autopromotes
+  controller: App\Controller\DashboardController::indexAction
+autopromote-add:
+  path: /autopromotes/add
+  controller: App\Controller\DashboardController::indexAction
+autopromote-edit:
+  path: /autopromotes/edit
+  controller: App\Controller\DashboardController::indexAction
+autopromote-delete:
+  path: /autopromotes/delete
+  controller: App\Controller\DashboardController::indexAction
+autopromote-ajax-get-analyzers:
+  path: /autopromotes/ajax/get-analyzers
+  controller: App\Controller\DashboardController::indexAction
+backups:
+  path: /backups
+  controller: App\Controller\DashboardController::indexAction
+backups_create_repo:
+  path: /backups/create-repo
+  controller: App\Controller\DashboardController::indexAction
+backups_edit_repo:
+  path: /backups/edit-repo/{name}
+  controller: App\Controller\DashboardController::indexAction
+backups_delete_repo:
+  path: /backups/delete-repo/{name}
+  controller: App\Controller\DashboardController::indexAction
+backups_delete_snapshot:
+  path: /backups/delete-snapshot/{repoName}/{name}
+  controller: App\Controller\DashboardController::indexAction
+backups_create_snapshot:
+  path: /backups/snapshot/create
+  controller: App\Controller\DashboardController::indexAction
+backups_restore_snapshot:
+  path: /backups/snapshot/restore/{repoName}/{name}
+  controller: App\Controller\DashboardController::indexAction
+boost-queries:
+  path: /boost-queries
+  controller: App\Controller\DashboardController::indexAction
+boost-query-add:
+  path: /boost-queries/add
+  controller: App\Controller\DashboardController::indexAction
+boost-query-edit:
+  path: /boost-queries/edit
+  controller: App\Controller\DashboardController::indexAction
+boost-query-delete:
+  path: /boost-queries/delete
+  controller: App\Controller\DashboardController::indexAction
+console:
+  path: /console
+  controller: App\Controller\DashboardController::indexAction
+console-save:
+  path: /console/save
+  controller: App\Controller\DashboardController::indexAction
+console-load:
+  path: /console/load
+  controller: App\Controller\DashboardController::indexAction
+console-delete:
+  path: /console/delete
+  controller: App\Controller\DashboardController::indexAction
+datasources:
+  path: /datasources
+  controller: App\Controller\DashboardController::indexAction
+datasources_ajaxlist:
+  path: /datasources/ajaxlist
+  controller: App\Controller\DashboardController::indexAction
+datasource-add:
+  path: /datasources/add
+  controller: App\Controller\DashboardController::indexAction
+datasource-edit:
+  path: /datasources/edit
+  controller: App\Controller\DashboardController::indexAction
+datasource-delete:
+  path: /datasources/delete
+  controller: App\Controller\DashboardController::indexAction
+datasource-kill:
+  path: /datasources/kill
+  controller: App\Controller\DashboardController::indexAction
+datasource-exec:
+  path: /datasources/exec
+  controller: App\Controller\DashboardController::indexAction
+datasource-get-output:
+  path: /datasources/output
+  controller: App\Controller\DashboardController::indexAction
+drupal-ctexport:
+  path: /drupal/ctexport
+  controller: App\Controller\DashboardController::indexAction
+get_edit_record_form:
+  path: /get-edit-record-form
+  controller: App\Controller\DashboardController::indexAction
+edit_record:
+  path: /edit-record
+  controller: App\Controller\DashboardController::indexAction
+groups:
+  path: /groups
+  controller: App\Controller\DashboardController::indexAction
+group-add:
+  path: /groups/add
+  controller: App\Controller\DashboardController::indexAction
+group-edit:
+  path: /groups/edit
+  controller: App\Controller\DashboardController::indexAction
+group-delete:
+  path: /groups/delete
+  controller: App\Controller\DashboardController::indexAction
+indexes:
+  path: /indexes
+  controller: App\Controller\IndexController::listIndexesAction
+index-add:
+  path: /indexes/add
+  controller: App\Controller\IndexController::addIndexAction
+index-edit:
+  path: /indexes/edit
+  controller: App\Controller\IndexController::editIndexAction
+index-delete:
+  path: /indexes/delete
+  controller: App\Controller\IndexController::deleteIndexAction
+index-edit-mapping:
+  path: /indexes/edit-mapping
+  controller: App\Controller\IndexController::editMappingAction
+index-add-mapping:
+  path: /indexes/add-mapping
+  controller: App\Controller\IndexController::addMappingAction
+test-service:
+  path: /test-service
+  controller: App\Controller\DashboardController::indexAction
+index-mapping-stat:
+  path: /indexes/mapping-stat/{index_name}/{mapping_name}
+  controller: App\Controller\IndexController::mappingStatAction
+synonyms-list:
+  path: /indexes/synonyms
+  controller: App\Controller\DashboardController::indexAction
+synonyms-add:
+  path: /indexes/synonyms/add
+  controller: App\Controller\DashboardController::indexAction
+synonyms-edit:
+  path: /indexes/synonyms/edit/{fileName}
+  controller: App\Controller\DashboardController::indexAction
+synonyms-delete:
+  path: /indexes/synonyms/delete/{fileName}
+  controller: App\Controller\DashboardController::indexAction
+js_search_api:
+  path: /searchapi/searchapi.js
+  controller: App\Controller\DashboardController::indexAction
+js_search_api_service:
+  path: /searchapi/service
+  controller: App\Controller\DashboardController::indexAction
+matching-lists:
+  path: /matching-list
+  controller: App\Controller\DashboardController::indexAction
+matching-list-add:
+  path: /matching-list/add
+  controller: App\Controller\DashboardController::indexAction
+matching-list-edit:
+  path: /matching-list/edit
+  controller: App\Controller\DashboardController::indexAction
+matching-list-delete:
+  path: /matching-lists/delete
+  controller: App\Controller\DashboardController::indexAction
+matching-import-file:
+  path: /matching-list/import-file
+  controller: App\Controller\DashboardController::indexAction
+matching-export:
+  path: /matching-list/export
+  controller: App\Controller\DashboardController::indexAction
+matching-init-from-index:
+  path: /matching-list/init-from-index
+  controller: App\Controller\DashboardController::indexAction
+parameters:
+  path: /parameters
+  controller: App\Controller\DashboardController::indexAction
+parameter-add:
+  path: /parameters/add
+  controller: App\Controller\DashboardController::indexAction
+parameter-edit:
+  path: /parameters/edit
+  controller: App\Controller\DashboardController::indexAction
+parameter-delete:
+  path: /parameters/delete
+  controller: App\Controller\DashboardController::indexAction
+processors:
+  path: /processors
+  controller: App\Controller\DashboardController::indexAction
+processor-add:
+  path: /processors/add
+  controller: App\Controller\DashboardController::indexAction
+processor-edit:
+  path: /processors/edit
+  controller: App\Controller\DashboardController::indexAction
+processor-delete:
+  path: /processor/delete
+  controller: App\Controller\DashboardController::indexAction
+get-settings-form:
+  path: /processors/get-settings-form
+  controller: App\Controller\DashboardController::indexAction
+processor-export:
+  path: /processors/export
+  controller: App\Controller\DashboardController::indexAction
+processor-import:
+  path: /processors/import
+  controller: App\Controller\DashboardController::indexAction
+reco-js:
+  path: /reco/reco.js
+  controller: App\Controller\DashboardController::indexAction
+reco-report:
+  path: /reco/report
+  controller: App\Controller\DashboardController::indexAction
+reco-get:
+  path: /reco/get
+  controller: App\Controller\DashboardController::indexAction
+api-update:
+  path: /api/update
+  controller: App\Controller\DashboardController::indexAction
+api-sp-def:
+  path: /api/sp-definition/{id}
+  controller: App\Controller\DashboardController::indexAction
+search-api-v2:
+  path: /search-api/v2
+  controller: App\Controller\DashboardController::indexAction
+search-api-mor-like-this:
+  path: /search-api/v2/more-like-this
+  controller: App\Controller\DashboardController::indexAction
+search-api-autocomplete:
+  path: /search-api/v2/autocomplete
+  controller: /api/update
+search-api-v2-custom:
+  path: /search-api/v2/custom
+  controller: /api/update
+search-pages:
+  path: /search-pages
+  controller: /api/update
+search-page-add:
+  path: /search-pages/add
+  controller: /api/update
+search-page-edit:
+  path: /search-pages/edit
+  controller: /api/update
+search-page-delete:
+  path: /search-pages/delete
+  controller: /api/update
+search-page-list-fields:
+  path: /search-pages/fields/{mapping}
+  controller: /api/update
+show-logs:
+  path: /logs
+  controller: /api/update
+search-page-display:
+  path: /search-pages/search/{id}
+  controller: /api/update
+more-like-this-display:
+  path: /search-pages/more-like-this/{searchPageId}/{docId}/{type}
+  controller: /api/update
+users:
+  path: /users
+  controller: /api/update
+user-add:
+  path: /users/add
+  controller: /api/update
+user-edit:
+  path: /users/edit
+  controller: /api/update
+user-delete:
+  path: /users/delete
+  controller: /api/update
+webcrawler-response:
+  path: /webcrawler-response
+  controller: /api/update
+webcrawler-test:
+  path: /webcrawler/test/{id}
+  controller: /api/update

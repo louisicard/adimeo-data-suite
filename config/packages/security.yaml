@@ -1,0 +1,90 @@
+security:
+    always_authenticate_before_granting: true
+
+    encoders:
+      AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User:
+        algorithm: bcrypt
+        cost: 12
+
+    role_hierarchy:
+      ROLE_DATASOURCE_CREATOR: ROLE_DATASOURCE_MANAGER
+      ROLE_MATCHING_LIST_CREATOR: ROLE_MATCHING_LIST_MANAGER
+      ROLE_PROCESSOR_CREATOR: ROLE_PROCESSOR_MANAGER
+      ROLE_SEARCH_PAGE_CREATOR: ROLE_SEARCH_PAGE_MANAGER
+      ROLE_BOOST_QUERY_CREATOR: ROLE_BOOST_QUERY_MANAGER
+      ROLE_PARAMETER_CREATOR: ROLE_PARAMETER_MANAGER
+      ROLE_ADMIN: [ROLE_INDEX_MANAGER, ROLE_DATASOURCE_CREATOR, ROLE_MATCHING_LIST_CREATOR, ROLE_PROCESSOR_CREATOR, ROLE_SEARCH_PAGE_CREATOR, ROLE_BOOST_QUERY_CREATOR, ROLE_ANALYTICS_USER, ROLE_LOGS_VIEWER, ROLE_BACKUP_USER, ROLE_CONSOLE_USER, ROLE_AUTOPROMOTE_USER, ROLE_PARAMETER_CREATOR]
+
+    providers:
+      adimeo_data_suite_users:
+        id: adimeo_data_suite_user_provider
+
+    firewalls:
+      main:
+        pattern: ^/
+        form_login:
+          provider: adimeo_data_suite_users
+          csrf_token_generator: security.csrf.token_manager
+          login_path: login
+          check_path: login
+        anonymous:    true
+        logout:
+          path:   logout
+          target: login
+
+    access_control:
+      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/webcrawler-response, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-pages/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-pages/more-like-this, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-pages/autocomplete, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-api/v2, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/drupal/ctexport, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/reco/reco.js, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/reco/report, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/reco/get, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/searchapi, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/search-client, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/indexes$, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/add-mapping, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/edit, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/mapping-stat, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/edit-mapping, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/synonyms$, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes/synonyms/edit, role: ROLE_INDEX_MANAGER }
+      - { path: ^/indexes, role: ROLE_ADMIN }
+      - { path: ^/datasources$, role: ROLE_DATASOURCE_MANAGER }
+      - { path: ^/datasources/edit, role: ROLE_DATASOURCE_MANAGER }
+      - { path: ^/webcrawler/test, role: ROLE_DATASOURCE_MANAGER }
+      - { path: ^/datasources/ajaxlist, role: ROLE_DATASOURCE_MANAGER }
+      - { path: ^/datasources, role: ROLE_DATASOURCE_CREATOR }
+      - { path: ^/processors$, role: ROLE_PROCESSOR_MANAGER }
+      - { path: ^/processors/edit, role: ROLE_PROCESSOR_MANAGER }
+      - { path: ^/processors/export, role: ROLE_PROCESSOR_MANAGER }
+      - { path: ^/processors/get-settings-form, role: ROLE_PROCESSOR_MANAGER }
+      - { path: ^/processor/delete, role: ROLE_PROCESSOR_CREATOR }
+      - { path: ^/processors, role: ROLE_PROCESSOR_CREATOR }
+      - { path: ^/matching-list$, role: ROLE_MATCHING_LIST_MANAGER }
+      - { path: ^/matching-list/edit, role: ROLE_MATCHING_LIST_MANAGER }
+      - { path: ^/matching-list/init-from-index, role: ROLE_MATCHING_LIST_MANAGER }
+      - { path: ^/matching-list/import-file, role: ROLE_MATCHING_LIST_MANAGER }
+      - { path: ^/matching-list/export, role: ROLE_MATCHING_LIST_MANAGER }
+      - { path: ^/matching-list, role: ROLE_MATCHING_LIST_CREATOR }
+      - { path: ^/search-pages$, role: ROLE_SEARCH_PAGE_MANAGER }
+      - { path: ^/search-pages/fields, role: ROLE_SEARCH_PAGE_MANAGER }
+      - { path: ^/search-pages/edit, role: ROLE_SEARCH_PAGE_MANAGER }
+      - { path: ^/search-pages, role: ROLE_SEARCH_PAGE_CREATOR }
+      - { path: ^/boost-queries$, role: ROLE_BOOST_QUERY_MANAGER }
+      - { path: ^/boost-queries/edit, role: ROLE_BOOST_QUERY_MANAGER }
+      - { path: ^/boost-queries, role: ROLE_BOOST_QUERY_CREATOR }
+      - { path: ^/analytics, role: ROLE_ANALYTICS_USER }
+      - { path: ^/logs, role: ROLE_LOGS_VIEWER }
+      - { path: ^/backups, role: ROLE_BACKUP_USER }
+      - { path: ^/console, role: ROLE_CONSOLE_USER }
+      - { path: ^/autopromotes, role: ROLE_AUTOPROMOTE_USER }
+      - { path: ^/_profiler, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/_wdt, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/, role: ROLE_ADMIN }

@@ -1,0 +1,26 @@
+{% block form_row %}
+    <div class="form-item{% if form.vars.required %} required{% endif %}">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock form_row %}
+{% block button_row %}
+    <div class="form-action">
+        {{ form_widget(form) }}
+    </div>
+{% endblock button_row %}
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }} class="choice-container">
+            {% for child in form %}
+                <div class="choice">
+                    <label for="{{ child.vars.id }}" class="choice-label">
+                        {{ form_widget(child, {'attr': {'class': attr.widget_class|default('')}}) }}
+                        {{ child.vars.label|trans({}, translation_domain) }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock %}

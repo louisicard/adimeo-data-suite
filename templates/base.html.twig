@@ -1,0 +1,174 @@
+{% extends 'base_wrapper.html.twig' %}
+
+{% if form is defined %}
+  {% form_theme form 'forms.html.twig' %}
+{% endif %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+
+{% block body %}
+  <header>
+    <figure id="logo">
+      <a href="{{path('homepage')}}" title="{{'Home'|trans}}"><img src="{{asset('images/logo48.png')}}" alt="Ct search" /></a>
+      <figcaption class="element-invisible">Logo Ct search</figcaption>
+    </figure>
+    <nav id="main-menu" class="clearfix">
+      <ul>
+        {% if no_menu is not defined or not no_menu %}
+        <li{%if main_menu_item=='home'%} class="active"{%endif%}><a href="{{path('homepage')}}" title="{{'Dashboard'|trans}}">{{'Dashboard'|trans}}</a></li>
+        {% if is_granted("ROLE_INDEX_MANAGER") or is_granted("ROLE_DATASOURCE_MANAGER") or is_granted("ROLE_MATCHING_LIST_MANAGER") or is_granted("ROLE_PROCESSOR_MANAGER") %}
+        <li class="expandable">
+          <a href="javascript:void(0)">Data studio</a>
+          <ul>
+            {% if is_granted("ROLE_INDEX_MANAGER") %}
+            <li{%if main_menu_item=='indexes'%} class="active"{%endif%}><a href="{{path('indexes')}}" title="{{'Indexes'|trans}}">{{'Indexes'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_DATASOURCE_MANAGER") %}
+            <li{%if main_menu_item=='datasources'%} class="active"{%endif%}><a href="{{path('datasources')}}" title="{{'Datasources'|trans}}">{{'Datasources'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_MATCHING_LIST_MANAGER") %}
+            <li{%if main_menu_item=='matching-lists'%} class="active"{%endif%}><a href="{{path('matching-lists')}}" title="{{'Matching lists'|trans}}">{{'Matching lists'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_PROCESSOR_MANAGER") %}
+              <li{%if main_menu_item=='processors'%} class="active"{%endif%}><a href="{{path('processors')}}" title="{{'Processors'|trans}}">{{'Processors'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_PARAMETER_MANAGER") %}
+              <li{%if main_menu_item=='parameters'%} class="active"{%endif%}><a href="{{path('parameters')}}" title="{{'Parameters'|trans}}">{{'Parameters'|trans}}</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %}
+        <li class="expandable">
+          <a href="javascript:void(0)">Search</a>
+          <ul>
+            {% if is_granted("ROLE_SEARCH_PAGE_MANAGER") %}
+              <li{%if main_menu_item=='search-pages'%} class="active"{%endif%}><a href="{{path('search-pages')}}" title="{{'Search pages'|trans}}">{{'Search pages'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_AUTOPROMOTE_USER") %}
+              <li{%if main_menu_item=='autopromotes'%} class="active"{%endif%}><a href="{{path('autopromotes')}}" title="{{'Auto-promote'|trans}}">{{'Auto-promote'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_BOOST_QUERY_MANAGER") %}
+              <li{%if main_menu_item=='boost-queries'%} class="active"{%endif%}><a href="{{path('boost-queries')}}" title="{{'Boost queries'|trans}}">{{'Boost queries'|trans}}</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% if is_granted("ROLE_ANALYTICS_USER") or is_granted("ROLE_LOGS_VIEWER") or is_granted("ROLE_BACKUP_USER") or is_granted("ROLE_CONSOLE_USER") %}
+        <li class="expandable">
+          <a href="javascript:void(0)">Tools</a>
+          <ul>
+            {% if is_granted("ROLE_ANALYTICS_USER") %}
+            <li{%if main_menu_item=='analytics'%} class="active"{%endif%}><a href="{{path('analytics')}}" title="{{'Analytics'|trans}}">{{'Analytics'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_LOGS_VIEWER") %}
+            <li{%if main_menu_item=='logs'%} class="active"{%endif%}><a href="{{path('show-logs')}}" title="{{'Logs'|trans}}">{{'Logs'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_BACKUP_USER") %}
+            <li{%if main_menu_item=='backups'%} class="active"{%endif%}><a href="{{path('backups')}}" title="{{'Backups'|trans}}">{{'Backups'|trans}}</a></li>
+            {% endif %}
+            {% if is_granted("ROLE_CONSOLE_USER") %}
+            <li{%if main_menu_item=='console'%} class="active"{%endif%}><a href="{{path('console')}}" title="{{'Console'|trans}}">{{'Console'|trans}}</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %}
+        {% if is_granted("ROLE_ADMIN") %}
+        <li class="expandable">
+          <a href="javascript:void(0)">Admin</a>
+          <ul>
+            <li><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
+            <li><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
+          </ul>
+        </li>
+        {% endif %}
+        {% endif %}
+      </ul>
+    </nav>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div id="userinfo">
+      <div class="username">{{ app.user.fullName }} ({{ app.user.username }})</div>
+      <div class="logout"><a><a href="{{ logout_path('main') }}">{{'Logout'|trans}}</a></a></div>
+    </div>
+    {% endif %}
+  </header>
+  <section id="container">
+    <h1>{{title}}</h1>
+    {% if app.session.get('messages') is defined and app.session.get('messages') is not null %}
+      <div id="messages">
+        <ul>
+          {%for message in app.session.get('messages')%}
+            <li class="message-type-{{message.type}}">{{message.text|raw}}</li>
+          {%endfor%}
+        </ul>
+      </div>
+      {{ app.session.set('messages',null) }}
+    {%endif%}
+    {% block main_content %}{% endblock %}
+  </section>
+{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('css/normalize.css')}}" />
+  <link rel="stylesheet" href="{{asset('js/jquery-ui/jquery-ui.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/global.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/jquery.jsonview.min.css')}}" />
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    var __ctsearch_base_url = '{{path('homepage')}}';
+    var __ctsearch_js_translations = {
+      OK: "{{'OK'|trans}}",
+      Cancel: "{{'Cancel'|trans}}",
+      Yes: "{{'Yes'|trans}}",
+      No: "{{'No'|trans}}",
+      DeleteIndexConfirm: "{{'You are about to delete an index.\\nDo you wish to proceed?'|trans}}",
+      DeleteMappingConfirm: "{{'You are about to delete this mapping.\\nDo you wish to proceed?'|trans}}",
+      UpdateMappingNoWipe: "{{'Updating this mapping without wiping data will not remove deleted fields.\\nDo you wish to proceed?'|trans}}",
+      UpdateMappingWipe: "{{'Updating this mapping will wipe all data.\\nDo you wish to proceed?'|trans}}",
+      ShowHideJSONDef: "{{'Show/hide JSON definition'|trans}}",
+      FieldName: "{{'Field name'|trans}}",
+      FieldType: "{{'Field type'|trans}}",
+      FieldFormat: "{{'Format'|trans}}",
+      FieldAnalysis: "{{'Analysis'|trans}}",
+      FieldIncludeRaw: "{{'Include raw'|trans}}",
+      FieldIncludeTransliterated: "{{'Include transliterated'|trans}}",
+      FieldStore: "{{'Store'|trans}}",
+      FieldBoost: "{{'Boost'|trans}}",
+      FieldAnalyzed: "{{'Analyzed'|trans}}",
+      FieldNotAnalyzed: "{{'Not analyzed'|trans}}",
+      FieldStored: "{{'Stored'|trans}}",
+      FieldNotStored: "{{'Not stored'|trans}}",
+      FieldDelete: "{{'Delete'|trans}}",
+      FieldAdd: "{{'Add field'|trans}}",
+      FieldAlreadyExists: "{{'This field is already set. You must delete it first.'|trans}}",
+      FieldMissingNameOrType: "{{'You must provide a field name and type.'|trans}}",
+      DeleteDatasourceConfirm: "{{'You are about to delete a data source.\\nDo you wish to proceed?'|trans}}",
+      DeleteProcessorConfirm: "{{'You are about to delete a processor.\\nDo you wish to proceed?'|trans}}",
+      DeleteSearchPageConfirm: "{{'You are about to delete a search page.\\nDo you wish to proceed?'|trans}}",
+      DeleteMatchingListConfirm: "{{'You are about to delete a matching list.\\nDo you wish to proceed?'|trans}}",
+      DeleteRepositoryConfirm: "{{'You are about to delete a repository.\\nDo you wish to proceed?'|trans}}",
+      DeleteSnapshotConfirm: "{{'You are about to delete a snapshot.\\nDo you wish to proceed?'|trans}}",
+      Prev: "{{'Previous'|trans}}",
+      Next: "{{'Next'|trans}}",
+      GroupDeleteConfirm: "{{'You are about to delete a group.\\nDo you wish to proceed?'|trans}}",
+      UserDeleteConfirm: "{{'You are about to delete a user.\\nDo you wish to proceed?'|trans}}",
+      AutopromoteDeleteConfirm: "{{'You are about to delete an autopromote.\\nDo you wish to proceed?'|trans}}",
+      BoostQueryDeleteConfirm: "{{'You are about to delete a boost query.\\nDo you wish to proceed?'|trans}}",
+      ParameterDeleteConfirm: "{{'You are about to delete a parameter.\\nDo you wish to proceed?'|trans}}"
+    };
+  </script>
+  <script type="text/javascript" src="{{asset('js/jquery-1.11.3.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/jquery-ui/jquery-ui.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/ctsearch.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/jquery.jsonview.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('js/prettyprint.js')}}"></script>
+  {% if app.request.get('_route') == 'analytics' %}
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+  </script>
+  {% endif %}
+{% endblock %}

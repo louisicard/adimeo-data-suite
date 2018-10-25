@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{%block main_content%}
+
+  {% if noCluster %}
+    <p>{{ 'Elastic server is unavailable. Please check your settings'|trans }}</p>
+  {% else %}
+
+    {% if error %}
+      <div>{{ errorText }}</div>
+    {% endif %}
+
+    <form action="{{ path('login') }}" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="_username" value="{{ lastUsername }}" />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="_password" />
+
+      {#
+          If you want to control the URL the user
+          is redirected to on success (more details below)
+          <input type="hidden" name="_target_path" value="/account" />
+      #}
+      <input type="hidden" name="_csrf_token"
+             value="{{ csrf_token('authenticate') }}"
+      >
+      <button type="submit">login</button>
+    </form>
+
+  {% endif %}
+
+{% endblock %}
