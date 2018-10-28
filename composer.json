@@ -9,6 +9,7 @@
         "adimeo-data-suite/commons": "dev-master",
         "adimeo-data-suite/datasources": "dev-master",
         "adimeo-data-suite/security": "dev-master",
+        "adimeo-data-suite/filters": "dev-master",
         "mmucklo/krumo": "^0.5.7",
         "symfony/asset": "*",
         "symfony/console": "*",
@@ -83,6 +84,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/louisicard/adimeo-data-suite-datasources"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/louisicard/adimeo-data-suite-filters"
         }
     ]
 }

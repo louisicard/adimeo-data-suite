@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+
+{%block main_content%}
+  {%if processors is defined%}
+    {% if is_granted('ROLE_ADMIN') %}
+    <ul class="actions">
+      <li><a href="{{path('processor-import')}}">{{'Import'|trans}}</a></li>
+    </ul>
+    {%endif%}
+    {%if form_add_processor is defined and is_granted('ROLE_PROCESSOR_CREATOR')%}
+      {{ form(form_add_processor, {'attr': {'id': 'form_add_processor'}}) }}
+    {%endif%}
+    {%if processors|length > 0%}
+    <table>
+      <thead>
+        <tr>
+          <th>{{'Datasource'|trans}}</th>
+          <th>{{'Target'|trans}}</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%set class='even'%}
+        {%for processor in processors%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{processor.datasource_name}}</td>
+            <td>{{processor.target}}</td>
+            <td class="actions">
+              <ul>
+                <li><a href="{{path('processor-edit', {'id': processor.id})}}">{{'Edit'|trans}}</a></li>
+                <li><a href="{{path('processor-export', {'id': processor.id})}}">{{'Export'|trans}}</a></li>
+                {% if is_granted('ROLE_PROCESSOR_CREATOR') %}
+                <li><a href="{{path('processor-delete', {'id': processor.id})}}" class="processor-delete action-delete">{{'Delete'|trans}}</a></li>
+                {%endif%}
+              </ul>
+            </td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+  {%endif%}
+  {%if form is defined%}
+    {{form(form, {'attr': {'id': 'form_processor'}})}}
+  {%endif%}
+  {%if import_form is defined%}
+    {{form(import_form, {'attr': {'id': 'import_form_processor'}})}}
+  {%endif%}
+  <script type="text/javascript">
+    var __filter_types = [];
+    var __target_fields = [];
+    var __datasource_fields = [];
+    var __loading_image_url = '{{asset('images/loading.gif')}}';
+    var __proc_settings_ajx_form_url = '{{path('get-settings-form')}}';
+    var __database_list_ajax_url = '{{path('datasources_ajaxlist')}}';
+    {% if datasourceId is defined %}
+    var __datasource_id = '{{ datasourceId }}';
+    {% endif %}
+  {%if filterTypes is defined%}
+    {%for class, name in filterTypes%}
+    __filter_types.push('{{class}}#{{name}}');
+    {%endfor%}
+  {%endif%}
+  {%if targetFields is defined%}
+    {%for field in targetFields%}
+    __target_fields.push('{{field}}');
+    {%endfor%}
+  {%endif%}
+  {%if mappingName is defined%}
+    var __mapping_name = '{{mappingName}}';
+  {%endif%}
+  {%if datasourceFields is defined%}
+    {%for field in datasourceFields%}
+    __datasource_fields.push('{{field}}');
+    {%endfor%}
+  {%endif%}
+  </script>
+{%endblock%}

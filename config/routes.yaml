@@ -205,19 +205,19 @@ parameter-delete:
   controller: App\Controller\DashboardController::indexAction
 processors:
   path: /processors
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::listProcessorsAction
 processor-add:
   path: /processors/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::addProcessorAction
 processor-edit:
   path: /processors/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::editProcessorAction
 processor-delete:
   path: /processor/delete
   controller: App\Controller\DashboardController::indexAction
 get-settings-form:
   path: /processors/get-settings-form
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::getSettingsFormAction
 processor-export:
   path: /processors/export
   controller: App\Controller\DashboardController::indexAction

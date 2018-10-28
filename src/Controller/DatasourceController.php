@@ -16,7 +16,7 @@ class DatasourceController extends AdimeoDataSuiteController
 
   public function listDatasourcesAction(Request $request) {
     $datasourceTypes = [];
-    $ids = $this->container->getParameter('adimeodatasource.datasources');
+    $ids = $this->container->getParameter('adimeodatasuite.datasources');
     foreach($ids as $id) {
       /** @var Datasource $ds */
       $ds = $this->container->get($id);

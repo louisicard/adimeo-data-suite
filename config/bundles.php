@@ -8,4 +8,5 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     AdimeoDataSuite\Bundle\ADSSecurityBundle\ADSSecurityBundle::class => ['all' => true],
     AdimeoDataSuite\Bundle\DatasourcesBundle\DatasourcesBundle::class => ['all' => true],
+    AdimeoDataSuite\Bundle\ProcessorsBundle\ProcessorsBundle::class => ['all' => true],
 ];
