@@ -2,6 +2,9 @@
     "adimeo-data-suite/commons": {
         "version": "dev-master"
     },
+    "adimeo-data-suite/datasources": {
+        "version": "dev-master"
+    },
     "adimeo-data-suite/security": {
         "version": "dev-master"
     },

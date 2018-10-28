@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+
+{%block main_content%}
+  {%if datasources is defined%}
+    {%if form_add_datasource is defined and is_granted('ROLE_DATASOURCE_CREATOR')%}
+      {% form_theme form_add_datasource 'forms.html.twig' %}
+      {{ form(form_add_datasource, {'attr': {'id': 'form_add_data_source'}}) }}
+    {%endif%}
+    {%if datasources|length > 0%}
+    <table>
+      <thead>
+        <tr>
+          <th>{{'Datasource name'|trans}}</th>
+          <th>{{'Type'|trans}}</th>
+          <th>{{'ID'|trans}}</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%set class='even'%}
+        {%for id, datasource in datasources%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{datasource.name}}</td>
+            <td>{{datasource.displayName}}</td>
+            <td>{{datasource.id}}</td>
+            <td class="actions">
+              <ul>
+                {% if is_granted('ROLE_DATASOURCE_CREATOR') and procs[datasource.id] is not defined %}
+                <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Execute'|trans}}</a></li>
+                {% endif %}
+                {% if procs[datasource.id] is defined %}
+                  <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Monitor'|trans}}</a></li>
+                {% endif %}
+                <li><a href="{{path('datasource-edit', {'id': datasource.id})}}">{{'Edit'|trans}}</a></li>
+                {% if is_granted('ROLE_DATASOURCE_CREATOR') %}
+                <li><a href="{{path('datasource-delete', {'id': datasource.id})}}" class="datasource-delete">{{'Delete'|trans}}</a></li>
+                {% endif %}
+                {% if datasource|getClass == "CtSearchBundle\\Datasource\\WebCrawler" %}
+                <li><a href="{{ path('webcrawler-test', {id: datasource.id}) }}">Tester</a></li>
+                {% endif %}
+              </ul>
+            </td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+  {%endif%}
+  {%if form is defined%}
+    {{form(form)}}
+    {% if output is defined %}
+      <h3>Processor output</h3>
+    <div class="webcrawler-output">
+      {{ output|nl2br }}
+    </div>
+    {% endif %}
+  {%endif%}
+  {% if proc is defined %}
+    <div class="infos">
+      <div class="item">
+        <div class="label">{{'PID'|trans}}</div>
+        <div class="value">{{ proc.pid }}</div>
+      </div>
+      <div class="item">
+        <div class="label">{{'CPU'|trans}}</div>
+        <div class="value">{{ proc.cpu }}%</div>
+      </div>
+      <div class="item">
+        <div class="label">{{'Memory'|trans}}</div>
+        <div class="value">{{ proc.mem }}%</div>
+      </div>
+    </div>
+    <div class="actions">
+      <ul>
+        <li><a href="{{ path('datasource-kill', {id: datasource.id}) }}">Kill</a></li>
+      </ul>
+    </div>
+    <h3>Output</h3>
+    <textarea id="datasource-output" data-datasource-id="{{ datasource.id }}" readonly="readonly">{{'Loading. Please wait.'|trans}}</textarea>
+    <script>
+      var __datasource_output_ajax_url = '{{path('datasource-get-output')}}';
+    </script>
+  {% endif %}
+{%endblock%}

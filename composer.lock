@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09d1807521b434c317231f1c740c88be",
+    "content-hash": "0849af6c284357652ddf6ad964913256",
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "e0325d16d84b88501ad0940cd130dff34f8cb2a7"
+                "reference": "a110ceae0e185c2fdf71915ce0e039adb0cd4c9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/e0325d16d84b88501ad0940cd130dff34f8cb2a7",
-                "reference": "e0325d16d84b88501ad0940cd130dff34f8cb2a7",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/a110ceae0e185c2fdf71915ce0e039adb0cd4c9e",
+                "reference": "a110ceae0e185c2fdf71915ce0e039adb0cd4c9e",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,38 @@
                 "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-commons/issues"
             },
-            "time": "2018-10-25T17:40:27+00:00"
+            "time": "2018-10-28T17:56:49+00:00"
+        },
+        {
+            "name": "adimeo-data-suite/datasources",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/louisicard/adimeo-data-suite-datasources.git",
+                "reference": "95092297a3770c7a60064abe52c5bdf33b60c74c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/95092297a3770c7a60064abe52c5bdf33b60c74c",
+                "reference": "95092297a3770c7a60064abe52c5bdf33b60c74c",
+                "shasum": ""
+            },
+            "require": {
+                "adimeo-data-suite/commons": "dev-master",
+                "adimeo-data-suite/security": "dev-master",
+                "symfony/framework-bundle": "*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "AdimeoDataSuite\\Bundle\\DatasourcesBundle\\": ""
+                }
+            },
+            "support": {
+                "source": "https://github.com/louisicard/adimeo-data-suite-datasources/tree/master",
+                "issues": "https://github.com/louisicard/adimeo-data-suite-datasources/issues"
+            },
+            "time": "2018-10-28T17:36:43+00:00"
         },
         {
             "name": "adimeo-data-suite/security",
@@ -2644,6 +2675,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "adimeo-data-suite/commons": 20,
+        "adimeo-data-suite/datasources": 20,
         "adimeo-data-suite/security": 20
     },
     "prefer-stable": false,

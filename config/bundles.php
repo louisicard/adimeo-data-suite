@@ -7,4 +7,5 @@ return [
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     AdimeoDataSuite\Bundle\ADSSecurityBundle\ADSSecurityBundle::class => ['all' => true],
+    AdimeoDataSuite\Bundle\DatasourcesBundle\DatasourcesBundle::class => ['all' => true],
 ];

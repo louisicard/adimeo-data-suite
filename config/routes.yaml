@@ -85,19 +85,19 @@ console-delete:
   controller: App\Controller\DashboardController::indexAction
 datasources:
   path: /datasources
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::listDatasourcesAction
 datasources_ajaxlist:
   path: /datasources/ajaxlist
   controller: App\Controller\DashboardController::indexAction
 datasource-add:
   path: /datasources/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::addOrEditDatasourceAction
 datasource-edit:
   path: /datasources/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::addOrEditDatasourceAction
 datasource-delete:
   path: /datasources/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::deleteDatasourceAction
 datasource-kill:
   path: /datasources/kill
   controller: App\Controller\DashboardController::indexAction
@@ -154,16 +154,16 @@ index-mapping-stat:
   controller: App\Controller\IndexController::mappingStatAction
 synonyms-list:
   path: /indexes/synonyms
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\IndexController::listSynonymsDictionariesAction
 synonyms-add:
   path: /indexes/synonyms/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\IndexController::addOrEditSynonymsDictionariesAction
 synonyms-edit:
   path: /indexes/synonyms/edit/{fileName}
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\IndexController::addOrEditSynonymsDictionariesAction
 synonyms-delete:
   path: /indexes/synonyms/delete/{fileName}
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\IndexController::deleteSynonymsDictionariesAction
 js_search_api:
   path: /searchapi/searchapi.js
   controller: App\Controller\DashboardController::indexAction

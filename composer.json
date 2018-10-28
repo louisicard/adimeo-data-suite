@@ -7,6 +7,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "adimeo-data-suite/commons": "dev-master",
+        "adimeo-data-suite/datasources": "dev-master",
         "adimeo-data-suite/security": "dev-master",
         "mmucklo/krumo": "^0.5.7",
         "symfony/asset": "*",
@@ -78,6 +79,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/louisicard/adimeo-data-suite-security"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/louisicard/adimeo-data-suite-datasources"
         }
     ]
 }
