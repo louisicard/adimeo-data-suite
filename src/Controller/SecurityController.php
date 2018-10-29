@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
 use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,13 @@ class SecurityController extends AdimeoDataSuiteController
       try {
 
         $this->getIndexManager()->initStore();
+        $users = $this->getIndexManager()->listObjects('user');
+        if(empty($users)) {
+          $user = new User('admin', array('ROLE_ADMIN'), 'admin@example.com', 'Administrator', array());
+          $encoded = $this->container->get('security.password_encoder')->encodePassword($user, 'admin');
+          $user->setPassword($encoded);
+          $this->getIndexManager()->persistObject($user);
+        }
 
         /** @var AuthenticationUtils $authenticationUtils */
         $authenticationUtils = $this->get('security.authentication_utils');

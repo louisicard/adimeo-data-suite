@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 
-use AdimeoDataSuite\Bundle\CommonsBundle\Model\Datasource;
+use AdimeoDataSuite\Model\Datasource;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DatasourceController extends AdimeoDataSuiteController
 {
@@ -121,4 +122,19 @@ class DatasourceController extends AdimeoDataSuiteController
     }
     return $this->redirect($this->generateUrl('datasources'));
   }
+
+  public function ajaxListDatasourcesAction(Request $request) {
+    $datasources = $this->getIndexManager()->listObjects('datasource');
+    $r = [];
+    foreach($datasources as $datasource){
+      /** @var Datasource $datasource */
+      $r[] = array(
+        'id' => $datasource->getId(),
+        'name' => $datasource->getName(),
+        'class' => get_class($datasource)
+      );
+    }
+    return new Response(json_encode($r, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json; charset=utf-8'));
+  }
+
 }

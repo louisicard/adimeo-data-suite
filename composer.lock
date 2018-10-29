@@ -12,31 +12,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "191d02ca16aef0ec92ec0cf3a37b66cd824c4103"
+                "reference": "1e5d8cb120519de1bd80485f7be23ce809f97f8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/191d02ca16aef0ec92ec0cf3a37b66cd824c4103",
-                "reference": "191d02ca16aef0ec92ec0cf3a37b66cd824c4103",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/1e5d8cb120519de1bd80485f7be23ce809f97f8c",
+                "reference": "1e5d8cb120519de1bd80485f7be23ce809f97f8c",
                 "shasum": ""
             },
             "require": {
-                "adimeo-data-suite/security": "dev-master",
-                "elasticsearch/elasticsearch": "5.x",
-                "symfony/framework-bundle": "*",
-                "symfony/security": "*"
+                "elasticsearch/elasticsearch": "5.x"
             },
-            "type": "symfony-bundle",
+            "type": "library",
             "autoload": {
                 "psr-4": {
-                    "AdimeoDataSuite\\Bundle\\CommonsBundle\\": ""
+                    "AdimeoDataSuite\\": ""
                 }
             },
             "support": {
                 "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-commons/issues"
             },
-            "time": "2018-10-28T19:23:16+00:00"
+            "time": "2018-10-29T09:54:10+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
@@ -44,30 +41,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-datasources.git",
-                "reference": "b1f523dddf5e667115c3813e56e17cbb9bc26f58"
+                "reference": "870fbc783bfb2b6de27316ebdc1ac543d6094c0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/b1f523dddf5e667115c3813e56e17cbb9bc26f58",
-                "reference": "b1f523dddf5e667115c3813e56e17cbb9bc26f58",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/870fbc783bfb2b6de27316ebdc1ac543d6094c0c",
+                "reference": "870fbc783bfb2b6de27316ebdc1ac543d6094c0c",
                 "shasum": ""
             },
             "require": {
                 "adimeo-data-suite/commons": "dev-master",
-                "adimeo-data-suite/security": "dev-master",
-                "symfony/framework-bundle": "*"
+                "adimeo-data-suite/security": "dev-master"
             },
-            "type": "symfony-bundle",
+            "type": "library",
             "autoload": {
                 "psr-4": {
-                    "AdimeoDataSuite\\Bundle\\DatasourcesBundle\\": ""
+                    "AdimeoDataSuite\\": ""
                 }
             },
             "support": {
                 "source": "https://github.com/louisicard/adimeo-data-suite-datasources/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-datasources/issues"
             },
-            "time": "2018-10-28T19:01:27+00:00"
+            "time": "2018-10-29T09:56:41+00:00"
         },
         {
             "name": "adimeo-data-suite/filters",
@@ -75,30 +71,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "cd489e154794191f19c4a42ee73431ad984faab0"
+                "reference": "e6539bd992c848c7a995f4204c059bb2a026c23a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/cd489e154794191f19c4a42ee73431ad984faab0",
-                "reference": "cd489e154794191f19c4a42ee73431ad984faab0",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/e6539bd992c848c7a995f4204c059bb2a026c23a",
+                "reference": "e6539bd992c848c7a995f4204c059bb2a026c23a",
                 "shasum": ""
             },
             "require": {
                 "adimeo-data-suite/commons": "dev-master",
-                "adimeo-data-suite/security": "dev-master",
-                "symfony/framework-bundle": "*"
+                "adimeo-data-suite/security": "dev-master"
             },
-            "type": "symfony-bundle",
+            "type": "library",
             "autoload": {
                 "psr-4": {
-                    "AdimeoDataSuite\\Bundle\\ProcessorsBundle\\": ""
+                    "AdimeoDataSuite\\": ""
                 }
             },
             "support": {
                 "source": "https://github.com/louisicard/adimeo-data-suite-filters/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-filters/issues"
             },
-            "time": "2018-10-28T19:39:44+00:00"
+            "time": "2018-10-29T09:56:16+00:00"
         },
         {
             "name": "adimeo-data-suite/security",
@@ -106,12 +101,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-security.git",
-                "reference": "4cf277c17450eb2104458d623697e9e4cb639d86"
+                "reference": "fd3458fbf21ca037bb49ee3a1eddabd662cbaba3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-security/zipball/4cf277c17450eb2104458d623697e9e4cb639d86",
-                "reference": "4cf277c17450eb2104458d623697e9e4cb639d86",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-security/zipball/fd3458fbf21ca037bb49ee3a1eddabd662cbaba3",
+                "reference": "fd3458fbf21ca037bb49ee3a1eddabd662cbaba3",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +124,7 @@
                 "source": "https://github.com/louisicard/adimeo-data-suite-security/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-security/issues"
             },
-            "time": "2018-10-24T14:58:53+00:00"
+            "time": "2018-10-29T09:58:26+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",

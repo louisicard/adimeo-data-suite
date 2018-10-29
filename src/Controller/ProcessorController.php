@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 
-use AdimeoDataSuite\Bundle\CommonsBundle\Model\Datasource;
-use AdimeoDataSuite\Bundle\CommonsBundle\Model\Processor;
-use AdimeoDataSuite\Bundle\CommonsBundle\Model\ProcessorFilter;
+use AdimeoDataSuite\Model\Datasource;
+use AdimeoDataSuite\Model\Processor;
+use AdimeoDataSuite\Model\ProcessorFilter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

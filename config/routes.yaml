@@ -88,7 +88,7 @@ datasources:
   controller: App\Controller\DatasourceController::listDatasourcesAction
 datasources_ajaxlist:
   path: /datasources/ajaxlist
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::ajaxListDatasourcesAction
 datasource-add:
   path: /datasources/add
   controller: App\Controller\DatasourceController::addOrEditDatasourceAction

@@ -9,7 +9,7 @@
 namespace App\Controller;
 
 
-use AdimeoDataSuite\Bundle\CommonsBundle\Index\IndexManager;
+use AdimeoDataSuite\Index\IndexManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdimeoDataSuiteController extends Controller

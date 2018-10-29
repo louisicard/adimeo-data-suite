@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use AdimeoDataSuite\Bundle\CommonsBundle\Exception\DictionariesPathNotDefinedException;
-use AdimeoDataSuite\Bundle\CommonsBundle\Index\SynonymsDictionariesManager;
+use AdimeoDataSuite\Exception\DictionariesPathNotDefinedException;
+use AdimeoDataSuite\Index\SynonymsDictionariesManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
