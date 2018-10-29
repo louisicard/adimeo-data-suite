@@ -17,7 +17,7 @@ use Symfony\Component\Translation\Translator;
 class IndexController extends AdimeoDataSuiteController {
 
   public function listIndexesAction(Request $request) {
-    $info = $this->getIndexManager()->getIndicesInfo();
+    $info = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
     ksort($info);
 
     return $this->render('indexes.html.twig', array(
@@ -247,7 +247,7 @@ class IndexController extends AdimeoDataSuiteController {
     /** @var SynonymsDictionariesManager $sdManager */
     $sdManager = $this->container->get('adimeo_data_suite_synonyms_dictionaries_manager');
     try {
-      $vars['dictionaries'] = $sdManager->getDictionaries();
+      $vars['dictionaries'] = $sdManager->getDictionaries($this->buildSecurityContext());
     }
     catch(DictionariesPathNotDefinedException $ex) {
       $this->addSessionMessage('error', $this->get('translator')->trans('Synonyms dictionaries path is not set properly'));

@@ -41,7 +41,7 @@ class DatasourceController extends AdimeoDataSuiteController
     return $this->render('datasource.html.twig', array(
       'title' => $this->get('translator')->trans('Data sources'),
       'main_menu_item' => 'datasources',
-      'datasources' => $this->getIndexManager()->listObjects('datasource'),
+      'datasources' => $this->getIndexManager()->listObjects('datasource', $this->buildSecurityContext()),
       'form_add_datasource' => $form->createView(),
       'procs' => []
     ));
@@ -56,7 +56,7 @@ class DatasourceController extends AdimeoDataSuiteController
       $edit = false;
 
     } elseif($request->get('id') != null) {
-      $datasource = $this->getIndexManager()->findObject('datasource', $request->get('id'));
+      $datasource = $this->getIndexManager()->findObject('datasource', $request->get('id'), $this->buildSecurityContext());
       $edit = true;
     } else {
       $this->addSessionMessage('error', $this->get('translator')->trans('No datasource type provided'));
@@ -127,7 +127,7 @@ class DatasourceController extends AdimeoDataSuiteController
   }
 
   public function ajaxListDatasourcesAction(Request $request) {
-    $datasources = $this->getIndexManager()->listObjects('datasource');
+    $datasources = $this->getIndexManager()->listObjects('datasource', $this->buildSecurityContext());
     $r = [];
     foreach($datasources as $datasource){
       /** @var Datasource $datasource */

@@ -9,7 +9,10 @@
 namespace App\Controller;
 
 
+use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\Group;
+use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
 use AdimeoDataSuite\Index\IndexManager;
+use AdimeoDataSuite\Model\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdimeoDataSuiteController extends Controller
@@ -38,6 +41,42 @@ class AdimeoDataSuiteController extends Controller
       );
     }
     $this->get('session')->set('messages', $messages);
+  }
+
+  /** @var SecurityContext */
+  private $securityContext = NULL;
+
+  /**
+   * @return SecurityContext
+   */
+  protected function buildSecurityContext() {
+    if($this->securityContext == null) {
+      $context = new SecurityContext();
+      $restrictions = array(
+        'indexes' => [],
+        'datasources' => [],
+        'matchingLists' => [],
+        'dictionaries' => [],
+      );
+      /** @var User $user */
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+      $context->setIsAdmin(in_array('ROLE_ADMIN', $user->getRoles()));
+      if ($user instanceof User) {
+        $context->setUserUid($user->getUid());
+        $groupNames = $user->getGroups();
+        foreach ($groupNames as $groupName) {
+          /** @var Group $group */
+          $group = $this->getIndexManager()->findObject('group', $groupName);
+          $restrictions['indexes'] += $group->getIndexes();
+          $restrictions['datasources'] += $group->getDatasources();
+          $restrictions['matchingLists'] += $group->getMatchingLists();
+          $restrictions['dictionaries'] += $group->getDictionaries();
+        }
+      }
+      $context->setRestrictions($restrictions);
+      $this->securityContext = $context;
+    }
+    return $this->securityContext;
   }
 
 }

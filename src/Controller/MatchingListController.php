@@ -19,7 +19,7 @@ class MatchingListController extends AdimeoDataSuiteController
     return $this->render('matching-lists.html.twig', array(
       'title' => $this->get('translator')->trans('Matching lists'),
       'main_menu_item' => 'matching-lists',
-      'matching_lists' => $this->getIndexManager()->listObjects('matching_list'),
+      'matching_lists' => $this->getIndexManager()->listObjects('matching_list', $this->buildSecurityContext()),
     ));
   }
 
@@ -86,7 +86,7 @@ class MatchingListController extends AdimeoDataSuiteController
     );
     if ($id != null) {
 
-      $infos = $this->getIndexManager()->getIndicesInfo();
+      $infos = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
       $select = '<select id="matching-list-field-selector"><option value="">Select a field</option>';
       foreach ($infos as $index => $info) {
         if(isset($info['mappings'])) {

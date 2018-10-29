@@ -22,8 +22,8 @@ class ProcessorController extends AdimeoDataSuiteController
   public function listProcessorsAction(Request $request)
   {
     /** @var Datasource[] $datasources */
-    $datasources = $this->getIndexManager()->listObjects('datasource');
-    $indexes = $this->getIndexManager()->getIndicesInfo();
+    $datasources = $this->getIndexManager()->listObjects('datasource', $this->buildSecurityContext());
+    $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
     $datasourceChoices = array();
     foreach ($datasources as $datasource) {
       $datasourceChoices[$datasource->getName()] = $datasource->getId();
@@ -59,7 +59,7 @@ class ProcessorController extends AdimeoDataSuiteController
       return $this->redirect($this->generateUrl('processor-add', array('datasource' => $data['datasource'], 'target' => $data['target'])));
     }
     /** @var Processor[] $processors */
-    $processors = $this->getIndexManager()->listObjects('processor');
+    $processors = $this->getIndexManager()->listObjects('processor', $this->buildSecurityContext());
     $listForDisplay = [];
     foreach($processors as $processor) {
       $listForDisplay[] = array(

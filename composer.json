@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "symfony/dotenv": "*",
+        "symfony/profiler-pack": "^1.0",
         "symfony/web-server-bundle": "*"
     },
     "config": {

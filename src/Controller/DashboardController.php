@@ -18,7 +18,7 @@ class DashboardController extends AdimeoDataSuiteController
   public function indexAction(Request $request) {
     try {
 
-      $info = $this->getIndexManager()->getIndicesInfo();
+      $info = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
 
       $serverInfo = $this->getIndexManager()->getServerInfo()['server_info'];
 

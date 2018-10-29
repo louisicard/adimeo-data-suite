@@ -47,6 +47,7 @@ security:
       - { path: ^/searchapi, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/search-client, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/$, roles: IS_AUTHENTICATED_REMEMBERED }
       - { path: ^/indexes$, role: ROLE_INDEX_MANAGER }
       - { path: ^/indexes/add-mapping, role: ROLE_INDEX_MANAGER }
       - { path: ^/indexes/edit, role: ROLE_INDEX_MANAGER }
