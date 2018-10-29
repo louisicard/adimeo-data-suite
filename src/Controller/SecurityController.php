@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AdimeoDataSuiteController
 {
@@ -23,6 +24,7 @@ class SecurityController extends AdimeoDataSuiteController
           $user = new User('admin', array('ROLE_ADMIN'), 'admin@example.com', 'Administrator', array());
           $encoded = $this->container->get('security.password_encoder')->encodePassword($user, 'admin');
           $user->setPassword($encoded);
+          $user->setCreatedBy('admin');
           $this->getIndexManager()->persistObject($user);
         }
 

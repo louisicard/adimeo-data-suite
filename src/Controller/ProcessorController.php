@@ -9,6 +9,7 @@ use AdimeoDataSuite\Model\ProcessorFilter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,7 +21,7 @@ class ProcessorController extends AdimeoDataSuiteController
 
   public function listProcessorsAction(Request $request)
   {
-
+    /** @var Datasource[] $datasources */
     $datasources = $this->getIndexManager()->listObjects('datasource');
     $indexes = $this->getIndexManager()->getIndicesInfo();
     $datasourceChoices = array();
@@ -114,9 +115,11 @@ class ProcessorController extends AdimeoDataSuiteController
       $processor->setDatasourceId($request->get('datasource'));
       $processor->setTarget($request->get('target'));
       $processor->setDefinition(json_encode($definition, JSON_PRETTY_PRINT));
+      $edit = false;
     } else { //Edit
       $processor = $this->getIndexManager()->findObject('processor', $id);
       $datasource = $this->getIndexManager()->findObject('datasource', $processor->getDatasourceId());
+      $edit = true;
     }
     if(is_array($processor->getTargetSiblings())){
       $processor->setTargetSiblings(implode(',', $processor->getTargetSiblings()));
@@ -147,6 +150,9 @@ class ProcessorController extends AdimeoDataSuiteController
       $proc = $form->getData();
       if($proc->getTargetSiblings() != ''){
         $proc->setTargetSiblings(explode(',', $proc->getTargetSiblings()));
+      }
+      if(!$edit) {
+        $proc->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
       }
       $this->getIndexManager()->persistObject($proc);
       if ($id == null) {

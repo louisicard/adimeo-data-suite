@@ -102,6 +102,9 @@ class DatasourceController extends AdimeoDataSuiteController
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $datasource->setSettings($form->getData());
+      if(!$edit) {
+        $datasource->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
+      }
       $this->getIndexManager()->persistObject($datasource);
       $this->addSessionMessage('status', $this->get('translator')->trans('Datasource has been added'));
       return $this->redirect($this->generateUrl('datasources'));

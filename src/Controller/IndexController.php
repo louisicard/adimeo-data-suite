@@ -35,7 +35,7 @@ class IndexController extends AdimeoDataSuiteController {
     if ($request->get('index_name') != null) {
       return $this->getIndexForm($request, false);
     } else {
-      CtSearchBundle::addSessionMessage($this, 'error', $this->get('translator')->trans('No index provided'));
+      $this->addSessionMessage('error', $this->get('translator')->trans('No index provided'));
       return $this->redirect($this->generateUrl('indexes'));
     }
   }
@@ -169,7 +169,6 @@ class IndexController extends AdimeoDataSuiteController {
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      /** @var Mapping $mapping */
       $mapping = $form->getData();
       if($mapping['dynamicTemplates'] == ''){
         $mapping['dynamicTemplates'] = NULL;
@@ -340,7 +339,7 @@ foo => foo bar, baz',
       $this->addSessionMessage('error', $this->get('translator')->trans('Synonyms dictionaries path is not set properly'));
     }
 
-    $vars['form'] = $form->createView();
+    $vars['form'] = isset($form) ? $form->createView() : NULL;
 
     return $this->render('synonyms.html.twig', $vars);
   }

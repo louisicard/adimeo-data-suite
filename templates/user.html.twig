@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+{%block main_content%}
+  {%if users is defined%}
+    <ul class="actions">
+      <li id="add-user"><a href="{{ path('user-add') }}">Add user</a></li>
+    </ul>
+    {%if users|length > 0%}
+    <table>
+      <thead>
+        <tr>
+          <th>{{'Username'|trans}}</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%set class='even'%}
+        {%for user in users%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{user.uid}}</td>
+            <td class="actions">
+              <ul>
+                <li><a href="{{ path('user-edit', {uid: user.uid}) }}">{{'Edit'|trans}}</a></li>
+                {% if app.user.username != user.uid %}
+                <li><a href="{{ path('user-delete', {uid: user.uid}) }}" class="user-delete action-delete">{{'Delete'|trans}}</a></li>
+                {% endif %}
+              </ul>
+            </td>
+          </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    {%endif%}
+  {%endif%}
+  {%if form is defined%}
+    {{form(form, {'attr': {'id': 'form_user'}})}}
+  {%endif%}
+  <script type="text/javascript">
+    
+  </script>
+{%endblock%}

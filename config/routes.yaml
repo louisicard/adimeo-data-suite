@@ -118,16 +118,16 @@ edit_record:
   controller: App\Controller\DashboardController::indexAction
 groups:
   path: /groups
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AdminController::listGroupsAction
 group-add:
   path: /groups/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AdminController::addGroupAction
 group-edit:
   path: /groups/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AdminController::editGroupAction
 group-delete:
   path: /groups/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AdminController::deleteGroupAction
 indexes:
   path: /indexes
   controller: App\Controller\IndexController::listIndexesAction
@@ -172,25 +172,25 @@ js_search_api_service:
   controller: App\Controller\DashboardController::indexAction
 matching-lists:
   path: /matching-list
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::listMatchingListsAction
 matching-list-add:
   path: /matching-list/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::addMatchingListAction
 matching-list-edit:
   path: /matching-list/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::editMatchingListAction
 matching-list-delete:
   path: /matching-lists/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::deleteMatchingListAction
 matching-import-file:
   path: /matching-list/import-file
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::importMatchingListFileAction
 matching-export:
   path: /matching-list/export
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::exportMatchingListFileAction
 matching-init-from-index:
   path: /matching-list/init-from-index
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\MatchingListController::initMatchingListFromIndexAction
 parameters:
   path: /parameters
   controller: App\Controller\DashboardController::indexAction
@@ -277,16 +277,16 @@ more-like-this-display:
   controller: /api/update
 users:
   path: /users
-  controller: /api/update
+  controller: App\Controller\AdminController::listUsersAction
 user-add:
   path: /users/add
-  controller: /api/update
+  controller: App\Controller\AdminController::addUserAction
 user-edit:
   path: /users/edit
-  controller: /api/update
+  controller: App\Controller\AdminController::editUserAction
 user-delete:
   path: /users/delete
-  controller: /api/update
+  controller: App\Controller\AdminController::deleteUserAction
 webcrawler-response:
   path: /webcrawler-response
   controller: /api/update

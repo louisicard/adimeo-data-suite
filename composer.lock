@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "1e5d8cb120519de1bd80485f7be23ce809f97f8c"
+                "reference": "d0d26091a6f8e6178d7dbfc9d63cc7ca3880fc75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/1e5d8cb120519de1bd80485f7be23ce809f97f8c",
-                "reference": "1e5d8cb120519de1bd80485f7be23ce809f97f8c",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/d0d26091a6f8e6178d7dbfc9d63cc7ca3880fc75",
+                "reference": "d0d26091a6f8e6178d7dbfc9d63cc7ca3880fc75",
                 "shasum": ""
             },
             "require": {
@@ -33,7 +33,7 @@
                 "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-commons/issues"
             },
-            "time": "2018-10-29T09:54:10+00:00"
+            "time": "2018-10-29T10:42:04+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
@@ -101,12 +101,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-security.git",
-                "reference": "fd3458fbf21ca037bb49ee3a1eddabd662cbaba3"
+                "reference": "a858c89ab85441cfbb1f5ff66fd22532c3f20285"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-security/zipball/fd3458fbf21ca037bb49ee3a1eddabd662cbaba3",
-                "reference": "fd3458fbf21ca037bb49ee3a1eddabd662cbaba3",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-security/zipball/a858c89ab85441cfbb1f5ff66fd22532c3f20285",
+                "reference": "a858c89ab85441cfbb1f5ff66fd22532c3f20285",
                 "shasum": ""
             },
             "require": {
@@ -124,7 +124,7 @@
                 "source": "https://github.com/louisicard/adimeo-data-suite-security/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-security/issues"
             },
-            "time": "2018-10-29T09:58:26+00:00"
+            "time": "2018-10-29T11:40:07+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",

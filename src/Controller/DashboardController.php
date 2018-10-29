@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
 use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AdimeoDataSuiteController
