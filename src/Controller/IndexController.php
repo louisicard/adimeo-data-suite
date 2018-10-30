@@ -229,7 +229,7 @@ class IndexController extends AdimeoDataSuiteController {
       'fields' => 0
     );
     if ($mapping != null) {
-      $res = $this->getIndexManager()->search($index_name, '{"query":{"match_all":{"boost":1}}}', 0, 0, $mapping_name);
+      $res = $this->getIndexManager()->search($index_name, json_decode('{"query":{"match_all":{"boost":1}}}', TRUE), 0, 0, $mapping_name);
       if (isset($res['hits']['total']) && $res['hits']['total'] > 0) {
         $data['docs'] = $res['hits']['total'];
       }

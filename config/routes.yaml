@@ -241,16 +241,16 @@ api-sp-def:
   controller: App\Controller\DashboardController::indexAction
 search-api-v2:
   path: /search-api/v2
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\SearchAPIController::searchAPIV2Action
 search-api-mor-like-this:
   path: /search-api/v2/more-like-this
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\SearchAPIController::seeMoreLikeThisAction
 search-api-autocomplete:
   path: /search-api/v2/autocomplete
-  controller: /api/update
+  controller: App\Controller\SearchAPIController::autocompleteAction
 search-api-v2-custom:
   path: /search-api/v2/custom
-  controller: /api/update
+  controller: App\Controller\SearchAPIController::customSearchAction
 search-pages:
   path: /search-pages
   controller: App\Controller\SearchPageController::listSearchPagesAction
