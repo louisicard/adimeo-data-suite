@@ -8,6 +8,7 @@ use AdimeoDataSuite\Exception\DictionariesPathNotDefinedException;
 use AdimeoDataSuite\Index\SynonymsDictionariesManager;
 use AdimeoDataSuite\Model\Datasource;
 use AdimeoDataSuite\Model\MatchingList;
+use AdimeoDataSuite\Model\Parameter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -187,6 +188,12 @@ class AdminController extends AdimeoDataSuiteController
     foreach($matchingLists as $item){
       $matchingListsChoices[$item->getName()] = $item->getId();
     }
+    /** @var Parameter[] $parameters */
+    $parameters = $this->getIndexManager()->listObjects('parameter');
+    $parametersChoices = [];
+    foreach($parameters as $item){
+      $parametersChoices[$item->getName()] = $item->getId();
+    }
     /** @var SynonymsDictionariesManager $sdManager */
     $sdManager = $this->container->get('adimeo_data_suite_synonyms_dictionaries_manager');
     try {
@@ -226,6 +233,13 @@ class AdminController extends AdimeoDataSuiteController
       ->add('matchingLists', ChoiceType::class, array(
         'label' => $this->get('translator')->trans('Allowed matching lists'),
         'choices' => $matchingListsChoices,
+        'required' => true,
+        'expanded' => true,
+        'multiple' => true
+      ))
+      ->add('parameters', ChoiceType::class, array(
+        'label' => $this->get('translator')->trans('Allowed parameters'),
+        'choices' => $parametersChoices,
         'required' => true,
         'expanded' => true,
         'multiple' => true

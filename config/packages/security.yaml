@@ -61,6 +61,10 @@ security:
       - { path: ^/webcrawler/test, role: ROLE_DATASOURCE_MANAGER }
       - { path: ^/datasources/ajaxlist, role: ROLE_DATASOURCE_MANAGER }
       - { path: ^/datasources, role: ROLE_DATASOURCE_CREATOR }
+      - { path: ^/parameters$, role: ROLE_PARAMETER_MANAGER }
+      - { path: ^/parameters/edit, role: ROLE_PARAMETER_MANAGER }
+      - { path: ^/parameters/delete, role: ROLE_PARAMETER_MANAGER }
+      - { path: ^/parameters/add, role: ROLE_PARAMETER_CREATOR }
       - { path: ^/processors$, role: ROLE_PROCESSOR_MANAGER }
       - { path: ^/processors/edit, role: ROLE_PROCESSOR_MANAGER }
       - { path: ^/processors/export, role: ROLE_PROCESSOR_MANAGER }

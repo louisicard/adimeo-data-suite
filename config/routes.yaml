@@ -25,19 +25,19 @@ analytics-compiler:
   controller: App\Controller\DashboardController::indexAction
 autopromotes:
   path: /autopromotes
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AutopromoteController::listAutopromotesAction
 autopromote-add:
   path: /autopromotes/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AutopromoteController::addAutopromoteAction
 autopromote-edit:
   path: /autopromotes/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AutopromoteController::editAutopromoteAction
 autopromote-delete:
   path: /autopromotes/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AutopromoteController::deleteAutopromoteAction
 autopromote-ajax-get-analyzers:
   path: /autopromotes/ajax/get-analyzers
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AutopromoteController::getAnalyzersAction
 backups:
   path: /backups
   controller: App\Controller\DashboardController::indexAction
@@ -193,16 +193,16 @@ matching-init-from-index:
   controller: App\Controller\MatchingListController::initMatchingListFromIndexAction
 parameters:
   path: /parameters
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ParameterController::listParametersAction
 parameter-add:
   path: /parameters/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ParameterController::addParameterAction
 parameter-edit:
   path: /parameters/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ParameterController::editParameterAction
 parameter-delete:
   path: /parameters/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ParameterController::deleteParameterAction
 processors:
   path: /processors
   controller: App\Controller\ProcessorController::listProcessorsAction
@@ -253,19 +253,19 @@ search-api-v2-custom:
   controller: /api/update
 search-pages:
   path: /search-pages
-  controller: /api/update
+  controller: App\Controller\SearchPageController::listSearchPagesAction
 search-page-add:
   path: /search-pages/add
-  controller: /api/update
+  controller: App\Controller\SearchPageController::addSearchPageAction
 search-page-edit:
   path: /search-pages/edit
-  controller: /api/update
+  controller: App\Controller\SearchPageController::editSearchPageAction
 search-page-delete:
   path: /search-pages/delete
-  controller: /api/update
+  controller: App\Controller\SearchPageController::deleteSearchPageAction
 search-page-list-fields:
   path: /search-pages/fields/{mapping}
-  controller: /api/update
+  controller: App\Controller\SearchPageController::getMappingFields
 show-logs:
   path: /logs
   controller: /api/update
