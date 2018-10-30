@@ -191,6 +191,17 @@ class ProcessorController extends AdimeoDataSuiteController
     ));
   }
 
+  public function deleteProcessorAction(Request $request)
+  {
+    if ($request->get('id') != null) {
+      $this->getIndexManager()->deleteObject($request->get('id'));
+      $this->addSessionMessage('status', $this->get('translator')->trans('Processor has been deleted'));
+    } else {
+      $this->addSessionMessage('error', $this->get('translator')->trans('No id provided'));
+    }
+    return $this->redirect($this->generateUrl('processors'));
+  }
+
   public function getSettingsFormAction(Request $request)
   {
     if ($request->get('class') != null) {

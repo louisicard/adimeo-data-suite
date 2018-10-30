@@ -214,7 +214,7 @@ processor-edit:
   controller: App\Controller\ProcessorController::editProcessorAction
 processor-delete:
   path: /processor/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::deleteProcessorAction
 get-settings-form:
   path: /processors/get-settings-form
   controller: App\Controller\ProcessorController::getSettingsFormAction
