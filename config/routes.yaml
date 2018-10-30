@@ -61,28 +61,28 @@ backups_restore_snapshot:
   controller: App\Controller\DashboardController::indexAction
 boost-queries:
   path: /boost-queries
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\BoostQueryController::listBoostQueriesAction
 boost-query-add:
   path: /boost-queries/add
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\BoostQueryController::addBoostQueryAction
 boost-query-edit:
   path: /boost-queries/edit
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\BoostQueryController::editBoostQueryAction
 boost-query-delete:
   path: /boost-queries/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\BoostQueryController::deleteBoostQueryAction
 console:
   path: /console
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ConsoleController::consoleAction
 console-save:
   path: /console/save
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ConsoleController::saveQueryAction
 console-load:
   path: /console/load
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ConsoleController::loadQueryAction
 console-delete:
   path: /console/delete
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ConsoleController::deleteQueryAction
 datasources:
   path: /datasources
   controller: App\Controller\DatasourceController::listDatasourcesAction

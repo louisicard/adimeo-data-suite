@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "43d9dea1f9b3d0ae2c12f2e8ca875e4b56ef62cc"
+                "reference": "5a7176d0abb6c97bf06f8f9eb94ea84d88b89970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/43d9dea1f9b3d0ae2c12f2e8ca875e4b56ef62cc",
-                "reference": "43d9dea1f9b3d0ae2c12f2e8ca875e4b56ef62cc",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/5a7176d0abb6c97bf06f8f9eb94ea84d88b89970",
+                "reference": "5a7176d0abb6c97bf06f8f9eb94ea84d88b89970",
                 "shasum": ""
             },
             "require": {
@@ -33,7 +33,7 @@
                 "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/master",
                 "issues": "https://github.com/louisicard/adimeo-data-suite-commons/issues"
             },
-            "time": "2018-10-29T23:57:00+00:00"
+            "time": "2018-10-30T17:06:45+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",

@@ -20,12 +20,12 @@
         {%for autopromote in autopromotes%}
           {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
           <tr class="{{class}}">
-            <td>{{autopromote.title}}</td>
+            <td>{{autopromote.name}}</td>
             <td>{{autopromote.index}}</td>
             <td class="actions">
               <ul>
-                <li><a href="{{ path('autopromote-edit', {id: autopromote.id}) }}">{{'Edit'|trans}}</a></li>
-                <li><a href="{{ path('autopromote-delete', {id: autopromote.id}) }}" class="autopromote-delete action-delete">{{'Delete'|trans}}</a></li>
+                <li><a href="{{ path('autopromote-edit', {id: autopromote.id, index: autopromote.index}) }}">{{'Edit'|trans}}</a></li>
+                <li><a href="{{ path('autopromote-delete', {id: autopromote.id, index: autopromote.index}) }}" class="autopromote-delete action-delete">{{'Delete'|trans}}</a></li>
               </ul>
             </td>
           </tr>
