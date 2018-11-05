@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use AdimeoDataSuite\Model\Datasource;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -62,7 +63,7 @@ class DatasourceController extends AdimeoDataSuiteController
       $this->addSessionMessage('error', $this->get('translator')->trans('No datasource type provided'));
       return $this->redirect($this->generateUrl('datasources'));
     }
-    $form = $this->createFormBuilder($edit ? $datasource->getSettings() : NULL);
+    $form = $this->createFormBuilder($edit ? $datasource->getSettings() + array('hasBatchExecution' => $datasource->hasBatchExecution()) : NULL);
     $form->add('name', TextType::class, array(
       'label' => $this->get('translator')->trans('Name'),
       'required' => true,
@@ -95,13 +96,20 @@ class DatasourceController extends AdimeoDataSuiteController
       }
       $form->add($key, $controlType, $params);
     }
+    $form->add('hasBatchExecution', CheckboxType::class, array(
+      'label' => $this->get('translator')->trans('Has batch execution'),
+      'required' => false
+    ));
     $form->add('submit', SubmitType::class, array(
       'label' => $this->get('translator')->trans($edit ? 'Update datasource' : 'Create datasource')
     ));
     $form = $form->getForm();
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-      $datasource->setSettings($form->getData());
+      $settings = $form->getData();
+      $datasource->setHasBatchExecution($settings['hasBatchExecution']);
+      unset($settings['hasBatchExecution']);
+      $datasource->setSettings($settings);
       if(!$edit) {
         $datasource->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
       }

@@ -35,7 +35,7 @@
             {% if is_granted("ROLE_PROCESSOR_MANAGER") %}
               <li{%if main_menu_item=='processors'%} class="active"{%endif%}><a href="{{path('processors')}}" title="{{'Processors'|trans}}">{{'Processors'|trans}}</a></li>
             {% endif %}
-            {% if is_granted("ROLE_PARAMETER_MANAGER") %}
+            {% if is_granted("ROLE_ADMIN") %}
               <li{%if main_menu_item=='parameters'%} class="active"{%endif%}><a href="{{path('parameters')}}" title="{{'Parameters'|trans}}">{{'Parameters'|trans}}</a></li>
             {% endif %}
           </ul>

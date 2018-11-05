@@ -166,7 +166,7 @@ class AdminController extends AdimeoDataSuiteController
 
   private function handleAddOrEditGroup($request, $id = null) {
     if ($id == null) { //Add
-      $group = new Group('', '', [], [], [], []);
+      $group = new Group('', '', [], [], []);
     } else { //Edit
       /** @var Group $group */
       $group = $this->getIndexManager()->findObject('group', $request->get('id'));
@@ -187,12 +187,6 @@ class AdminController extends AdimeoDataSuiteController
     $matchingListsChoices = [];
     foreach($matchingLists as $item){
       $matchingListsChoices[$item->getName()] = $item->getId();
-    }
-    /** @var Parameter[] $parameters */
-    $parameters = $this->getIndexManager()->listObjects('parameter');
-    $parametersChoices = [];
-    foreach($parameters as $item){
-      $parametersChoices[$item->getName()] = $item->getId();
     }
     /** @var SynonymsDictionariesManager $sdManager */
     $sdManager = $this->container->get('adimeo_data_suite_synonyms_dictionaries_manager');
@@ -233,13 +227,6 @@ class AdminController extends AdimeoDataSuiteController
       ->add('matchingLists', ChoiceType::class, array(
         'label' => $this->get('translator')->trans('Allowed matching lists'),
         'choices' => $matchingListsChoices,
-        'required' => true,
-        'expanded' => true,
-        'multiple' => true
-      ))
-      ->add('parameters', ChoiceType::class, array(
-        'label' => $this->get('translator')->trans('Allowed parameters'),
-        'choices' => $parametersChoices,
         'required' => true,
         'expanded' => true,
         'multiple' => true

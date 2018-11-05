@@ -25,33 +25,33 @@ class ParameterController extends AdimeoDataSuiteController
   }
 
   public function editParameterAction(Request $request) {
-    return $this->handleAddOrEditParameter($request, $request->get('id'));
+    return $this->handleAddOrEditParameter($request, $request->get('name'));
   }
 
   public function deleteParameterAction(Request $request) {
-    if ($request->get('id') != null) {
-      $this->getIndexManager()->deleteObject($request->get('id'));
+    if ($request->get('name') != null) {
+      $this->getIndexManager()->deleteObject($request->get('name'));
       $this->addSessionMessage('status', $this->get('translator')->trans('Parameter has been deleted'));
     } else {
-      $this->addSessionMessage('error', $this->get('translator')->trans('No id provided'));
+      $this->addSessionMessage('error', $this->get('translator')->trans('No name provided'));
     }
     return $this->redirect($this->generateUrl('parameters'));
   }
 
 
-  private function handleAddOrEditParameter($request, $id = null)
+  private function handleAddOrEditParameter($request, $name = null)
   {
-    if ($id == null) { //Add
+    if ($name == null) { //Add
       $parameter = new Parameter('', '');
     } else { //Edit
       /** @var Parameter $parameter */
-      $parameter = $this->getIndexManager()->findObject('parameter', $request->get('id'));
+      $parameter = $this->getIndexManager()->findObject('parameter', $name);
     }
     $form = $this->createFormBuilder($parameter)
       ->add('name', TextType::class, array(
         'label' => $this->get('translator')->trans('Name'),
         'required' => true,
-        'disabled' => $id != null
+        'disabled' => $name != null
       ))
       ->add('value', TextType::class, array(
         'label' => $this->get('translator')->trans('Value'),
@@ -61,20 +61,28 @@ class ParameterController extends AdimeoDataSuiteController
       ->getForm();
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-      if($id == null){
+      $error = false;
+      if($name == null){
         $parameter->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
+        $exists = $this->getIndexManager()->findObject('parameter', $parameter->getName()) != null;
+        if($exists) {
+          $this->addSessionMessage('error', $this->get('translator')->trans('A parameter with this name already exists'));
+          $error = true;
+        }
       }
-      $this->getIndexManager()->persistObject($parameter);
-      if ($id == null) {
-        $this->addSessionMessage('status', $this->get('translator')->trans('New parameter has been added successfully'));
-      } else {
-        $this->addSessionMessage('status', $this->get('translator')->trans('Parameter has been updated successfully'));
+      if(!$error) {
+        $this->getIndexManager()->persistObject($parameter);
+        if ($name == null) {
+          $this->addSessionMessage('status', $this->get('translator')->trans('New parameter has been added successfully'));
+        } else {
+          $this->addSessionMessage('status', $this->get('translator')->trans('Parameter has been updated successfully'));
+        }
+        return $this->redirect($this->generateUrl('parameters'));
       }
-      return $this->redirect($this->generateUrl('parameters'));
     }
 
     return $this->render('parameters.html.twig', array(
-      'title' => $id == null ? $this->get('translator')->trans('New parameter') : $this->get('translator')->trans('Edit parameter'),
+      'title' => $name == null ? $this->get('translator')->trans('New parameter') : $this->get('translator')->trans('Edit parameter'),
       'main_menu_item' => 'parameters',
       'form' => $form->createView()
     ));

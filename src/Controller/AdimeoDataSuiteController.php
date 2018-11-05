@@ -57,7 +57,6 @@ class AdimeoDataSuiteController extends Controller
         'datasources' => [],
         'matchingLists' => [],
         'dictionaries' => [],
-        'parameters' => [],
       );
       /** @var User $user */
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
@@ -71,7 +70,6 @@ class AdimeoDataSuiteController extends Controller
           $restrictions['indexes'] += $group->getIndexes();
           $restrictions['datasources'] += $group->getDatasources();
           $restrictions['matchingLists'] += $group->getMatchingLists();
-          $restrictions['parameters'] += $group->getParameters();
           $restrictions['dictionaries'] += $group->getDictionaries();
         }
       }
