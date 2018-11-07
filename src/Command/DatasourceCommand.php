@@ -53,7 +53,7 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
       if(!isset($args[$k])) {
         if(isset($field['required']) && $field['required']) {
           if(isset($field['default_from_settings']) && $field['default_from_settings']) {
-            $args[$k] = $datasource->getSettings()[$k];
+            $args[$k] = $datasource->injectParameters($datasource->getSettings()[$k]);
           }
           else {
             throw new \Exception('Missing argument ' . $k);
