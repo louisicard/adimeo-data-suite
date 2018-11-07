@@ -8,11 +8,13 @@ use AdimeoDataSuite\Model\Processor;
 use AdimeoDataSuite\Model\ProcessorFilter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -242,6 +244,10 @@ class ProcessorController extends AdimeoDataSuiteController
       }
       foreach($filter->getSettingFields() as $key => $field) {
         $controlType = null;
+        $params = array(
+          'label' => $field['label'],
+          'required' => $field['required']
+        );
         switch($field['type']) {
           case 'string':
             $controlType = TextType::class;
@@ -253,18 +259,26 @@ class ProcessorController extends AdimeoDataSuiteController
             $controlType = TextareaType::class;
             break;
           case 'boolean':
+            $controlType = CheckboxType::class;
+            break;
+          case 'choice':
             $controlType = ChoiceType::class;
+            if(isset($field['multiple']))
+              $params['multiple'] = $field['multiple'];
+            if(isset($field['choices']))
+              $params['choices'] = $field['choices'];
+            if(isset($field['bound_to'])) {
+              $choices = array('Select >' => '');
+              $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
+              foreach($objects as $object) {
+                $choices[$object->getName()] = $object->getId();
+              }
+              $params['choices'] = $choices;
+            }
             break;
         }
-        $params = array(
-          'label' => $field['label'],
-          'required' => $field['required']
-        );
         if(isset($field['default']) && !isset($data['setting_' . $key])) {
           $params['data'] = $field['default'];
-        }
-        if($field['type'] == 'boolean') {
-          $params['multiple'] = true;
         }
         if(isset($field['trim'])) {
           $params['trim'] = $field['trim'];
@@ -297,6 +311,53 @@ class ProcessorController extends AdimeoDataSuiteController
         'form' => $form->createView()
       ));
     }
+  }
+
+  public function exportProcessorAction(Request $request)
+  {
+    if ($request->get('id')) {
+      /** @var Processor $proc */
+      $proc = $this->getIndexManager()->findObject('processor', $request->get('id'));
+      if ($proc != null) {
+        return new Response($proc->export($this->getIndexManager()), 200, array('Content-type' => 'application/json;charset=utf-8', 'Content-disposition' => 'attachment;filename=processor_' . $proc->getTarget() . '.json'));
+      } else {
+        $this->addSessionMessage('error', $this->get('translator')->trans('No processor found for this id'));
+        return $this->redirect($this->generateUrl('processors'));
+      }
+    } else {
+      $this->addSessionMessage('error', $this->get('translator')->trans('No ID provided'));
+      return $this->redirect($this->generateUrl('processors'));
+    }
+  }
+
+  public function importProcessorAction(Request $request)
+  {
+    $form = $this->createFormBuilder()
+      ->add('file', FileType::class, array(
+        'label' => $this->get('translator')->trans('File'),
+        'required' => true,
+      ))
+      ->add('override', CheckboxType::class, array(
+        'label' => $this->get('translator')->trans('Override existing Index/Mapping'),
+        'required' => false
+      ))
+      ->add('import', SubmitType::class, array('label' => $this->get('translator')->trans('Import')))
+      ->getForm();
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $file = $form->getData()['file'];
+      /* @var UploadedFile $file */
+      $json = file_get_contents($file->getRealPath());
+      $override = $form->getData()['override'];
+      Processor::import($json, $this->getIndexManager(), $override);
+      $this->addSessionMessage('status', $this->get('translator')->trans('Processor has been imported'));
+      return $this->redirect($this->generateUrl('processor-import'));
+    }
+    return $this->render('processor.html.twig', array(
+      'title' => $this->get('translator')->trans('Import'),
+      'main_menu_item' => 'processors',
+      'import_form' => $form->createView(),
+    ));
   }
 
 }

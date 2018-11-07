@@ -220,10 +220,10 @@ get-settings-form:
   controller: App\Controller\ProcessorController::getSettingsFormAction
 processor-export:
   path: /processors/export
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::exportProcessorAction
 processor-import:
   path: /processors/import
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\ProcessorController::importProcessorAction
 reco-js:
   path: /reco/reco.js
   controller: App\Controller\DashboardController::indexAction

@@ -892,7 +892,7 @@
           dialog.find('input.filter-argument').each(function () {
             setFilterSelect($(this), json, filter);
           });
-          if (filterClass == 'CtSearchBundle\\Processor\\DebugFilter') {
+          if (filterClass == 'AdimeoDataSuite\\ProcessorFilter\\DebugFilter') {
             dialog.find('#form_setting_fields_to_dump').css('display', 'none');
             for (var i = 0; i < json.datasource.fields.length; i++) {
               dialog.find('#form_setting_fields_to_dump').parent().append('<div class="debug-dump-item"><input type="checkbox" id="dump-datasource_' + json.datasource.fields[i] + '" value="datasource.' + json.datasource.fields[i] + '" /><label for="dump-datasource_' + json.datasource.fields[i] + '">Datasource field ' + json.datasource.fields[i] + '</label></div>');

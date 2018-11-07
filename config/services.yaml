@@ -58,3 +58,28 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.smartmapper:
+    class: AdimeoDataSuite\ProcessorFilter\SmartMapper
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.matchinglistfilter:
+    class: AdimeoDataSuite\ProcessorFilter\MatchingListFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.arrayimplodefilter:
+    class: AdimeoDataSuite\ProcessorFilter\ArrayImplodeFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.associativearrayselectorfilter:
+    class: AdimeoDataSuite\ProcessorFilter\AssociativeArraySelectorFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.debugfilter:
+    class: AdimeoDataSuite\ProcessorFilter\DebugFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
