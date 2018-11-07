@@ -41,6 +41,9 @@ services:
     class: AdimeoDataSuite\Index\SynonymsDictionariesManager
     arguments: ["%env(SYNONYMS_DICTIONARIES_PATH)%"]
     public: true
+  adimeo_data_suite_pdo_pool:
+    class: AdimeoDataSuite\PDO\PDOPool
+    public: true
 
   adimeodatasource.datasource.textfileparser:
       class: AdimeoDataSuite\Datasource\TextFileParser
@@ -80,6 +83,71 @@ services:
       - { name: adimeodatasuite.filter }
   adimeodatasource.filters.debugfilter:
     class: AdimeoDataSuite\ProcessorFilter\DebugFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.defineconstantfilter:
+    class: AdimeoDataSuite\ProcessorFilter\DefineConstantFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.existingdocumentfilter:
+    class: AdimeoDataSuite\ProcessorFilter\ExistingDocumentFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.googlegeocodingfilter:
+    class: AdimeoDataSuite\ProcessorFilter\GoogleGeocodingFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.htmltextextractorfilter:
+    class: AdimeoDataSuite\ProcessorFilter\HTMLTextExtractorFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.linkeddataauthorfilter:
+    class: AdimeoDataSuite\ProcessorFilter\LinkedDataAuthorFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.pdoqueryfilter:
+    class: AdimeoDataSuite\ProcessorFilter\PDOQueryFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.simplexmlparserfilter:
+    class: AdimeoDataSuite\ProcessorFilter\SimpleXMLParserFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xmlparserfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XMLParserFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xmlparsertoarrayfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XMLParserToArrayFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xpathfinderfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XPathFinderFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xpathgetterfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XPathGetterFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xpathselectorattributesfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XPathSelectorAttributesFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.xpathselectorfilter:
+    class: AdimeoDataSuite\ProcessorFilter\XPathSelectorFilter
     public: true
     tags:
       - { name: adimeodatasuite.filter }

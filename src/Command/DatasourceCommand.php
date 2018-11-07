@@ -32,7 +32,7 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
       throw new \Exception('No datasource found for ID "' . $datasourceId . '"');
     }
 
-    $datasource->initForExecution($this->getIndexManager(), new CommandOutputManager($output));
+    $datasource->initForExecution($this->getIndexManager(), new CommandOutputManager($output), $this->getContainer()->get('adimeo_data_suite_pdo_pool'));
 
     $args = [];
     for($i = 1; $i <= 5; $i++) {

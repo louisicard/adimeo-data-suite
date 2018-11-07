@@ -70,6 +70,10 @@ class DatasourceController extends AdimeoDataSuiteController
     ));
     foreach($datasource->getSettingFields() as $key => $field) {
       $controlType = null;
+      $params = array(
+        'label' => $field['label'],
+        'required' => $field['required']
+      );
       switch($field['type']) {
         case 'string':
           $controlType = TextType::class;
@@ -81,18 +85,34 @@ class DatasourceController extends AdimeoDataSuiteController
           $controlType = TextareaType::class;
           break;
         case 'boolean':
+          $controlType = CheckboxType::class;
+          break;
+        case 'choice':
           $controlType = ChoiceType::class;
+          if(isset($field['multiple']))
+            $params['multiple'] = $field['multiple'];
+          if(isset($field['choices']))
+            $params['choices'] = $field['choices'];
+          if(isset($field['bound_to'])) {
+            $choices = array('Select >' => '');
+            if($field['bound_to'] == 'index') {
+              $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
+              foreach($indexes as $indexName => $info) {
+                $choices[$indexName] = $indexName;
+              }
+            }
+            else {
+              $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
+              foreach ($objects as $object) {
+                $choices[$object->getName()] = $object->getId();
+              }
+            }
+            $params['choices'] = $choices;
+          }
           break;
       }
-      $params = array(
-        'label' => $field['label'],
-        'required' => $field['required']
-      );
-      if(isset($field['default']) && !isset($datasource->getSettings()[$key])) {
-        $params['data'] = $field['default'];
-      }
-      if($field['type'] == 'boolean') {
-        $params['multiple'] = true;
+      if(isset($field['trim'])) {
+        $params['trim'] = $field['trim'];
       }
       $form->add($key, $controlType, $params);
     }

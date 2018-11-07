@@ -162,8 +162,7 @@ class ProcessorController extends AdimeoDataSuiteController
       } else {
         $this->addSessionMessage('status', $this->get('translator')->trans('Processor has been updated successfully'));
       }
-      if ($id == null)
-        return $this->redirect($this->generateUrl('processors'));
+      return $this->redirect($this->generateUrl('processor-edit', array('id' => $proc->getId())));
     }
     $target_r = explode('.', $processor->getTarget());
     $indexName = $target_r[0];
@@ -269,9 +268,17 @@ class ProcessorController extends AdimeoDataSuiteController
               $params['choices'] = $field['choices'];
             if(isset($field['bound_to'])) {
               $choices = array('Select >' => '');
-              $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
-              foreach($objects as $object) {
-                $choices[$object->getName()] = $object->getId();
+              if($field['bound_to'] == 'index') {
+                $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
+                foreach($indexes as $indexName => $info) {
+                  $choices[$indexName] = $indexName;
+                }
+              }
+              else {
+                $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
+                foreach ($objects as $object) {
+                  $choices[$object->getName()] = $object->getId();
+                }
               }
               $params['choices'] = $choices;
             }

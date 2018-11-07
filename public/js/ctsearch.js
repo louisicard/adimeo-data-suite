@@ -853,6 +853,9 @@
       autoOpen: false,
       title: 'Filter settings',
       width: 600,
+      open: function(){
+        $(this).dialog('option', 'maxHeight', $(window).height() - 150);
+      },
       create: function () {
         var dialog = $(this);
         var data = {
