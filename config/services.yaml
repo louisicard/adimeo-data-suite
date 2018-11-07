@@ -60,6 +60,16 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.jsonparser:
+      class: AdimeoDataSuite\Datasource\JSONParser
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.oaiharvester:
+      class: AdimeoDataSuite\Datasource\OAIHarvester
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter
