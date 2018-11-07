@@ -50,6 +50,16 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.directoryscanner:
+      class: AdimeoDataSuite\Datasource\DirectoryScanner
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.drupalctexport:
+      class: AdimeoDataSuite\Datasource\DrupalCtExport
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter

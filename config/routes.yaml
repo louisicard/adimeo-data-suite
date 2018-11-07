@@ -100,13 +100,13 @@ datasource-delete:
   controller: App\Controller\DatasourceController::deleteDatasourceAction
 datasource-kill:
   path: /datasources/kill
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::killDatasourceAction
 datasource-exec:
   path: /datasources/exec
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::executeDatasourceAction
 datasource-get-output:
   path: /datasources/output
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DatasourceController::getDatasourceOutputAction
 drupal-ctexport:
   path: /drupal/ctexport
   controller: App\Controller\DashboardController::indexAction
@@ -146,9 +146,6 @@ index-edit-mapping:
 index-add-mapping:
   path: /indexes/add-mapping
   controller: App\Controller\IndexController::addMappingAction
-test-service:
-  path: /test-service
-  controller: App\Controller\DashboardController::indexAction
 index-mapping-stat:
   path: /indexes/mapping-stat/{index_name}/{mapping_name}
   controller: App\Controller\IndexController::mappingStatAction

@@ -199,29 +199,6 @@ class IndexController extends AdimeoDataSuiteController {
     return $this->render('indexes.html.twig', $vars);
   }
 
-  /**
-   * @Route("/test-service", name="test-service")
-   */
-  public function testServiceAction(Request $request) {
-    $data = array(
-      'op' => 'test',
-      'domain' => 'core-techs.fr'
-    );
-    $r = $this->getRestData('http://localhost:8080/CtSearchWebCrawler/service', $data);
-    return new \Symfony\Component\HttpFoundation\Response(json_encode($r), 200, array('Content-type' => 'text/html'));
-  }
-
-  private function getRestData($url, $data) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, 'data=' . urlencode(json_encode($data)));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $r = curl_exec($ch);
-    curl_close($ch);
-    return json_decode($r, true);
-  }
-
   public function mappingStatAction(Request $request, $index_name, $mapping_name) {
     $mapping = $this->getIndexManager()->getMapping($index_name, $mapping_name);
     $data = array(

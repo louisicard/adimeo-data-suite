@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use AdimeoDataSuite\Model\Datasource;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -44,7 +45,7 @@ class DatasourceController extends AdimeoDataSuiteController
       'main_menu_item' => 'datasources',
       'datasources' => $this->getIndexManager()->listObjects('datasource', $this->buildSecurityContext()),
       'form_add_datasource' => $form->createView(),
-      'procs' => []
+      'procs' => $this->getRunningDatasources()
     ));
   }
 
@@ -142,6 +143,178 @@ class DatasourceController extends AdimeoDataSuiteController
       'main_menu_item' => 'datasources',
       'form' => $form->createView()
     ));
+  }
+
+  public function executeDatasourceAction(Request $request) {
+    if ($request->get('id') != null) {
+      /** @var Datasource $instance */
+      $instance = $this->getIndexManager()->findObject('datasource', $request->get('id'));
+      $procs = $this->getRunningDatasources();
+      if(isset($procs[$instance->getId()])){
+        return $this->render('datasource.html.twig', array(
+          'title' => $this->get('translator')->trans('Monitor "@ds_name"', array('@ds_name' => $instance->getName())),
+          'main_menu_item' => 'datasources',
+          'proc' => $procs[$instance->getId()],
+          'datasource' => $instance
+        ));
+      }
+      else {
+        $form = $this->createFormBuilder();
+        foreach($instance->getExecutionArgumentFields() as $key => $field) {
+          $controlType = null;
+          $params = array(
+            'label' => $field['label'],
+            'required' => $field['required']
+          );
+          switch($field['type']) {
+            case 'string':
+              $controlType = TextType::class;
+              break;
+            case 'integer':
+              $controlType = IntegerType::class;
+              break;
+            case 'textarea':
+              $controlType = TextareaType::class;
+              break;
+            case 'boolean':
+              $controlType = CheckboxType::class;
+              break;
+            case 'choice':
+              $controlType = ChoiceType::class;
+              if(isset($field['multiple']))
+                $params['multiple'] = $field['multiple'];
+              if(isset($field['choices']))
+                $params['choices'] = $field['choices'];
+              if(isset($field['bound_to'])) {
+                $choices = array('Select >' => '');
+                if($field['bound_to'] == 'index') {
+                  $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
+                  foreach($indexes as $indexName => $info) {
+                    $choices[$indexName] = $indexName;
+                  }
+                }
+                else {
+                  $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
+                  foreach ($objects as $object) {
+                    $choices[$object->getName()] = $object->getId();
+                  }
+                }
+                $params['choices'] = $choices;
+              }
+              break;
+          }
+          if(isset($field['trim'])) {
+            $params['trim'] = $field['trim'];
+          }
+          if(isset($field['default_from_settings']) && $field['default_from_settings']) {
+            $params['data'] = $instance->getSettings()[$key];
+          }
+          $form->add($key, $controlType, $params);
+        }
+        $form->add('submit', SubmitType::class, array(
+          'label' => $this->get('translator')->trans('Execute')
+        ));
+        $form = $form->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+          $this->launchProcess($form->getData(), $instance->getId());
+          $this->addSessionMessage('status', $this->get('translator')->trans('Datasource has been launched'));
+          return $this->redirect($this->generateUrl('datasource-exec', array('id' => $instance->getId())));
+        }
+        return $this->render('datasource.html.twig', array(
+          'title' => $this->get('translator')->trans('Execute "@ds_name"', array('@ds_name' => $instance->getName())),
+          'main_menu_item' => 'datasources',
+          'form' => $form->createView()
+        ));
+      }
+    } else {
+      $this->addSessionMessage('error', $this->get('translator')->trans('No id provided'));
+      return $this->redirect($this->generateUrl('datasources'));
+    }
+  }
+
+  private function launchProcess($args, $id){
+    $paramsQsR = [];
+    foreach($args as $k => $v){
+      $paramsQsR[] = '"' . str_replace('"', '\\"', $v) . '"';
+    }
+    $paramsQs = implode(' ', $paramsQsR);
+    $output = $this->getOutputFile($id);
+    popen($this->getCommand($id) . ' ' . $paramsQs . ' > ' . $output . ' 2>&1 &', 'w');
+  }
+
+  private function getOutputFile($id){
+    $fs = new Filesystem();
+    if(!$fs->exists(__DIR__ . '/../../var')){
+      $fs->mkdir(__DIR__ . '/../../var');
+    }
+    if(!$fs->exists(__DIR__ . '/../../var/outputs')){
+      $fs->mkdir(__DIR__ . '/../../var/outputs');
+    }
+    return __DIR__ . '/../../var/outputs/' . $id;
+  }
+
+  private function getCommand($id){
+    $bin = PHP_BINARY;
+    if(!is_executable($bin)){
+      $bin = PHP_BINDIR . '/php';
+    }
+    $console = __DIR__ . '/../../bin/console';
+    $cmd = '"' . $bin . '" "' . $console . '" ads:exec ' . $id;
+    return $cmd;
+  }
+
+  private function getOutputContent($id, $offset = 0){
+    if(file_exists($this->getOutputFile($id)))
+      $content = file_get_contents($this->getOutputFile($id), null, null, $offset);
+    else
+      $content = '';
+    return $content;
+  }
+
+  private function getRunningDatasources(){
+    $r = array();
+    $procs = '';
+    exec('ps aux | grep -i "ads:exec" | grep -v "grep"', $procs);
+    exec('ps aux | grep -i "ads:oai" | grep -v "grep"', $procs);
+    foreach($procs as $proc){
+      $raw = preg_split('/[ ]+/', $proc);
+      $info = array(
+        'pid' => $raw[1],
+        'owner' => $raw[0],
+        'cpu' => $raw[2],
+        'mem' => $raw[3],
+        'time' => $raw[9],
+      );
+      if(isset($raw[13])){
+        $info['id'] = $raw[13];
+        $r[$raw[13]] = $info;
+      }
+    }
+    return $r;
+  }
+
+  public function kill($id){
+    $procs = $this->getRunningDatasources();
+    if(isset($procs[$id])){
+      $pid = $procs[$id]['pid'];
+      exec('kill -9 ' . $pid);
+    }
+  }
+
+  public function getDatasourceOutputAction(Request $request) {
+    $output = $this->getOutputContent($request->get('id'), $request->get('from'));
+    return new Response($output, 200, array('Content-Type' => 'text/plain; charset=utf-8'));
+  }
+
+  public function killDatasourceAction(Request $request) {
+    if ($request->get('id') != null) {
+      $this->kill($request->get('id'));
+      $this->addSessionMessage('status', $this->get('translator')->trans('Datasource has been killed'));
+    } else {
+      $this->addSessionMessage('error', $this->get('translator')->trans('No id provided'));
+    }
+    return $this->redirect($this->generateUrl('datasources'));
   }
 
   public function deleteDatasourceAction(Request $request) {

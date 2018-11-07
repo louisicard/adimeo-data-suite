@@ -20,6 +20,11 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
       ->addArgument('arg3', InputArgument::OPTIONAL, 'Datasource execution arg3')
       ->addArgument('arg4', InputArgument::OPTIONAL, 'Datasource execution arg4')
       ->addArgument('arg5', InputArgument::OPTIONAL, 'Datasource execution arg5')
+      ->addArgument('arg6', InputArgument::OPTIONAL, 'Datasource execution arg6')
+      ->addArgument('arg7', InputArgument::OPTIONAL, 'Datasource execution arg7')
+      ->addArgument('arg8', InputArgument::OPTIONAL, 'Datasource execution arg8')
+      ->addArgument('arg9', InputArgument::OPTIONAL, 'Datasource execution arg9')
+      ->addArgument('arg10', InputArgument::OPTIONAL, 'Datasource execution arg10')
     ;
   }
 
@@ -34,10 +39,26 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
 
     $datasource->initForExecution($this->getIndexManager(), new CommandOutputManager($output), $this->getContainer()->get('adimeo_data_suite_pdo_pool'));
 
+    $argFields = array_keys($datasource->getExecutionArgumentFields());
     $args = [];
-    for($i = 1; $i <= 5; $i++) {
+    for($i = 1; $i <= 10; $i++) {
       if($input->getArgument('arg' . $i) != null) {
-        $args[$i - 1] = $datasource->injectParameters($input->getArgument('arg' . $i));
+        if(isset($argFields[$i - 1])) {
+          $args[$argFields[$i - 1]] = $datasource->injectParameters($input->getArgument('arg' . $i));
+        }
+      }
+    }
+
+    foreach($datasource->getExecutionArgumentFields() as $k => $field) {
+      if(!isset($args[$k])) {
+        if(isset($field['required']) && $field['required']) {
+          if(isset($field['default_from_settings']) && $field['default_from_settings']) {
+            $args[$k] = $datasource->getSettings()[$k];
+          }
+          else {
+            throw new \Exception('Missing argument ' . $k);
+          }
+        }
       }
     }
 
