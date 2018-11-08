@@ -6,8 +6,16 @@ namespace App\Controller;
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\Group;
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
 use AdimeoDataSuite\Index\IndexManager;
+use AdimeoDataSuite\Model\Datasource;
+use AdimeoDataSuite\Model\PersistentObject;
 use AdimeoDataSuite\Model\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilder;
 
 class AdimeoDataSuiteController extends Controller
 {
@@ -71,6 +79,76 @@ class AdimeoDataSuiteController extends Controller
       $this->securityContext = $context;
     }
     return $this->securityContext;
+  }
+
+  protected function addControls(FormBuilder $formBuilder, $fields, PersistentObject $object = null, $fieldPrefix = '') {
+    foreach($fields as $key => $field) {
+      $controlType = null;
+      $params = array(
+        'label' => $field['label'],
+        'required' => $field['required']
+      );
+      switch($field['type']) {
+        case 'string':
+          $controlType = TextType::class;
+          break;
+        case 'integer':
+          $controlType = IntegerType::class;
+          break;
+        case 'textarea':
+          $controlType = TextareaType::class;
+          break;
+        case 'boolean':
+          $controlType = CheckboxType::class;
+          break;
+        case 'choice':
+          $controlType = ChoiceType::class;
+          if(isset($field['multiple']))
+            $params['multiple'] = $field['multiple'];
+          if(isset($field['choices']))
+            $params['choices'] = $field['choices'];
+          if(isset($field['bound_to'])) {
+            $choices = array('Select >' => '');
+            if($field['bound_to'] == 'index') {
+              $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
+              foreach($indexes as $indexName => $info) {
+                $choices[$indexName] = $indexName;
+              }
+            }
+            elseif($field['bound_to'] == 'mapping') {
+              $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
+              $targetChoices = array();
+              foreach ($indexes as $indexName => $info) {
+                $subChoices = array();
+                if (isset($info['mappings'])) {
+                  foreach ($info['mappings'] as $mapping) {
+                    $subChoices[$indexName . '.' . $mapping['name']] = $indexName . '.' . $mapping['name'];
+                  }
+                }
+                $targetChoices[$indexName] = $subChoices;
+              }
+              ksort($targetChoices);
+              $choices += $targetChoices;
+            }
+            else {
+              $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
+              foreach ($objects as $object) {
+                $choices[$object->getName()] = $object->getId();
+              }
+            }
+            $params['choices'] = $choices;
+          }
+          break;
+      }
+      if(isset($field['trim'])) {
+        $params['trim'] = $field['trim'];
+      }
+      if(isset($field['default_from_settings']) && $field['default_from_settings']) {
+        if($object != null && $object instanceof Datasource)
+        $params['data'] = $object->getSettings()[$key];
+      }
+      $formBuilder->add($fieldPrefix . $key, $controlType, $params);
+    }
   }
 
 }

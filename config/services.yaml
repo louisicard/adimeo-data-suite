@@ -70,6 +70,16 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.pdodatabase:
+      class: AdimeoDataSuite\Datasource\PDODatabase
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.queryexecutor:
+      class: AdimeoDataSuite\Datasource\QueryExecutor
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter

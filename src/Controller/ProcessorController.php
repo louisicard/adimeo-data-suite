@@ -241,57 +241,7 @@ class ProcessorController extends AdimeoDataSuiteController
           )
         ));
       }
-      foreach($filter->getSettingFields() as $key => $field) {
-        $controlType = null;
-        $params = array(
-          'label' => $field['label'],
-          'required' => $field['required']
-        );
-        switch($field['type']) {
-          case 'string':
-            $controlType = TextType::class;
-            break;
-          case 'integer':
-            $controlType = IntegerType::class;
-            break;
-          case 'textarea':
-            $controlType = TextareaType::class;
-            break;
-          case 'boolean':
-            $controlType = CheckboxType::class;
-            break;
-          case 'choice':
-            $controlType = ChoiceType::class;
-            if(isset($field['multiple']))
-              $params['multiple'] = $field['multiple'];
-            if(isset($field['choices']))
-              $params['choices'] = $field['choices'];
-            if(isset($field['bound_to'])) {
-              $choices = array('Select >' => '');
-              if($field['bound_to'] == 'index') {
-                $indexes = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
-                foreach($indexes as $indexName => $info) {
-                  $choices[$indexName] = $indexName;
-                }
-              }
-              else {
-                $objects = $this->getIndexManager()->listObjects($field['bound_to'], $this->buildSecurityContext());
-                foreach ($objects as $object) {
-                  $choices[$object->getName()] = $object->getId();
-                }
-              }
-              $params['choices'] = $choices;
-            }
-            break;
-        }
-        if(isset($field['default']) && !isset($data['setting_' . $key])) {
-          $params['data'] = $field['default'];
-        }
-        if(isset($field['trim'])) {
-          $params['trim'] = $field['trim'];
-        }
-        $form->add('setting_' . $key, $controlType, $params);
-      }
+      $this->addControls($form, $filter->getSettingFields(), null, 'setting_');
       $form->add('submit', SubmitType::class, array(
         'label' => $this->get('translator')->trans('OK')
       ));
