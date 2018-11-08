@@ -286,7 +286,7 @@ user-delete:
   controller: App\Controller\AdminController::deleteUserAction
 webcrawler-response:
   path: /webcrawler-response
-  controller: /api/update
+  controller: App\Controller\DatasourceController::webCrawlerResponseAction
 webcrawler-test:
   path: /webcrawler/test/{id}
   controller: /api/update

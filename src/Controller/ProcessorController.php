@@ -248,7 +248,7 @@ class ProcessorController extends AdimeoDataSuiteController
       $form = $form->getForm();
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
+        $data = $this->handleFileUpload($form, $filter->getSettingFields());
         $filter->setData($data);
         $response = array(
           'class' => $class,

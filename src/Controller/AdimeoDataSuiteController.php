@@ -10,12 +10,16 @@ use AdimeoDataSuite\Model\Datasource;
 use AdimeoDataSuite\Model\PersistentObject;
 use AdimeoDataSuite\Model\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdimeoDataSuiteController extends Controller
 {
@@ -101,6 +105,9 @@ class AdimeoDataSuiteController extends Controller
         case 'boolean':
           $controlType = CheckboxType::class;
           break;
+        case 'file':
+          $controlType = FileType::class;
+          break;
         case 'choice':
           $controlType = ChoiceType::class;
           if(isset($field['multiple']))
@@ -149,6 +156,27 @@ class AdimeoDataSuiteController extends Controller
       }
       $formBuilder->add($fieldPrefix . $key, $controlType, $params);
     }
+  }
+
+  protected function handleFileUpload(FormInterface $form, $fields) {
+    $data = $form->getData();
+    foreach($fields as $k => $field) {
+      if($field['type'] == 'file') {
+        $value = $data[$k];
+        if($value instanceof UploadedFile) {
+          $fs = new Filesystem();
+          if(!$fs->exists(__DIR__ . '/../../var')){
+            $fs->mkdir(__DIR__ . '/../../var');
+          }
+          if(!$fs->exists(__DIR__ . '/../../var/outputs')){
+            $fs->mkdir(__DIR__ . '/../../var/outputs');
+          }
+          $path = $value->move(__DIR__ . '/../../var/uploads');
+          $data[$k] = $path;
+        }
+      }
+    }
+    return $data;
   }
 
 }

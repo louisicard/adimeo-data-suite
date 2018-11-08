@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 
+use AdimeoDataSuite\Datasource\WebCrawler;
 use AdimeoDataSuite\Model\Datasource;
+use AdimeoDataSuite\Model\DummyOutputManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -80,7 +82,7 @@ class DatasourceController extends AdimeoDataSuiteController
     $form = $form->getForm();
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-      $settings = $form->getData();
+      $settings = $this->handleFileUpload($form, $datasource->getSettingFields());;
       $datasource->setHasBatchExecution($settings['hasBatchExecution']);
       unset($settings['hasBatchExecution']);
       $datasource->setSettings($settings);
@@ -120,7 +122,8 @@ class DatasourceController extends AdimeoDataSuiteController
         $form = $form->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-          $this->launchProcess($form->getData(), $instance->getId());
+          $data = $this->handleFileUpload($form, $instance->getExecutionArgumentFields());
+          $this->launchProcess($data, $instance->getId());
           $this->addSessionMessage('status', $this->get('translator')->trans('Datasource has been launched'));
           return $this->redirect($this->generateUrl('datasource-exec', array('id' => $instance->getId())));
         }
@@ -242,6 +245,22 @@ class DatasourceController extends AdimeoDataSuiteController
       );
     }
     return new Response(json_encode($r, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json; charset=utf-8'));
+  }
+
+  public function webCrawlerResponseAction(Request $request) {
+    if($request->get('datasourceId') != null){
+      $datasource = $this->getIndexManager()->findObject('datasource', $request->get('datasourceId'));
+      if($datasource instanceof WebCrawler) {
+        $datasource->initForExecution($this->getIndexManager(), new DummyOutputManager(), $this->container->get('adimeo_data_suite_pdo_pool'));
+        $datasource->handleDataFromCallback(array(
+          'title' => $request->get('title') != null ? $request->get('title') : '',
+          'html' => $request->get('html') != null ? $request->get('html') : '',
+          'url' => $request->get('url') != null ? $request->get('url') : '',
+        ));
+        return new Response(json_encode(array('Status' => 'OK')), 200, array('Content-type' => 'text/html; charset=utf-8'));
+      }
+    }
+    return new Response(json_encode(array('Error' => 'Provided datasource is incorrect')), 400, array('Content-type' => 'application/json'));
   }
 
 }

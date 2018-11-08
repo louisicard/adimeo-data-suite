@@ -80,6 +80,16 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.webcrawler:
+      class: AdimeoDataSuite\Datasource\WebCrawler
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.xmlparser:
+      class: AdimeoDataSuite\Datasource\XMLParser
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter
