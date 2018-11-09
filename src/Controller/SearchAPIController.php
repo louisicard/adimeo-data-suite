@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use AdimeoDataSuite\Model\BoostQuery;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-define('SEARCH_API_DEBUG', false);
 
 class SearchAPIController extends AdimeoDataSuiteController
 {
@@ -123,8 +123,6 @@ class SearchAPIController extends AdimeoDataSuiteController
               }
             }
           }
-          if(SEARCH_API_DEBUG)
-            var_dump($filters);
           if (count($filters) > 0) {
             $refactor_for_boolean_query = TRUE;
             $query['query'] = array(
@@ -209,8 +207,6 @@ class SearchAPIController extends AdimeoDataSuiteController
                 $filterQueries[$filter['field']][] = $subquery;
               }
             }
-            if(SEARCH_API_DEBUG)
-              var_dump($filterQueries);
             $query['query']['bool']['filter'] = $this->computeFilter($filterQueries, NULL, $stickyFacets);
           }
         }
@@ -333,7 +329,7 @@ class SearchAPIController extends AdimeoDataSuiteController
 
           if(isset($query['query']['bool']['filter'])) {
             foreach ($query['aggs'] as $agg_name => $agg) {
-              if(in_array($agg_name, $stickyFacets)) {
+              if(in_array($agg_name, $stickyFacets) && isset($filterQueries)) {
                 $query['aggs']['sticky_' . $agg_name] = array(
                   'global' => new \stdClass(),
                   'aggs' => array(
@@ -388,17 +384,14 @@ class SearchAPIController extends AdimeoDataSuiteController
           }
         }
 
-        //TODO: handle boosting queries
-        //if($request->get('no_boosting') == null || $request->get('no_boosting') == 0){
-        //  $boostQueries = IndexManager::getInstance()->getBoostQueries($request->get('mapping'));
-        //  foreach($boostQueries as $boostQuery){
-        //    $query['query']['bool']['should'][] = json_decode($boostQuery->getDefinition(), true);
-        //  }
-        //}
-
-        if(SEARCH_API_DEBUG) {
-          var_dump($query);
-          var_dump(json_encode($query));
+        if($request->get('apply_boosting') == 1){
+          /** @var BoostQuery[] $boostQueries */
+          $boostQueries = $this->getIndexManager()->listObjects('boost_query', NULL, 0, 10000, 'asc', array(
+            'tags' => 'index_name=' . $indexName
+          ));
+          foreach($boostQueries as $boostQuery){
+            $query['query']['bool']['should'][] = json_decode($boostQuery->getDefinition(), true);
+          }
         }
         try {
           $res = $this->getIndexManager()->search($indexName, $query, $request->get('from') != null ? $request->get('from') : 0, $request->get('size') != null ? $request->get('size') : 10, $mappingName);
@@ -429,29 +422,31 @@ class SearchAPIController extends AdimeoDataSuiteController
             });
             $res['suggest_ctsearch'] = $suggestions;
           }
-          //TODO: handle autopromote
-//          if($query_string != '*' && !empty($query_string) && IndexManager::getInstance()->mappingExists($indexName, 'ctsearch_autopromote')){
-//            $autopromoteAnalyzer = IndexManager::getInstance()->getAutopromoteAnalyzer($indexName);
-//            $promote_query_r = array(
-//              'query' => array(
-//                'query_string' => array(
-//                  'query' => $query_string,
-//                  'default_field' => 'ctsap__keywords'
-//                )
-//              )
-//            );
-//            if($autopromoteAnalyzer != NULL) {
-//              $promote_query_r['query']['query_string']['analyzer'] = $autopromoteAnalyzer;
-//            }
-//            $promote_query = json_encode($promote_query_r);
-//            $promote = IndexManager::getInstance()->search($indexName, $promote_query, 0, 5, 'ctsearch_autopromote');
-//            if(isset($promote['hits']['hits']) && count($promote['hits']['hits']) > 0){
-//              $res['autopromote'] = $promote;
-//            }
-//          }
+
+          if($query_string != '*' && !empty($query_string) && $request->get('autopromote') == 1){
+            try {
+              $promote_query = array(
+                'query' => array(
+                  'query_string' => array(
+                    'query' => $query_string,
+                    'default_field' => 'keywords'
+                  )
+                )
+              );
+              $promote_query['query']['query_string']['analyzer'] = $request->get('analyzer') != null ? $request->get('analyzer') : 'standard';
+              $promote = $this->getIndexManager()->search($this->getIndexManager()->getAutopromoteIndexName($indexName), $promote_query, 0, 5);
+              if (isset($promote['hits']['hits']) && count($promote['hits']['hits']) > 0) {
+                $res['autopromote'] = $promote;
+              }
+            }
+            catch(Missing404Exception $ex) {
+              //No autopromote index
+            }
+          }
         } catch (\Exception $ex) {
           return new Response(json_encode(array('error' => $ex->getMessage())), 500, array('Content-type' => 'application/json;charset=utf-8'));
         }
+
         if (isset($res['hits'])) {
           if (isset($res['aggregations'])) {
             foreach ($res['aggregations'] as $agg_name => $agg) {
@@ -521,8 +516,6 @@ class SearchAPIController extends AdimeoDataSuiteController
             $compoundQuery['bool'][in_array($field, $stickyFacets) ? 'should' : 'must'][] = $compoundPart;
           }
         }
-        if(SEARCH_API_DEBUG)
-          var_dump($compoundQuery);
         $query_filter['bool']['must'][] = $compoundQuery;
       }
     }
