@@ -34,7 +34,7 @@ class AdimeoDataSuiteController extends Controller
   /**
    * @return StatIndexManager
    */
-  private function getStatIndexManager() {
+  protected function getStatIndexManager() {
     return $this->container->get('adimeo_data_suite_stat_es_server');
   }
 
