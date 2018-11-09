@@ -31,6 +31,13 @@ class AdimeoDataSuiteController extends Controller
     return $this->container->get('adimeo_data_suite_es_server');
   }
 
+  /**
+   * @return StatIndexManager
+   */
+  private function getStatIndexManager() {
+    return $this->container->get('adimeo_data_suite_stat_es_server');
+  }
+
   protected function addSessionMessage($type, $message) {
     if ($this->get('session')->get('messages') != null) {
       $messages = $this->get('session')->get('messages');

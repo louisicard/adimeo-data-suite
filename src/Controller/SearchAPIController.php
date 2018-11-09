@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use AdimeoDataSuite\Index\IndexManager;
+use AdimeoDataSuite\Index\StatIndexManager;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
@@ -397,10 +399,36 @@ class SearchAPIController extends AdimeoDataSuiteController
         }
         try {
           $res = $this->getIndexManager()->search($indexName, $query, $request->get('from') != null ? $request->get('from') : 0, $request->get('size') != null ? $request->get('size') : 10, $mappingName);
-          //TODO: handle stats
-          //if($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1) {
-          //  IndexManager::getInstance()->saveStat($request->get('mapping'), $applied_facets, $request->get('query') != null ? $request->get('query') : '', $request->get('analyzer'), $request->getQueryString(), isset($res['hits']['total']) ? $res['hits']['total'] : 0, isset($res['took']) ? $res['took'] : 0, $request->get('clientIp') != null ? $request->get('clientIp') : $request->getClientIp(), $request->get('tag') != null ? $request->get('tag') : '');
-          //}
+
+          //Stat part
+          if($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1) {
+            $text = $request->get('query') != null ? $request->get('query') : '';
+            $analyzer = $request->get('analyzer');
+            $tokens = $analyzer != null && !empty($analyzer) && strlen($text) > 2 ? $this->analyze($indexName, $analyzer, $text) : array();
+            if (isset($tokens['tokens'])) {
+              $query_analyzed = array();
+              foreach ($tokens['tokens'] as $token) {
+                if (isset($token['token'])) {
+                  $query_analyzed[] = $token['token'];
+                }
+              }
+              $query_analyzed = implode(' ', $query_analyzed);
+            } else {
+              $query_analyzed = '';
+            }
+            $this->getStatIndexManager()->saveStat(
+              $request->get('mapping'),
+              $applied_facets,
+              $text,
+              $query_analyzed,
+              $request->getQueryString(),
+              isset($res['hits']['total']) ? $res['hits']['total'] : 0,
+              isset($res['took']) ? $res['took'] : 0,
+              $request->get('clientIp') != null ? $request->get('clientIp') : $request->getClientIp(),
+              $request->get('tag') != null ? $request->get('tag') : ''
+            );
+          }
+
           if (isset($res['suggest'])) {
             $suggestions = array();
             foreach ($res['suggest'] as $field => $suggests) {
@@ -536,6 +564,15 @@ class SearchAPIController extends AdimeoDataSuiteController
       );
     }
     return $query_filter;
+  }
+
+  private function analyze($indexName, $analyzer, $text)
+  {
+    return $this->getIndexManager()->getClient()->indices()->analyze(array(
+      'index' => $indexName,
+      'analyzer' => $analyzer,
+      'text' => $text,
+    ));
   }
 
   public function seeMoreLikeThisAction(Request $request)
