@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,8 +35,12 @@ class SearchAPIController extends AdimeoDataSuiteController
           return new Response(json_encode($res, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json;charset=utf-8'));
         }
 
-
-        $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
+        $cache = new FilesystemCache();
+        $mapping = $cache->get('ads_search_' . $request->get('mapping'));
+        if($mapping == null) {
+          $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
+          $cache->set('ads_search_' . $request->get('mapping'), $mapping);
+        }
         $definition = $mapping['properties'];
         $analyzed_fields = array();
         $nested_analyzed_fields = array();
