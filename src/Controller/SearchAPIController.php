@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
+use AdimeoDataSuite\Model\PersistentObject;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
@@ -436,7 +438,16 @@ class SearchAPIController extends AdimeoDataSuiteController
               $promote_query['query']['query_string']['analyzer'] = $request->get('analyzer') != null ? $request->get('analyzer') : 'standard';
               $promote = $this->getIndexManager()->search($this->getIndexManager()->getAutopromoteIndexName($indexName), $promote_query, 0, 5);
               if (isset($promote['hits']['hits']) && count($promote['hits']['hits']) > 0) {
-                $res['autopromote'] = $promote;
+                foreach($promote['hits']['hits'] as $apHit) {
+                  /** @var Autopromote $ap */
+                  $ap = PersistentObject::unserialize($apHit['_source']['data']);
+                  $res['autopromote'][] = array(
+                    'title' => $ap->getName(),
+                    'body' => $ap->getBody(),
+                    'url' => $ap->getUrl(),
+                    'image' => $ap->getImage(),
+                  );
+                }
               }
             }
             catch(Missing404Exception $ex) {
