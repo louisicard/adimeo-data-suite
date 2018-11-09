@@ -13,6 +13,8 @@ class AdimeoDataSuiteCompilerPass implements CompilerPassInterface
     $container->setParameter("adimeodatasuite.datasources", array_keys($services));
     $filtersServices = $container->findTaggedServiceIds("adimeodatasuite.filter");
     $container->setParameter("adimeodatasuite.filters", array_keys($filtersServices));
+    $statServices = $container->findTaggedServiceIds("adimeodatasuite.stat");
+    $container->setParameter("adimeodatasuite.stats", array_keys($statServices));
   }
 
 }

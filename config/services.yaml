@@ -195,3 +195,10 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.filter }
+
+  adimeodatasuite.stat.avgresponsetimestatcompiler:
+    class: AdimeoDataSuite\Stat\AvgResponseTimeStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }

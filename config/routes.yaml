@@ -19,10 +19,10 @@ ct_search_client_mlt:
   controller: App\Controller\DashboardController::indexAction
 analytics:
   path: /analytics
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AnalyticsController::analyticsAction
 analytics-compiler:
   path: /analytics/compile
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\AnalyticsController::compileAction
 autopromotes:
   path: /autopromotes
   controller: App\Controller\AutopromoteController::listAutopromotesAction
