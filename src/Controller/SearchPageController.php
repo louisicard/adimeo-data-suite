@@ -46,9 +46,9 @@ class SearchPageController extends AdimeoDataSuiteController
 
     $r = array();
     if(count(explode('.', $mapping)) > 1){
-      $indexName = explode('.', $mapping)[0];
-      $type = explode('.', $mapping)[1];
-      $type = $this->getIndexManager()->getMapping($indexName, $type);
+      $indexName = strpos($mapping, '.') === 0 ? ('.' . explode('.', $mapping)[1]) : explode('.', $mapping)[0];
+      $mappingName = strpos($mapping, '.') === 0 ? explode('.', $mapping)[2] : explode('.', $mapping)[1];
+      $type = $this->getIndexManager()->getMapping($indexName, $mappingName);
       if($type != null){
         foreach($type['properties'] as $field_name => $field){
           $r = array_merge($r, $this->getFieldDefitions($field, $field_name));

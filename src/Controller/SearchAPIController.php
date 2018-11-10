@@ -588,8 +588,8 @@ class SearchAPIController extends AdimeoDataSuiteController
     if ($request->get('mapping') != null && $request->get('doc_id') != null && $request->get('fields') != null) {
       $mapping = $request->get('mapping');
       if (count(explode('.', $mapping)) > 1) {
-        $indexName = explode('.', $mapping)[0];
-        $type = explode('.', $mapping)[1];
+        $indexName = strpos($mapping, '.') === 0 ? ('.' . explode('.', $mapping)[1]) : explode('.', $mapping)[0];
+        $mappingName = strpos($mapping, '.') === 0 ? explode('.', $mapping)[2] : explode('.', $mapping)[1];
         $body = array(
           'query' => array(
             'more_like_this' => array(
@@ -597,7 +597,7 @@ class SearchAPIController extends AdimeoDataSuiteController
               'like' => array(
                 array(
                   '_index' => $indexName,
-                  '_type' => $type,
+                  '_type' => $mappingName,
                   '_id' => $request->get('doc_id'),
                 )
               )
@@ -694,11 +694,11 @@ class SearchAPIController extends AdimeoDataSuiteController
         )
       );
     }
-    $index = explode('.', $mapping)[0];
-    $type = explode('.', $mapping)[1];
+    $indexName = strpos($mapping, '.') === 0 ? ('.' . explode('.', $mapping)[1]) : explode('.', $mapping)[0];
+    $mappingName = strpos($mapping, '.') === 0 ? explode('.', $mapping)[2] : explode('.', $mapping)[1];
     $r = $this->getIndexManager()->getClient()->search(array(
-      'index' => $index,
-      'type' => $type,
+      'index' => $indexName,
+      'type' => $mappingName,
       'body' => $body
     ));
     $ret = array();
