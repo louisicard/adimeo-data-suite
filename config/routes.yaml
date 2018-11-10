@@ -109,7 +109,8 @@ datasource-get-output:
   controller: App\Controller\DatasourceController::getDatasourceOutputAction
 drupal-ctexport:
   path: /drupal/ctexport
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\DrupalCtExportController::indexAction
+  methods: [PUT, DELETE]
 get_edit_record_form:
   path: /get-edit-record-form
   controller: App\Controller\DashboardController::indexAction
