@@ -11,6 +11,7 @@
         "adimeo-data-suite/filters": "dev-master",
         "adimeo-data-suite/security": "dev-master",
         "adimeo-data-suite/stat": "dev-master",
+        "adimeo-data-suite/search-client": "dev-master",
         "mmucklo/krumo": "^0.5.7",
         "symfony/asset": "*",
         "symfony/cache": "*",
@@ -95,6 +96,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/louisicard/adimeo-data-suite-stat"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/louisicard/adimeo-data-suite-search-client"
         }
     ]
 }

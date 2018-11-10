@@ -11,12 +11,6 @@ logout:
   path:     /logout
   controller: App\Controller\SecurityController::logoutAction
 
-ct_search_client_homepage:
-  path: /search-client/search
-  controller: App\Controller\DashboardController::indexAction
-ct_search_client_mlt:
-  path: /search-client/mlt
-  controller: App\Controller\DashboardController::indexAction
 analytics:
   path: /analytics
   controller: App\Controller\AnalyticsController::analyticsAction
@@ -113,10 +107,10 @@ drupal-ctexport:
   methods: [PUT, DELETE]
 get_edit_record_form:
   path: /get-edit-record-form
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\EditionController::getEditRecordFormAction
 edit_record:
   path: /edit-record
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\EditionController::editRecordAction
 groups:
   path: /groups
   controller: App\Controller\AdminController::listGroupsAction
@@ -233,10 +227,10 @@ reco-get:
   controller: App\Controller\DashboardController::indexAction
 api-update:
   path: /api/update
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\RestController::updateAction
 api-sp-def:
   path: /api/sp-definition/{id}
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\RestController::getSearchPageAction
 search-api-v2:
   path: /search-api/v2
   controller: App\Controller\SearchAPIController::searchAPIV2Action
@@ -269,7 +263,7 @@ show-logs:
   controller: /api/update
 search-page-display:
   path: /search-pages/search/{id}
-  controller: /api/update
+  controller: App\Controller\SearchPageController::displaySearchPageAction
 more-like-this-display:
   path: /search-pages/more-like-this/{searchPageId}/{docId}/{type}
   controller: /api/update
@@ -291,3 +285,11 @@ webcrawler-response:
 webcrawler-test:
   path: /webcrawler/test/{id}
   controller: /api/update
+
+
+search_client_homepage:
+  path: /search-client/search
+  controller: AdimeoDataSuite\SearchClientBundle\Controller\SearchController::searchAction
+search_client_mlt:
+  path: /search-client/mlt
+  controller: AdimeoDataSuite\SearchClientBundle\Controller\SearchController::moreLikeThisAction

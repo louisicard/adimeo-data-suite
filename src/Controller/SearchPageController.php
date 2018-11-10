@@ -141,4 +141,19 @@ class SearchPageController extends AdimeoDataSuiteController
       'form' => $form->createView()
     ));
   }
+
+  public function displaySearchPageAction(Request $request, $id)
+  {
+    /** @var SearchPage $searchPage */
+    $searchPage = $this->getIndexManager()->findObject('search_page', $id);
+
+    $params = array(
+      'mapping' => $searchPage->getMapping(),
+      'sp_id' => $id,
+    );
+
+    $url = $this->generateUrl('search_client_homepage', $params);
+
+    return $this->redirect($url);
+  }
 }

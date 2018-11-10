@@ -404,21 +404,23 @@ class SearchAPIController extends AdimeoDataSuiteController
           if($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1) {
             $text = $request->get('query') != null ? $request->get('query') : '';
             $analyzer = $request->get('analyzer');
-            $analyzedTokens = $analyzer != null && !empty($analyzer) && strlen($text) > 2 ? $this->analyze($indexName, $analyzer, $text) : array();
-            $rawTokens = $this->analyze($indexName, 'standard', $text);
             $statKeywords = [];
             $rawStatKeywords = [];
-            if (isset($analyzedTokens['tokens'])) {
-              foreach ($analyzedTokens['tokens'] as $token) {
-                if (isset($token['token'])) {
-                  $statKeywords[] = $token['token'];
+            if($text != '' && $text != '*') {
+              $analyzedTokens = $analyzer != null && !empty($analyzer) && strlen($text) > 2 ? $this->analyze($indexName, $analyzer, $text) : array();
+              $rawTokens = $this->analyze($indexName, 'standard', $text);
+              if (isset($analyzedTokens['tokens'])) {
+                foreach ($analyzedTokens['tokens'] as $token) {
+                  if (isset($token['token'])) {
+                    $statKeywords[] = $token['token'];
+                  }
                 }
               }
-            }
-            if (isset($rawTokens['tokens'])) {
-              foreach ($rawTokens['tokens'] as $token) {
-                if (isset($token['token'])) {
-                  $rawStatKeywords[] = $token['token'];
+              if (isset($rawTokens['tokens'])) {
+                foreach ($rawTokens['tokens'] as $token) {
+                  if (isset($token['token'])) {
+                    $rawStatKeywords[] = $token['token'];
+                  }
                 }
               }
             }
