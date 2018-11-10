@@ -202,3 +202,27 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.keywordstatcompiler:
+    class: AdimeoDataSuite\Stat\KeywordsStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.rawkeywordstatcompiler:
+    class: AdimeoDataSuite\Stat\RawKeywordsStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.querycountstatcompiler:
+    class: AdimeoDataSuite\Stat\QueryCountStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.responsetimestatcompiler:
+    class: AdimeoDataSuite\Stat\ResponseTimeStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }

@@ -6,6 +6,7 @@ namespace App\Controller;
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\Group;
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
 use AdimeoDataSuite\Index\IndexManager;
+use AdimeoDataSuite\Index\StatIndexManager;
 use AdimeoDataSuite\Model\Datasource;
 use AdimeoDataSuite\Model\PersistentObject;
 use AdimeoDataSuite\Model\SecurityContext;

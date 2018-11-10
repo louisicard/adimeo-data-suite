@@ -404,23 +404,29 @@ class SearchAPIController extends AdimeoDataSuiteController
           if($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1) {
             $text = $request->get('query') != null ? $request->get('query') : '';
             $analyzer = $request->get('analyzer');
-            $tokens = $analyzer != null && !empty($analyzer) && strlen($text) > 2 ? $this->analyze($indexName, $analyzer, $text) : array();
-            if (isset($tokens['tokens'])) {
-              $query_analyzed = array();
-              foreach ($tokens['tokens'] as $token) {
+            $analyzedTokens = $analyzer != null && !empty($analyzer) && strlen($text) > 2 ? $this->analyze($indexName, $analyzer, $text) : array();
+            $rawTokens = $this->analyze($indexName, 'standard', $text);
+            $statKeywords = [];
+            $rawStatKeywords = [];
+            if (isset($analyzedTokens['tokens'])) {
+              foreach ($analyzedTokens['tokens'] as $token) {
                 if (isset($token['token'])) {
-                  $query_analyzed[] = $token['token'];
+                  $statKeywords[] = $token['token'];
                 }
               }
-              $query_analyzed = implode(' ', $query_analyzed);
-            } else {
-              $query_analyzed = '';
+            }
+            if (isset($rawTokens['tokens'])) {
+              foreach ($rawTokens['tokens'] as $token) {
+                if (isset($token['token'])) {
+                  $rawStatKeywords[] = $token['token'];
+                }
+              }
             }
             $this->getStatIndexManager()->saveStat(
               $request->get('mapping'),
               $applied_facets,
-              $text,
-              $query_analyzed,
+              $statKeywords,
+              $rawStatKeywords,
               $request->getQueryString(),
               isset($res['hits']['total']) ? $res['hits']['total'] : 0,
               isset($res['took']) ? $res['took'] : 0,
