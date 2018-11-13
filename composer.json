@@ -12,6 +12,8 @@
         "adimeo-data-suite/security": "dev-master",
         "adimeo-data-suite/stat": "dev-master",
         "adimeo-data-suite/search-client": "dev-master",
+        "adimeo-data-suite/sharepoint": "dev-master",
+        "adimeo-data-suite/tika": "dev-master",
         "mmucklo/krumo": "^0.5.7",
         "symfony/asset": "*",
         "symfony/cache": "*",
@@ -100,6 +102,14 @@
         {
             "type": "vcs",
             "url": "https://github.com/louisicard/adimeo-data-suite-search-client"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/louisicard/adimeo-data-suite-sharepoint"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/louisicard/adimeo-data-suite-tika"
         }
     ]
 }

@@ -140,6 +140,11 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.deletedocumentfilter:
+    class: AdimeoDataSuite\ProcessorFilter\DeleteDocumentFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
   adimeodatasource.filters.googlegeocodingfilter:
     class: AdimeoDataSuite\ProcessorFilter\GoogleGeocodingFilter
     public: true
@@ -226,3 +231,30 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.stat }
+
+
+  adimeodatasource.datasource.sharepointsearch:
+      class: AdimeoDataSuite\Datasource\SharepointSearch
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.sharepointchangelogs:
+      class: AdimeoDataSuite\Datasource\SharepointChangeLogs
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
+  adimeodatasource.filter.sharepointfiledownloader:
+      class: AdimeoDataSuite\ProcessorFilter\SharepointFileDownloader
+      public: true
+      tags:
+        - { name: adimeodatasuite.filter }
+  adimeodatasource.filter.sharepointdocumentretriever:
+      class: AdimeoDataSuite\ProcessorFilter\SharepointDocumentRetriever
+      public: true
+      tags:
+        - { name: adimeodatasuite.filter }
+  adimeodatasource.filter.tikafilter:
+      class: AdimeoDataSuite\ProcessorFilter\TikaFilter
+      public: true
+      tags:
+        - { name: adimeodatasuite.filter }

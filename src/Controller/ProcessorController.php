@@ -64,10 +64,12 @@ class ProcessorController extends AdimeoDataSuiteController
     $processors = $this->getIndexManager()->listObjects('processor', $this->buildSecurityContext());
     $listForDisplay = [];
     foreach($processors as $processor) {
+      $datasource = $this->getIndexManager()->findObject('datasource', $processor->getDatasourceId());
       $listForDisplay[] = array(
         'id' => $processor->getId(),
-        'datasource_name' => $this->getIndexManager()->findObject('datasource', $processor->getDatasourceId())->getName(),
-        'target' => $processor->getTarget()
+        'datasource_name' => $datasource != null ? $datasource->getName() : '!!! Missing datasource',
+        'target' => $processor->getTarget(),
+        'delete_only' => $datasource == null
       );
     }
     return $this->render('processor.html.twig', array(

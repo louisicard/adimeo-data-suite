@@ -29,8 +29,10 @@
             <td>{{processor.target}}</td>
             <td class="actions">
               <ul>
+                {% if not processor.delete_only %}
                 <li><a href="{{path('processor-edit', {'id': processor.id})}}">{{'Edit'|trans}}</a></li>
                 <li><a href="{{path('processor-export', {'id': processor.id})}}">{{'Export'|trans}}</a></li>
+                {% endif %}
                 {% if is_granted('ROLE_PROCESSOR_CREATOR') %}
                 <li><a href="{{path('processor-delete', {'id': processor.id})}}" class="processor-delete action-delete">{{'Delete'|trans}}</a></li>
                 {%endif%}
