@@ -25,6 +25,7 @@ class SecurityController extends AdimeoDataSuiteController
           $encoded = $this->container->get('security.password_encoder')->encodePassword($user, 'admin');
           $user->setPassword($encoded);
           $user->setCreatedBy('admin');
+          $user->setCreated(new \DateTime());
           $this->getIndexManager()->persistObject($user);
         }
 
