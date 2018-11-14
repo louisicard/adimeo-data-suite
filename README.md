@@ -30,10 +30,10 @@ composer update
 composer require server --dev
 ```
 
-Then start server (Search pages won't be working with this command. You should use server:start instead with is multithreaded but requires pcntl extension for PHP)
+Then start server (requires pcntl extension for PHP)
 
 ```sh
-php bin/console server:run --env =prod
+php bin/console server:start --env =prod
 ```
 
 4. Or configure your favorite webserver (See doc on [symfony.org](https://symfony.com/doc/current/setup/web_server_configuration.html))
