@@ -33,7 +33,7 @@ composer require server --dev
 Then start server (requires pcntl extension for PHP)
 
 ```sh
-php bin/console server:start --env =prod
+php bin/console server:start --env=prod
 ```
 
 4. Or configure your favorite webserver (See doc on [symfony.org](https://symfony.com/doc/current/setup/web_server_configuration.html))
