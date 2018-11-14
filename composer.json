@@ -6,14 +6,14 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "adimeo-data-suite/commons": "dev-master",
-        "adimeo-data-suite/datasources": "dev-master",
-        "adimeo-data-suite/filters": "dev-master",
-        "adimeo-data-suite/security": "dev-master",
-        "adimeo-data-suite/stat": "dev-master",
-        "adimeo-data-suite/search-client": "dev-master",
-        "adimeo-data-suite/sharepoint": "dev-master",
-        "adimeo-data-suite/tika": "dev-master",
+        "adimeo-data-suite/commons": "*",
+        "adimeo-data-suite/datasources": "*",
+        "adimeo-data-suite/filters": "*",
+        "adimeo-data-suite/security": "*",
+        "adimeo-data-suite/stat": "*",
+        "adimeo-data-suite/search-client": "*",
+        "adimeo-data-suite/sharepoint": "*",
+        "adimeo-data-suite/tika": "*",
         "mmucklo/krumo": "^0.5.7",
         "symfony/asset": "*",
         "symfony/cache": "*",
@@ -77,39 +77,5 @@
             "allow-contrib": false,
             "require": "4.1.*"
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-commons"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-security"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-datasources"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-filters"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-stat"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-search-client"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-sharepoint"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/louisicard/adimeo-data-suite-tika"
-        }
-    ]
+    }
 }
