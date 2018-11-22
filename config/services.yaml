@@ -94,6 +94,11 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
+  adimeodatasource.datasource.scrollableapi:
+      class: AdimeoDataSuite\Datasource\ScrollableAPI
+      public: true
+      tags:
+        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter

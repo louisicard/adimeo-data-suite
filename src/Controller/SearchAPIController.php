@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use AdimeoDataSuite\Index\IndexManager;
-use AdimeoDataSuite\Index\StatIndexManager;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
@@ -58,16 +56,17 @@ class SearchAPIController extends AdimeoDataSuiteController
           }
         }
         foreach ($definition as $field => $field_detail) {
-          if ((!isset($field_detail['index']) || $field_detail['index'] == 'analyzed') && ($field_detail['type'] == 'string' || !$isLegacy && $field_detail['type'] == 'text')) {
-            if(isset($field_detail['boost'])) {
-              $field .= '^' . $field_detail['boost'];
-            }
-            $analyzed_fields[] = $field;
-          }
-          elseif ($field_detail['type'] == 'nested') {
-            foreach ($field_detail['properties'] as $sub_field => $sub_field_detail) {
-              if ((!isset($sub_field_detail['index']) || $sub_field_detail['index'] == 'analyzed') && ($sub_field_detail['type'] == 'string' || !$isLegacy && $sub_field_detail['type'] == 'text')) {
-                $nested_analyzed_fields[] = $field . '.' . $sub_field;
+          if(isset($field_detail['type'])) {
+            if ((!isset($field_detail['index']) || $field_detail['index'] == 'analyzed') && ($field_detail['type'] == 'string' || !$isLegacy && $field_detail['type'] == 'text')) {
+              if (isset($field_detail['boost'])) {
+                $field .= '^' . $field_detail['boost'];
+              }
+              $analyzed_fields[] = $field;
+            } elseif ($field_detail['type'] == 'nested') {
+              foreach ($field_detail['properties'] as $sub_field => $sub_field_detail) {
+                if ((!isset($sub_field_detail['index']) || $sub_field_detail['index'] == 'analyzed') && ($sub_field_detail['type'] == 'string' || !$isLegacy && $sub_field_detail['type'] == 'text')) {
+                  $nested_analyzed_fields[] = $field . '.' . $sub_field;
+                }
               }
             }
           }
