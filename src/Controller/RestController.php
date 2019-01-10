@@ -59,6 +59,12 @@ class RestController extends AdimeoDataSuiteController
   public function getSearchPageAction(Request $request, $id) {
     /** @var SearchPage $sp */
     $sp = $this->getIndexManager()->findObject('search_page', $id);
-    return new Response($sp != null ? $sp->getDefinition() : null, 200, array('Content-type' => 'application/json; charset=utf-8'));
+    $json = $sp != null ? $sp->getDefinition() : null;
+    if($json != null) {
+      $json = json_decode($json, TRUE);
+      $json['mapping'] = $sp->getMapping();
+      $json = json_encode($json);
+    }
+    return new Response($json, 200, array('Content-type' => 'application/json; charset=utf-8', 'Access-Control-Allow-Origin' => '*', 'Access-Control-Allow-Headers' => 'Content-Type, Pragma, If-Modified-Since, Cache-Control'));
   }
 }
