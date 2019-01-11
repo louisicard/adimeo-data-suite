@@ -32,6 +32,23 @@
       return false;
     });
 
+    var toggleMenu = function() {
+      if($('aside#main-menu').hasClass('collapsed')) {
+        $('aside#main-menu').removeClass('collapsed');
+        $('aside#main-menu').addClass('expanded');
+        $('body').removeClass('menu-collapsed');
+      }
+      else {
+        $('aside#main-menu').removeClass('expanded');
+        $('aside#main-menu').addClass('collapsed');
+        $('body').addClass('menu-collapsed');
+      }
+    }
+
+    $('.menu-toggle-wrapper a').click(function(e) {
+      toggleMenu();
+    });
+
 
     $('a.index-delete').click(function (e) {
       e.preventDefault();
