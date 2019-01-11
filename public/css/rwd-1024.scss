@@ -45,7 +45,24 @@ body {
     }
   }
 }
-.widget-content {
-  max-width:100%;
-  overflow:auto;
+.widget {
+
+  .widget-actions {
+
+    a {
+      display:inline-block;
+      width:0.75rem;
+      overflow:hidden;
+      white-space: nowrap;
+    }
+
+    a:before {
+      margin-right:0;
+    }
+  }
+
+  .widget-content {
+    max-width:100%;
+    overflow:auto;
+  }
 }

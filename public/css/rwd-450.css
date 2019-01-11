@@ -3,13 +3,11 @@
 
 body #main-wrapper main,
 body.menu-collapsed #main-wrapper main {
-  margin-left: 0; }
+  margin-left: 0;
+  width: 100%; }
 
 body.page-login {
   background: #fff; }
-body main {
-  margin-left: 0;
-  width: 100%; }
 body header figure {
   margin-right: 0.8rem; }
   body header figure figcaption {

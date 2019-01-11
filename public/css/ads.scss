@@ -8,6 +8,8 @@ $lightGreen: #73b566;
 $green: #5c9a4f;
 $darkGreen: #4e8343;
 $red: #fb5140;
+$mainFont: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
+$faFont: normal normal 900 14px/1 "Font Awesome 5 Free";
 
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
 *{
@@ -39,7 +41,7 @@ html, body
 }
 body{
   position: relative;
-  font-family: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: $mainFont;
   background: $bodyBg;
   color: $darkGrey;
   a {
@@ -111,7 +113,7 @@ body{
         position:absolute;
         top:0.5rem;
         left:0.6rem;
-        font: normal normal 900 1.3rem/1 "Font Awesome 5 Free";
+        font: $faFont;
         content:"\f007";
         z-index:9;
         color: $mediumGrey;
@@ -154,7 +156,7 @@ body{
     padding:0.75rem 1rem;
 
     &:before {
-      font: normal normal 900 1rem/1 "Font Awesome 5 Free";
+      font: $faFont;
       content:"\f071";
       padding-right:0.75rem;
     }
@@ -256,7 +258,7 @@ body {
 
             &:before {
               content:"\f3fd";
-              font: normal normal 900 14px/1 "Font Awesome 5 Free";
+              font: $faFont;
               font-size: inherit;
               text-rendering: auto;
               -webkit-font-smoothing: antialiased;
@@ -363,4 +365,98 @@ body {
 }
 /*  END MAIN LAYOUT  */
 
+/*  WIDGET & TABLE  */
+.widget {
+  width:100%;
+  margin: 1rem 0;
+  position: relative;
 
+  .widget-actions {
+    position:absolute;
+    top:0.5rem;
+    right:1rem;
+
+    a,
+    i {
+      margin-left: 0.5rem;
+      font-family: $mainFont;
+      font-weight:400;
+    }
+
+    a:before {
+      margin-right:0.25rem;
+      font: $faFont;
+    }
+  }
+
+  .widget-title {
+    background: #ececef;
+    text-transform: uppercase;
+    padding:0.5rem;
+    border:1px solid #ccc;
+    border-radius:4px 4px 0 0;
+  }
+
+  .widget-content {
+    background:#fff;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    padding:1rem;
+    border-radius:0 0 4px 4px;
+  }
+}
+
+table,td,th,tr {
+  margin:0;
+  padding:0;
+  font-weight:normal;
+  text-align: left;
+  border-collapse: collapse;
+}
+table {
+  width:100%;
+
+  td, th {
+    padding:0.5rem;
+  }
+  th {
+    font-weight: 600;
+  }
+  tr {
+    border-top:1px solid #eee;
+  }
+  ul,
+  li {
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+}
+
+i.fas {
+  padding-right:0.25rem;
+}
+/*  END WIDGET & TABLE  */
+
+/*  INDEXES  */
+.page-indexes {
+  #index-table {
+    .index-mapping {
+      margin-bottom:0.5rem;
+      a {
+        font-weight: 600;
+      }
+    }
+    .mapping-stat {
+    ul {
+      display:inline;
+      li {
+        display:inline;
+        padding-left:0.75rem;
+      }
+    }
+    }
+  }
+}
+/*  END INDEXES  */

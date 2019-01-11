@@ -25,7 +25,14 @@ body #main-wrapper main {
 body header figure {
   margin-right: 0.8rem; }
 
-.widget-content {
+.widget .widget-actions a {
+  display: inline-block;
+  width: 0.75rem;
+  overflow: hidden;
+  white-space: nowrap; }
+.widget .widget-actions a:before {
+  margin-right: 0; }
+.widget .widget-content {
   max-width: 100%;
   overflow: auto; }
 

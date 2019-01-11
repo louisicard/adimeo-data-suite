@@ -6,16 +6,13 @@ body.menu-collapsed {
   #main-wrapper {
     main {
       margin-left: 0;
+      width:100%;
     }
   }
 }
 body {
   &.page-login {
     background:#fff;
-  }
-  main {
-    margin-left: 0;
-    width: 100%;
   }
   header {
     figure {
