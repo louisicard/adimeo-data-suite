@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use AdimeoDataSuite\Index\IndexManager;
-use AdimeoDataSuite\Index\StatIndexManager;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
@@ -58,16 +56,17 @@ class SearchAPIController extends AdimeoDataSuiteController
           }
         }
         foreach ($definition as $field => $field_detail) {
-          if ((!isset($field_detail['index']) || $field_detail['index'] == 'analyzed') && ($field_detail['type'] == 'string' || !$isLegacy && $field_detail['type'] == 'text')) {
-            if(isset($field_detail['boost'])) {
-              $field .= '^' . $field_detail['boost'];
-            }
-            $analyzed_fields[] = $field;
-          }
-          elseif ($field_detail['type'] == 'nested') {
-            foreach ($field_detail['properties'] as $sub_field => $sub_field_detail) {
-              if ((!isset($sub_field_detail['index']) || $sub_field_detail['index'] == 'analyzed') && ($sub_field_detail['type'] == 'string' || !$isLegacy && $sub_field_detail['type'] == 'text')) {
-                $nested_analyzed_fields[] = $field . '.' . $sub_field;
+          if(isset($field_detail['type'])) {
+            if ((!isset($field_detail['index']) || $field_detail['index'] == 'analyzed') && ($field_detail['type'] == 'string' || !$isLegacy && $field_detail['type'] == 'text')) {
+              if (isset($field_detail['boost'])) {
+                $field .= '^' . $field_detail['boost'];
+              }
+              $analyzed_fields[] = $field;
+            } elseif ($field_detail['type'] == 'nested') {
+              foreach ($field_detail['properties'] as $sub_field => $sub_field_detail) {
+                if ((!isset($sub_field_detail['index']) || $sub_field_detail['index'] == 'analyzed') && ($sub_field_detail['type'] == 'string' || !$isLegacy && $sub_field_detail['type'] == 'text')) {
+                  $nested_analyzed_fields[] = $field . '.' . $sub_field;
+                }
               }
             }
           }
@@ -626,7 +625,12 @@ class SearchAPIController extends AdimeoDataSuiteController
     $field = $request->get('field');
     $group = $request->get('group');
     $text = $request->get('text');
-    $text = $this->transliterate($text);
+    try {
+      $text = $this->transliterate($text);
+    }
+    catch(\Exception $e) {
+      return new Response('{"error": "'.$e->getMessage().'"}', 400, array('Content-type' => 'application/json;charset=utf-8'));
+    }
     $size = $request->get('size') != null ? (int)$request->get('size') : 20;
     $sizePerGroup = $request->get('size_per_group') != null ? (int)$request->get('size_per_group') : 10;
     $words = explode(' ', $text);
@@ -687,6 +691,7 @@ class SearchAPIController extends AdimeoDataSuiteController
         'size' => $size
       );
     }
+
     if($request->get('filterQuerystring') != null){
       $body['query']['bool']['must'][] = array(
         'query_string' => array(
@@ -725,10 +730,24 @@ class SearchAPIController extends AdimeoDataSuiteController
     return new Response(json_encode($ret, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json; charset=utf8', 'Access-Control-Allow-Origin' => '*'));
   }
 
-  private function transliterate($str){
+  /**
+   * @param $str
+   * @return string
+   * @throws \Exception
+   */
+  private function transliterate($str)
+  {
     $chars = array("aàáâãäåāąă","AÀÁÂÃÄÅĀĄĂ","cçćč","CÇĆČ","dđď","DĐĎ","eèéêëěēę","EÈÉÊËĚĒĘ","iìíîïī","IÌÍÎÏĪ","lł","LŁ","nñňń","NÑŇŃ","oòóôõöøō","OÒÓÔÕÖØŌ","rř","RŘ","sšśș","SŠŚȘ","tťț","TŤȚ","uùúûüůū","UÙÚÛÜŮŪ","yÿý","YŸÝ","zžżź","ZŽŻŹ");
     $str_c = preg_split('/(?<!^)(?!$)/u', $str );
     $out = '';
+
+    if(is_array($str_c)) {
+      $str_c = array_filter($str_c);
+    }
+    else {
+      throw new \Exception("Cannot transliterate the following text: ".$str);
+    }
+
     foreach($str_c as $c){
       $repl = false;
       foreach($chars as $char_seq){

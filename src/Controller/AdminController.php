@@ -119,6 +119,7 @@ class AdminController extends AdimeoDataSuiteController
       }
       if($uid == null) {
         $user->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
+        $user->setCreated(new \DateTime());
       }
       $this->getIndexManager()->persistObject($user);
       if ($uid == null) {
@@ -166,7 +167,7 @@ class AdminController extends AdimeoDataSuiteController
 
   private function handleAddOrEditGroup($request, $id = null) {
     if ($id == null) { //Add
-      $group = new Group('', '', [], [], []);
+      $group = new Group('', '', [], [], [], []);
     } else { //Edit
       /** @var Group $group */
       $group = $this->getIndexManager()->findObject('group', $request->get('id'));
@@ -201,11 +202,6 @@ class AdminController extends AdimeoDataSuiteController
       $dictionariesChoices[$item['name']] = $item['name'];
     }
     $form = $this->createFormBuilder($group)
-      ->add('id', TextType::class, array(
-        'label' => $this->get('translator')->trans('ID'),
-        'required' => true,
-        'disabled' => $id != null
-      ))
       ->add('name', TextType::class, array(
         'label' => $this->get('translator')->trans('Groupe name'),
         'required' => true,
@@ -243,6 +239,7 @@ class AdminController extends AdimeoDataSuiteController
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       if($id == null) {
+        $group->setCreated(new \DateTime());
         $group->setCreatedBy($this->container->get('security.token_storage')->getToken()->getUser()->getUid());
       }
       $this->getIndexManager()->persistObject($form->getData());

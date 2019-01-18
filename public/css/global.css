@@ -914,3 +914,13 @@ table.log-table tbody td.object{
   padding:5px 10px;
   margin-top:20px;
 }
+
+.page-datasource-add textarea,
+.page-datasource-edit textarea{
+  width:100%;
+  font-family: sans-serif;
+  padding:5px;
+  min-height:300px;
+  font-family:'Courier', sans-serif;
+  font-size:12px;
+}
