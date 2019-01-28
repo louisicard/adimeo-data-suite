@@ -140,7 +140,7 @@ In order to run the examples in this documentation, please install the API_DEMO 
     * Select `documentation\processor_api_demo.data_demo.json` file
     * Import the configuration by clicking on `Import` button
     
-#### Import data in data source
+#### Import data
 * In `DataStudio > Datasources`, select the `API_Examples` row and click on `Execute` action:
     * Fill the `File path` field with the local path of the `documentation\Api_Examples.csv`    
     * Click on `Execute` button to proceed import    
