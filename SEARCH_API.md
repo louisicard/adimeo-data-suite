@@ -2,7 +2,7 @@
 
 ## Requirement
 In order to run the examples in this documentation, please install the API_DEMO database as follows.<br />
-[ Skip the step ](#summary)
+[ Skip this step ](#summary)
 
 ### Data installation
 #### Create index
