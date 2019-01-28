@@ -111,7 +111,7 @@ class SearchAPIController extends AdimeoDataSuiteController
 
         $applied_facets = array();
         $refactor_for_boolean_query = FALSE;
-        if ($request->get('filter') != null) {
+        if (is_array($request->get('filter'))) {
           $filters = array();
           foreach ($request->get('filter') as $filter) {
             preg_match('/(?P<name>[^!=><]*)(?P<operator>[!=><]+)"(?P<value>[^"]*)"/', $filter, $matches);
