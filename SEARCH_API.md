@@ -1,11 +1,151 @@
 # Adimeo Data Suite: Documentation Search API
 
 ## Requirement
-To benefit from an API call execution environment, please proceed with the installation of the API_DEMO data as follows:
+In order to run the examples in this documentation, please install the API_DEMO database as follows.<br />
+[ Skip the step ](#summary)
 
-[@TODO]
+### Data installation
+#### Create index
+* In `DataStudio > Indexes`, click on `Add a new index`:
+    * Fill the `Index name` field with the value `api_demo`
+    * Fill the `Settings` field as follow: 
+        ```json
+            {
+                "analysis": {
+                    "filter": {
+                        "french_stop": {
+                            "type": "stop",
+                            "stopwords": "_french_"
+                        },
+                        "french_elision": {
+                            "type": "elision",
+                            "articles": [
+                                "l",
+                                "m",
+                                "t",
+                                "qu",
+                                "n",
+                                "s",
+                                "j",
+                                "d",
+                                "c",
+                                "jusqu",
+                                "quoiqu",
+                                "lorsqu",
+                                "puisqu"
+                            ]
+                        },
+                        "french_stemmer": {
+                            "name": "light_french",
+                            "type": "stemmer"
+                        }
+                    },
+                    "analyzer": {
+                        "french": {
+                            "filter": [
+                                "standard",
+                                "asciifolding",
+                                "french_elision",
+                                "lowercase",
+                                "french_stop",
+                                "french_stemmer"
+                            ],
+                            "tokenizer": "standard"
+                        },
+                        "transliterator": {
+                            "filter": [
+                                "standard",
+                                "asciifolding",
+                                "lowercase"
+                            ],
+                            "tokenizer": "keyword"
+                        }
+                    }
+                },
+                "number_of_replicas": "1",
+                "number_of_shards": "5"
+            }
+         ```
+    * Save the configuration by clicking on `Create index` button
+        
+#### Create mapping
+* In `DataStudio > Indexes`, click on `Add a mapping` on the line concerned by the index `api_demo`:
+    * Fill the `Mapping name` field with the value `data_demo`
+    * Click on `Show/hide JSON definition` and fill field as follow: 
+        ```json
+            {
+                "body": {
+                    "type": "text",
+                    "boost": 5,
+                    "store": true,
+                    "analyzer": "standard"
+                },
+                "city": {
+                    "type": "text",
+                    "store": true,
+                    "fields": {
+                        "raw": {
+                            "type": "keyword",
+                            "store": true
+                        },
+                        "transliterated": {
+                            "type": "text",
+                            "store": true,
+                            "analyzer": "transliterator"
+                        }
+                    },
+                    "analyzer": "standard"
+                },
+                "color": {
+                    "type": "text",
+                    "store": true,
+                    "fields": {
+                        "raw": {
+                            "type": "keyword",
+                            "store": true
+                        }
+                    },
+                    "analyzer": "standard"
+                },
+                "entity": {
+                    "type": "text",
+                    "store": true,
+                    "fields": {
+                        "raw": {
+                            "type": "keyword",
+                            "store": true
+                        },
+                        "transliterated": {
+                            "type": "text",
+                            "store": true,
+                            "analyzer": "transliterator"
+                        }
+                    },
+                    "analyzer": "standard"
+                },
+                "thumbnail": {
+                    "type": "text",
+                    "store": true
+                },
+                "url": {
+                    "type": "text",
+                    "store": true
+                }
+            }
+        ```     
+        * Save the configuration by clicking on `Save mapping` button
 
+#### Create processor
+* In `DataStudio > Processors`, click on `import`:
+    * Select `documentation\processor_api_demo.data_demo.json` file
+    * Import the configuration by clicking on `Import` button
+    
+#### Import data in data source
+* In `DataStudio > Datasources`, select the `API_Examples` row and click on `Execute` action:
+    * Fill the `File path` field with the local path of the `documentation\Api_Examples.csv`    
+    * Click on `Execute` button to proceed import    
 
+<a name="summary"></a>
 ## Summary
 1. [ Search : Main call ](#search-main)
 2. [ Search : Optional additional parameters ](#search-optional-additional-parameters)
@@ -27,7 +167,7 @@ To benefit from an API call execution environment, please proceed with the insta
 ----
 <a name="search-main"></a>
 ### Search : Main call
-Main call returns all data for an index and a mapping.
+Main call return all data for an index and a mapping.
 
 * **URL**
 
@@ -41,7 +181,8 @@ Main call returns all data for an index and a mapping.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
 
 * **Success Response:**
 
@@ -156,7 +297,8 @@ Optional additional parameters can be combined with each other based on the main
 
 <a name="search-query"></a>
 #### Searching for a string into indexed fields   
-Returns all the data corresponding to the exact search of the characters. The partial search can be done thanks to the joker (*).
+Return all the data corresponding to the exact search of the characters. 
+The partial search can be done thanks to the joker (*).
 
 * **URL**
 
@@ -170,7 +312,8 @@ Returns all the data corresponding to the exact search of the characters. The pa
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.  
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.  
   * `query=[string]`: Characters to search in result.
 
 * **Success Response:**
@@ -223,7 +366,7 @@ Returns all the data corresponding to the exact search of the characters. The pa
 
 <a name="search-single-document"></a>
 #### View a single document
-Returns all data for a single document with its ID.
+Return all data for a single document with its ID.
 
 * **URL**
 
@@ -237,7 +380,8 @@ Returns all data for a single document with its ID.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.  
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.  
   * `doc_id=[string]`: ID of the document to display.
 
 * **Success Response:**
@@ -245,7 +389,7 @@ Returns all data for a single document with its ID.
     Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id] = `AWhxHJQs5a6YCxlRadcd`
+    * [you_document_id] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
     
     * **Call:**    
       ```console
@@ -290,7 +434,7 @@ Returns all data for a single document with its ID.
 
 <a name="view-document-list"></a>
 #### Search: View a document list
-Returns all data for a document list specified by their ID.
+Return all data for a document list specified by their ID.
 
 * **URL**
 
@@ -304,7 +448,8 @@ Returns all data for a document list specified by their ID.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.  
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.  
   * `ids=[string]`: ID of the document to display separate by `,`.
 
 * **Success Response:**
@@ -312,8 +457,8 @@ Returns all data for a document list specified by their ID.
     Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id1] = `AWhxHJV45a6YCxlRadce`
-    * [you_document_id2] = `AWhxHJQs5a6YCxlRadcd` 
+    * [you_document_id1] = `AWhxHJV45a6YCxlRadce` [Adjust this value for your documents]
+    * [you_document_id2] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
 
     * **Call:**    
       ```console
@@ -372,7 +517,7 @@ Returns all data for a document list specified by their ID.
 
 <a name="search-filter"></a>
 #### Search: Filter on raw or transliterated field
-Returns all the data constrained by search filter on raw or transliterated field.
+Return all the data constrained by search filter on raw or transliterated field.
 
 * **URL**
 
@@ -386,7 +531,8 @@ Returns all the data constrained by search filter on raw or transliterated field
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `filter[]=[array]`: Defines which search filter.<br /> 
   Each filter must respect the following pattern: `[field name][operator][value]`.<br /> 
   The list of available **operators** is:
@@ -453,7 +599,7 @@ Returns all the data constrained by search filter on raw or transliterated field
 
 <a name="search-query-string"></a>
 #### Search: Query string on analyzed field
-Returns all the data constrained by a filter in connection with an analyzed field.
+Return all the data constrained by a filter in connection with an analyzed field.
 
 * **URL**
 
@@ -467,7 +613,8 @@ Returns all the data constrained by a filter in connection with an analyzed fiel
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `qs_filter[]=[array]`: Defines which filter must be applied in regard <br /> 
     Each filter must respect the following pattern: `[field name]`="`[value]`".<br /> 
   
@@ -525,7 +672,8 @@ Returns all the data constrained by a filter in connection with an analyzed fiel
   
 <a name="activation-auto-promote"></a>
 #### Search: Display auto-promote
-Display the promotional banners previously defined for a target (index.mapping) that appear at the top of search results based on the keywords provided.
+Display the promotional banners previously defined for a target (index.mapping) that appear at the top of search results 
+based on the keywords provided.
 
 * **URL**
 
@@ -539,7 +687,8 @@ Display the promotional banners previously defined for a target (index.mapping) 
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `autopromote=[integer]`: Activation of auto-promote for the target index.mapping concerned. 
   
 * **Success Response:**
@@ -600,7 +749,7 @@ Display the promotional banners previously defined for a target (index.mapping) 
 
 <a name="search-sort-filter"></a>
 #### Search: Sort filter
-You can specifiy the order filter on a **raw or transliterated** field.
+You can specify the order filter on a **raw or transliterated** field.
 
 * **URL**
 
@@ -614,7 +763,8 @@ You can specifiy the order filter on a **raw or transliterated** field.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `sort[]=[string]`: Defines which field must be sort by (ASC or DESC)<br /> 
     The sort filter must respect the following pattern: `[field_name]`,`[ASC|DESC]`".<br />   
   
@@ -697,8 +847,8 @@ You can specifiy the order filter on a **raw or transliterated** field.
 
 <a name="search-suggestion-field"></a>
 #### Search: Suggestion fields
-You can specify the suggestion fields, if your main search has failed with the current string, 
-you will be offered a suggestion close to the search based on the search fields : *Did you mean... ?*
+If your main search failed for the current channel, a suggestion, based on the suggestion fields, will be proposed:
+*Did you mean... ?*
 
 * **URL**
 
@@ -712,8 +862,9 @@ you will be offered a suggestion close to the search based on the search fields 
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
-  * `suggest[]=[string]`: Defines which field is concerned by suggestion, if main search failed with the current string<br /> 
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `suggest[]=[string]`: Defines which field is concerned by suggestion.<br /> 
     The suggestion parameter must respect the following pattern: `[field_name_1]`,`[field_name_2]`".<br />   
   
 * **Success Response:**
@@ -799,9 +950,11 @@ You can highlight the search terms if those ones were found in specified fields.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `query=[string]`: Characters to search in result.  
-  * `highlights=[string]`: The following pattern must be respected: `[field]|[fragment_size]|[number_of_fragments]|[no_match_size],[field]|[fragment_size]|[number_of_fragments]|[no_match_size]`.
+  * `highlights=[string]`: The following pattern must be respected: 
+    `[field]|[fragment_size]|[number_of_fragments]|[no_match_size],[field]|[fragment_size]|[number_of_fragments]|[no_match_size]`.
   
   * **field**<br />
   Specifies the fields to retrieve highlights for. You can use wildcards to specify fields. 
@@ -864,8 +1017,10 @@ for the relevant index.
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
-  * `facets=[string]`: Defines which raw or transliterated field is concerned to faceted. The following pattern must be respected: `[your_raw_field_1],[your_raw_field_2]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `facets=[string]`: Defines which raw or transliterated field is concerned to faceted.
+    The following pattern must be respected: `[your_raw_field_1],[your_raw_field_2]`.
   
 * **Example :**
 
@@ -963,7 +1118,8 @@ The fingerprint analyzer is a specialist analyzer which creates a fingerprint wh
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `analyzer=[string]`: Defines which analyzer must be applied to the current index. 
   
 * **Example :**
@@ -995,7 +1151,8 @@ These make it possible to adjust the relevance of the engine according to certai
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
   * `apply_boosting=[integer]`: Activation of boost query configured for a target (index.mapping). 
   
 * **Example :**
@@ -1027,15 +1184,20 @@ Returns json data corresponding to the partial or complete text from the paramet
 
   **Required:**
    
-  * `mapping=[string]`: Defines which index and mapping is concerned. The following pattern must be respected: `[your_index].[your_mapping]`.
-  * `field=[string]`: Defines the data field used as the source for auto-completion. The field format must be `keyword` or `text with included raw`.
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `field=[string]`: Defines the data field used as the source for auto-completion. 
+    The field format must be `keyword` or `text with included raw`.
   * `text=[string]`: Characters to search in the specified data field.
    
   **Optional:**
     
-  * `group=[string]`: Determine the data field for categorizing the results of auto-completion. The field format must be `keyword` or `text with included raw`.
-  * `size=[integer]`: Determine the number of displaying results for the field name for a group or not. By default, this number is set to `20`.
-  * `sizePerGroup=[integer]`: Determine the number of displaying group. By default, this number is set to `10`.
+  * `group=[string]`: Determine the data field for categorizing the results of auto-completion. 
+    The field format must be `keyword` or `text with included raw`.
+  * `size=[integer]`: Determine the number of displaying results for the field name for a group or not. 
+    By default, this number is set to `20`.
+  * `sizePerGroup=[integer]`: Determine the number of displaying group. 
+    By default, this number is set to `10`.
 
 * **Success Response:**
 
@@ -1086,11 +1248,42 @@ Returns json data corresponding to the partial or complete text from the paramet
   
 <a name="see-more-like-this"></a>
 ### See more like this  
-[@TODO]
+Find documents that are similar to a given document or a set of documents.
 
+* **URL**
 
+   `search-api/v2/more-like-this?mapping=`[your_index].[your_mapping]`&fields=`[your_fields_concerned]`&doc_id=`[your_document_id]
 
+* **Method:**
+
+    `GET`
+
+* **URL Params**
+
+  **Required:**
+   
+  * `mapping=[string]`: Defines which index and mapping is concerned. 
+    The following pattern must be respected: `[your_index].[your_mapping]`.
+  * `fields=[array of string]`: Defines the data fields for similarity search
+  * `doc_id=[string]`: ID of the reference document 
   
+* **Success Response:**
+  
+    Let's try to make an sample call cURL with this parameters:
+    * [your_index] = `api_demo`
+    * [your_mapping] = `data_demo`
+    * [your_fields_concerned] = `entity, body`
+    * [your_document_id] = `AWiUunlU5a6YCxlRbh4B` [Adjust this value for your documents]
+  
+    * **Call:**    
+    ```console
+        curl http://localhost:8888/index.php/search-api/v2/more-like-this\?mapping\=api_demo.data_demo\&fields\=entity,body\&doc_id\=AWiUunlU5a6YCxlRbh4B
+    ```   
+    * **Code:** 200
+    
+    * **Content:** 
+    This result for this dataset can be obtained by fixing `min_doc_freq` to `1`.
+    
 <a name="custom-search"></a>
 ### Custom search
 Make your own and custom query by-passing ADS filter.
