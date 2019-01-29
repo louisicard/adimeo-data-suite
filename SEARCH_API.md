@@ -1407,7 +1407,7 @@ Make your own and custom query by-passing ADS filter.
                     "_id": "AWiUunlU5a6YCxlRbh4B",
                     "_score": 0.6931472,
                     "_source": {
-                        "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                        "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
                         "city": "Paris",
                         "entity": "Adimeo",
                         "thumbnail": "https://picsum.photos/200/300/?image=921",
