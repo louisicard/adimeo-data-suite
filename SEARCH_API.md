@@ -908,7 +908,7 @@ If your main search failed for the current channel, a suggestion, based on the s
 
 * **URL**
 
-  `/search-api/v2?mapping=`[your_index].[your_mapping]`&suggest[]=`[field_name_1],[field_name_2]
+  `/search-api/v2?mapping=`[your_index].[your_mapping]`&suggest[]=`[field_name_1],[field_name_2]`&query=`[your_query]
   
 * **Method:**
 
@@ -929,7 +929,8 @@ If your main search failed for the current channel, a suggestion, based on the s
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `entity`
-    * [field_name_2] = `city`    
+    * [field_name_2] = `city`  
+    * [your_query] = `Ademo`  
 
     * **Call:**    
     ```console
@@ -1022,7 +1023,9 @@ You can highlight the search terms if those ones were found in specified fields.
   The size of the highlighted fragment in characters. Defaults to 100.
   
   * **number_of_fragments**<br />
-  The maximum number of fragments to return. If the number of fragments is set to 0, no fragments are returned. Instead, the entire field contents are highlighted and returned. This can be handy when you need to highlight short texts such as a title or address, but fragmentation is not required. If number_of_fragments is 0, fragment_size is ignored. Defaults to 5.
+  The maximum number of fragments to return. If the number of fragments is set to 0, no fragments are returned. Instead, the entire field contents are highlighted and returned. 
+  This can be handy when you need to highlight short texts such as a title or address, but fragmentation is not required. If number_of_fragments is 0, fragment_size is ignored. 
+  Defaults to 5.
   
   * **no_match_size**<br />
   The amount of text you want to return from the beginning of the field if there are no matching fragments to highlight. Defaults to 0 (nothing is returned).  
@@ -1373,7 +1376,7 @@ Make your own and custom query by-passing ADS filter.
 
     Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
-    * [your_size] = `entity.raw`
+    * [your_size] = `10`
     * [your_raw_data] = `{"query":{"bool":{"must":{"term":{"entity":"adimeo"}}}}}` 
     
     * **Call:**    
@@ -1401,10 +1404,10 @@ Make your own and custom query by-passing ADS filter.
                 {
                     "_index": "api_demo",
                     "_type": "data_demo",
-                    "_id": "AWhxHJQs5a6YCxlRadcd",
+                    "_id": "AWiUunlU5a6YCxlRbh4B",
                     "_score": 0.6931472,
                     "_source": {
-                        "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
+                        "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
                         "city": "Paris",
                         "entity": "Adimeo",
                         "thumbnail": "https://picsum.photos/200/300/?image=921",
