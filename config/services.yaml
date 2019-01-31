@@ -35,10 +35,14 @@ services:
 
   adimeo_data_suite_es_server:
     class: AdimeoDataSuite\Index\IndexManager
-    arguments: ["%env(ELASTICSEARCH_SERVER_URL)%"]
+    arguments: ["%env(ELASTICSEARCH_SERVER_URL)%", "@security.token_storage"]
     public: true
   adimeo_data_suite_stat_es_server:
     class: AdimeoDataSuite\Index\StatIndexManager
+    arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%"]
+    public: true
+  adimeo_data_suite_backups_es_server:
+    class: AdimeoDataSuite\Index\BackupsManager
     arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%"]
     public: true
   adimeo_data_suite_synonyms_dictionaries_manager:

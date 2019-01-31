@@ -32,27 +32,6 @@ autopromote-delete:
 autopromote-ajax-get-analyzers:
   path: /autopromotes/ajax/get-analyzers
   controller: App\Controller\AutopromoteController::getAnalyzersAction
-backups:
-  path: /backups
-  controller: App\Controller\DashboardController::indexAction
-backups_create_repo:
-  path: /backups/create-repo
-  controller: App\Controller\DashboardController::indexAction
-backups_edit_repo:
-  path: /backups/edit-repo/{name}
-  controller: App\Controller\DashboardController::indexAction
-backups_delete_repo:
-  path: /backups/delete-repo/{name}
-  controller: App\Controller\DashboardController::indexAction
-backups_delete_snapshot:
-  path: /backups/delete-snapshot/{repoName}/{name}
-  controller: App\Controller\DashboardController::indexAction
-backups_create_snapshot:
-  path: /backups/snapshot/create
-  controller: App\Controller\DashboardController::indexAction
-backups_restore_snapshot:
-  path: /backups/snapshot/restore/{repoName}/{name}
-  controller: App\Controller\DashboardController::indexAction
 boost-queries:
   path: /boost-queries
   controller: App\Controller\BoostQueryController::listBoostQueriesAction
