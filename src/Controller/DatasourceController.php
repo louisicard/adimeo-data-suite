@@ -29,7 +29,7 @@ class DatasourceController extends AdimeoDataSuiteController
     }
     $form = $this->createFormBuilder(null)
       ->add('dataSourceType', ChoiceType::class, array(
-        'choices' => array($this->get('translator')->trans('Add a new datasource') => '') + $datasourceTypes,
+        'choices' => array($this->get('translator')->trans('Select') . ' >' => '') + $datasourceTypes,
         'required' => true,
       ))
       ->add('ok', SubmitType::class, array(

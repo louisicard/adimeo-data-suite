@@ -3,7 +3,6 @@
 
 {%block main_content%}
   {%if indexes is defined%}
-  {%if indexes|length > 0%}
     <div class="widget">
       <div class="widget-title">{%trans%}Indexes on the server{%endtrans%}</div>
       {% if is_granted('ROLE_INDEX_MANAGER') %}
@@ -60,10 +59,14 @@
         </table>
       </div>
     </div>
-    {%endif%}
   {%endif%}
   {%if form is defined%}
-    {{form(form)}}
+    <div class="widget">
+      <div class="widget-title">{{ "Index settings"|trans }}</div>
+      <div class="widget-content">
+        {{form(form)}}
+      </div>
+    </div>
   {%endif%}
   <script type="text/javascript">
     var __index_analyzers = [];

@@ -3,40 +3,47 @@
 
 {%block main_content%}
   {%if matching_lists is defined %}
-    {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
-    <ul class="actions">
-      <li><a href="{{path('matching-list-add')}}">{{'Add a new matching list'|trans}}</a></li>
-    </ul>
-    {% endif %}
-  {%if matching_lists|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'List name'|trans}}</th>
-          <th>{{'Value count'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for matchingList in matching_lists%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{matchingList.name}}</td>
-            <td class="numeric">{{matchingList.list|jsonDecode|length}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{path('matching-list-edit', {'id': matchingList.id})}}">{{'Edit'|trans}}</a></li>
-                {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
-                <li><a href="{{path('matching-list-delete', {'id': matchingList.id})}}" class="matching-list-delete">{{'Delete'|trans}}</a></li>
-                {% endif %}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of datasources{%endtrans%}</div>
+      {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
+      <div class="widget-actions">
+        <a href="{{path('matching-list-add')}}" class="fa fa-plus">{{'Add a new matching list'|trans}}</a>
+      </div>
+      {% endif %}
+      <div class="widget-content">
+        {%if matching_lists|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'List name'|trans}}</th>
+              <th>{{'Value count'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for matchingList in matching_lists%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{matchingList.name}}</td>
+                <td class="numeric">{{matchingList.list|jsonDecode|length}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{path('matching-list-edit', {'id': matchingList.id})}}">{{'Edit'|trans}}</a></li>
+                    {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
+                    <li><a href="{{path('matching-list-delete', {'id': matchingList.id})}}" class="matching-list-delete">{{'Delete'|trans}}</a></li>
+                    {% endif %}
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_matching_list'}})}}

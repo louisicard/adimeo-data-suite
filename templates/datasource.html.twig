@@ -4,48 +4,58 @@
 {%block main_content%}
   {%if datasources is defined%}
     {%if form_add_datasource is defined and is_granted('ROLE_DATASOURCE_CREATOR')%}
-      {% form_theme form_add_datasource 'forms.html.twig' %}
-      {{ form(form_add_datasource, {'attr': {'id': 'form_add_data_source'}}) }}
+      <div class="widget collapsible collapsed">
+        <div class="widget-title">{%trans%}Add a new datasource{%endtrans%}</div>
+        <div class="widget-content">
+        {% form_theme form_add_datasource 'forms.html.twig' %}
+        {{ form(form_add_datasource, {'attr': {'id': 'form_add_data_source'}}) }}
+        </div>
+      </div>
     {%endif%}
     {%if datasources|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Datasource name'|trans}}</th>
-          <th>{{'Type'|trans}}</th>
-          <th>{{'ID'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for id, datasource in datasources%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{datasource.name}}</td>
-            <td>{{datasource.displayName}}</td>
-            <td>{{datasource.id}}</td>
-            <td class="actions">
-              <ul>
-                {% if is_granted('ROLE_DATASOURCE_CREATOR') and procs[datasource.id] is not defined %}
-                <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Execute'|trans}}</a></li>
-                {% endif %}
-                {% if procs[datasource.id] is defined %}
-                  <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Monitor'|trans}}</a></li>
-                {% endif %}
-                <li><a href="{{path('datasource-edit', {'id': datasource.id})}}">{{'Edit'|trans}}</a></li>
-                {% if is_granted('ROLE_DATASOURCE_CREATOR') %}
-                <li><a href="{{path('datasource-delete', {'id': datasource.id})}}" class="datasource-delete">{{'Delete'|trans}}</a></li>
-                {% endif %}
-                {% if datasource|getClass == "CtSearchBundle\\Datasource\\WebCrawler" %}
-                <li><a href="{{ path('webcrawler-test', {id: datasource.id}) }}">Tester</a></li>
-                {% endif %}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
+      <div class="widget">
+        <div class="widget-title">{%trans%}List of datasources{%endtrans%}</div>
+        <div class="widget-content">
+          <table>
+            <thead>
+              <tr>
+                <th>{{'Datasource name'|trans}}</th>
+                <th>{{'Type'|trans}}</th>
+                <th>{{'ID'|trans}}</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%set class='even'%}
+              {%for id, datasource in datasources%}
+                {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+                <tr class="{{class}}">
+                  <td>{{datasource.name}}</td>
+                  <td>{{datasource.displayName}}</td>
+                  <td>{{datasource.id}}</td>
+                  <td class="actions">
+                    <ul>
+                      {% if is_granted('ROLE_DATASOURCE_CREATOR') and procs[datasource.id] is not defined %}
+                      <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Execute'|trans}}</a></li>
+                      {% endif %}
+                      {% if procs[datasource.id] is defined %}
+                        <li><a href="{{path('datasource-exec', {'id': datasource.id})}}">{{'Monitor'|trans}}</a></li>
+                      {% endif %}
+                      <li><a href="{{path('datasource-edit', {'id': datasource.id})}}">{{'Edit'|trans}}</a></li>
+                      {% if is_granted('ROLE_DATASOURCE_CREATOR') %}
+                      <li><a href="{{path('datasource-delete', {'id': datasource.id})}}" class="datasource-delete">{{'Delete'|trans}}</a></li>
+                      {% endif %}
+                      {% if datasource|getClass == "CtSearchBundle\\Datasource\\WebCrawler" %}
+                      <li><a href="{{ path('webcrawler-test', {id: datasource.id}) }}">Tester</a></li>
+                      {% endif %}
+                    </ul>
+                  </td>
+                </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
     {%endif%}
   {%endif%}
   {%if form is defined%}

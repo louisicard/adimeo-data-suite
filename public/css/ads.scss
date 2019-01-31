@@ -8,6 +8,7 @@ $lightGreen: #73b566;
 $green: #5c9a4f;
 $darkGreen: #4e8343;
 $red: #fb5140;
+$orange: #f88e11;
 $mainFont: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
 $faFont: normal normal 900 14px/1 "Font Awesome 5 Free";
 
@@ -253,7 +254,7 @@ body {
             &.active,
             &:hover {
               background: #f8f9fa;
-              border-left:3px solid #f88e11;
+              border-left:3px solid $orange;
             }
 
             &:before {
@@ -405,6 +406,33 @@ body {
     padding:1rem;
     border-radius:0 0 4px 4px;
   }
+
+  &.collapsible {
+    .widget-title {
+      cursor:pointer;
+
+      &:before {
+        content:"\f068";
+        font: $faFont;
+        padding-right:0.25rem;
+      }
+    }
+
+    &.collapsed {
+      .widget-content {
+        display:none;
+      }
+      .widget-title {
+        border-radius:4px;
+        &:before {
+          content:"\f067";
+        }
+      }
+    }
+  }
+
+
+
 }
 
 table,td,th,tr {
@@ -439,6 +467,100 @@ i.fas {
 }
 /*  END WIDGET & TABLE  */
 
+/*  FORMS  */
+form input[type="text"],
+form input[type="number"],
+form input[type="password"],
+form input[type="file"],
+form select,
+form textarea {
+  width: 100%;
+  border: 1px solid #eee;
+  padding: 0.5rem;
+  border-radius: 3px;
+  background:#fff;
+
+  &[disabled] {
+    background:#eee;
+  }
+}
+form select {
+}
+form {
+  .select-wrapper {
+    position:relative;
+    display:block;
+    &:after {
+      font: $faFont;
+      content: "\f0dd";
+      position:absolute;
+      right:0.5rem;
+      top:calc((100% - 1rem) / 2);
+      height:1rem;
+      display:block;
+      z-index:9;
+    }
+    select {
+      option {
+        padding-right:3rem;
+      }
+    }
+  }
+  input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
+  }
+  textarea {
+    min-height:15rem;
+    font-family: "Courier New";
+    font-size: 0.85rem;
+  }
+  label {
+    display:block;
+    font-weight: 600;
+    margin:0.25rem 0;
+  }
+  .form-item {
+    margin-bottom:1rem;
+
+    .error-msg {
+      font-size:0.85rem;
+      color: red;
+      margin:0.15rem 0;
+    }
+  }
+  input[type="submit"],
+  button[type="submit"] {
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    background: $green;
+    min-width:5rem;
+    margin-right:1rem;
+    padding:0.5rem 1rem;
+    -webkit-transition: all ease 0.4s;
+    -moz-transition: all ease 0.4s;
+    -ms-transition: all ease 0.4s;
+    -o-transition: all ease 0.4s;
+    transition: all ease 0.4s;
+
+    &:hover {
+      background-color:$lightGreen;
+    }
+  }
+}
+
+.json-link {
+
+  &:before {
+    margin-right: 0.25rem;
+    font: $faFont;
+    content: "\f121";
+  }
+}
+/*  END FORMS  */
+
 /*  INDEXES  */
 .page-indexes {
   #index-table {
@@ -449,14 +571,390 @@ i.fas {
       }
     }
     .mapping-stat {
-    ul {
-      display:inline;
-      li {
+      ul {
         display:inline;
-        padding-left:0.75rem;
+        li {
+          display:inline;
+          padding-left:0.75rem;
+        }
       }
     }
+  }
+}
+.page-index-edit-mapping {
+  .new-field-row td {
+    vertical-align: top;
+  }
+  #mapping-add-field {
+    display:inline-block;
+    margin-top: 0.5rem;
+
+    &:before {
+      margin-right: 0.25rem;
+      font: $faFont;
+      content: "\f067";
     }
   }
 }
 /*  END INDEXES  */
+
+/*  DIALOGS  */
+.ui-dialog {
+
+  &.ui-widget-content,
+  &.ui-widget {
+    background: #fff;
+    border: 1px solid $grey;
+    border-radius: 0px;
+    font-family: $mainFont;
+    * {
+      font-family: $mainFont;
+    }
+  }
+
+  ul,li {
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+  .adv-content {
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  .adv-actions {
+    text-align: center;
+    button {
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      background: $green;
+      min-width:5rem;
+      margin-right:1rem;
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s;
+
+      &:hover {
+        background-color:$lightGreen;
+      }
+
+      &.cancel {
+        background:#fff;
+        color: $green;
+        border: 1px solid $green;
+      }
+    }
+  }
+
+  form {
+    font-size:1rem;
+
+    label {
+      margin:0;
+    }
+
+    .form-item div label {
+      display:inline;
+      font-weight:normal;
+      line-height: 1.75rem;
+    }
+
+    .form-item div input[type="checkbox"] {
+      margin-right: 0.25rem;
+    }
+
+    textarea {
+      font-family: "Courier New"!important;
+      font-size: 0.85rem;
+    }
+  }
+
+  .ui-dialog-titlebar {
+    border-radius: 0px;
+  }
+  .ui-widget-header {
+    background: $lightBlue;
+    border:none;
+  }
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border:none;
+    border-radius:0;
+    background:#fff;
+  }
+  .ui-state-default .ui-icon {
+    background:url(../images/close.png) no-repeat 50% 50%;
+  }
+  button.ui-dialog-titlebar-close {
+    right: .5em;
+    width: 25px;
+    margin: -12px 0 0px 0;
+    height: 25px;
+  }
+  .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
+    padding: 0;
+  }
+}
+.ui-dialog.adv-alert {
+
+  &.ui-widget-content,
+  &.ui-widget {
+    background: #fff;
+    border: 3px solid $red;
+    border-radius: 6px;
+    font-family: $mainFont;
+    * {
+      font-family: $mainFont;
+    }
+  }
+
+  .ui-dialog-titlebar {
+    display:none;
+  }
+  ul,li {
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+  .adv-content {
+    margin-bottom: 1rem;
+    color: $red;
+  }
+  .adv-actions {
+    text-align: center;
+    button {
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      background: $red;
+      min-width:5rem;
+    }
+  }
+}
+.ui-dialog.adv-confirm {
+
+  &.ui-widget-content,
+  &.ui-widget {
+    background: #fff;
+    border: 3px solid $green;
+    border-radius: 6px;
+    font-family: $mainFont;
+    * {
+      font-family: $mainFont;
+    }
+  }
+
+  .ui-dialog-titlebar {
+    display:none;
+  }
+  ul,li {
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+  .adv-content {
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  .adv-actions {
+    text-align: center;
+    button {
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      background: $green;
+      min-width:5rem;
+      margin-right:1rem;
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s;
+
+      &:hover {
+        background-color:$lightGreen;
+      }
+
+      &.cancel {
+        background:#fff;
+        color: $green;
+        border: 1px solid $green;
+      }
+    }
+  }
+}
+/*  END DIALOGS  */
+
+/*  PROCESSOR  */
+#processor-stack {
+
+
+  .processor-chain {
+    max-width: 100%;
+    width: 800px;
+    margin: 1rem auto;
+    background: #fff;
+    border: 1px solid $grey;
+    border-radius: 4px;
+    padding: 1rem;
+
+    .stack-item {
+
+      &:after {
+        display: block;
+        content: ".";
+        background: url('../images/process-arrow.png') no-repeat 50% 0 transparent;
+        background-size: contain;
+        height: 50px;
+        overflow:hidden;
+        text-indent: 9999px;
+      }
+
+      &:last-child:after,
+      &.ui-sortable-helper:after {
+        display: none;
+        content: "";
+      }
+
+      &.ui-sortable-placeholder:after {
+        height:200px;
+      }
+
+      .inside {
+        background: $lightGrey;
+        margin: 0;
+        position: relative;
+        padding-bottom:2rem;
+
+        .header {
+          background: $darkGrey;
+          color: #fff;
+          padding: 0.25rem;
+          cursor: pointer;
+
+          & > div {
+            display: inline-block;
+
+            &:before {
+              content: "/";
+              display: inline-block;
+              padding: 0 0.25rem;
+            }
+            &:first-child:before {
+              content: "";
+              padding: 0;
+            }
+          }
+
+          &:before {
+            content:"\f067";
+            font: $faFont;
+            padding-right:0.25rem;
+          }
+
+          &.expanded:before {
+            content:"\f068";
+          }
+        }
+
+        .edit-filter,
+        .move-filter,
+        .remove-filter {
+          position: absolute;
+        }
+        .move-filter {
+          bottom: 0.25rem;
+          left: 1rem;
+
+          .move-left,
+          .move-right {
+            display: inline-block;
+            width: 17px;
+            height: 12px;
+            overflow: hidden;
+            text-indent: 999px;
+
+            &:before {
+              content: "\f077";
+              text-indent: 0;
+              font: normal normal 900 14px/1 "Font Awesome 5 Free";
+              display:block;
+            }
+            &.move-right:before {
+              content:"\f078";
+            }
+          }
+        }
+        .edit-filter {
+          right: 0.5rem;
+          top: 0.2rem;
+
+          a {
+            color: #fff;
+            &:before {
+              font: $faFont;
+              content: "\f044";
+              padding-right: 0.25rem;
+            }
+          }
+        }
+        .remove-filter {
+          right: 0.5rem;
+          bottom: 0.3rem;
+
+          a {
+            color: $red;
+            &:before {
+              font: $faFont;
+              content: "\f1f8";
+              padding-right: 0.25rem;
+            }
+          }
+        }
+
+
+        .display-name {
+          font-style: italic;
+          padding: 0 1rem;
+          margin: 1rem 0;
+        }
+
+        .collapsible {
+          display:none;
+          padding: 0 1rem;
+        }
+      }
+    }
+  }
+
+  #add-filter-container {
+    max-width: 100%;
+    width: 800px;
+    margin: 1rem auto;
+  }
+}
+form#form_processor {
+  label[for="form_definition"] {
+    display:block;
+    text-align: center;
+    font-size:1.25rem;
+    margin:1rem 0;
+  }
+  .actions {
+    display:block;
+    margin-top:0.25rem;
+
+    a {
+      margin-left: 0.5rem;
+      font-family: $mainFont;
+      font-weight:400;
+
+      &:before {
+        margin-right:0.25rem;
+        font: $faFont;
+      }
+    }
+  }
+}
+/*  END PROCESSOR  */
