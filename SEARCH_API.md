@@ -1,10 +1,11 @@
 # Adimeo Data Suite: Documentation Search API
 
 ## Requirement
-In order to run the examples in this documentation, please install the API_DEMO database as follows.<br />
+In order to run the examples in this documentation, please install the API DEMO database as follows.
+
 [ Skip this step ](#summary)
 
-### Data installation
+### API DEMO database installation
 #### Create index
 * In `DataStudio > Indexes`, click on `Add a new index`:
     * Fill the `Index name` field with the value `api_demo`
@@ -135,7 +136,7 @@ In order to run the examples in this documentation, please install the API_DEMO 
         ```     
         * Save the configuration by clicking on `Save mapping` button
 
-#### Create processor
+#### Import processors
 * In `DataStudio > Processors`, click on `import`:
     * Select `documentation\processor_api_demo.data_demo.json` file
     * Import the configuration by clicking on `Import` button
@@ -147,8 +148,8 @@ In order to run the examples in this documentation, please install the API_DEMO 
 
 <a name="summary"></a>
 ## Summary
-1. [ Search : Main call ](#search-main)
-2. [ Search : Optional additional parameters ](#search-optional-additional-parameters)
+1. [ Search: Main call ](#search-main)
+2. [ Search: Optional additional parameters ](#search-optional-additional-parameters)
     1. [ Searching for a string into indexed fields ](#search-query)  
     2. [ View a single document ](#search-single-document)  
     3. [ View a document list ](#search-document-list)         
@@ -166,8 +167,8 @@ In order to run the examples in this documentation, please install the API_DEMO 
 5. [ Custom search ](#custom-search)
 ----
 <a name="search-main"></a>
-### Search : Main call
-Main call return all data for an index and a mapping.
+### Search: Main call
+Main call returns all data for an index and a mapping.
 
 * **URL**
 
@@ -177,7 +178,7 @@ Main call return all data for an index and a mapping.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -186,7 +187,7 @@ Main call return all data for an index and a mapping.
 
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
 
@@ -278,7 +279,7 @@ Main call return all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when the elasticsearch query fails :
+      Occurs when the elasticsearch query fails:
       ```json  
         {    
             "error": "Search failed"
@@ -288,7 +289,7 @@ Main call return all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when index or mapping not exists :
+      Occurs when index or mapping not exists:
       ```json  
         {    
             "error": "Mapping does not exists"
@@ -298,7 +299,7 @@ Main call return all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when index or mapping parameters is missing :
+      Occurs when index or mapping parameters is missing:
       ```json  
         {    
             "error": "Missing mapping parameter"
@@ -306,7 +307,7 @@ Main call return all data for an index and a mapping.
       ```      
 
 <a name="search-optional-additional-parameters"></a>
-### Search : Optional additional parameters
+### Search: Optional additional parameters
 Optional additional parameters can be combined with each other based on the main call.
 
 <a name="search-query"></a>
@@ -322,7 +323,7 @@ The partial search can be done thanks to the joker (*).
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -332,7 +333,7 @@ The partial search can be done thanks to the joker (*).
 
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_character_search] = `digit*`
@@ -404,7 +405,7 @@ Return all data for a single document with its ID.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -414,7 +415,7 @@ Return all data for a single document with its ID.
 
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [you_document_id] = `AWiUunlU5a6YCxlRbh4B` [Adjust this value for your documents]
@@ -472,7 +473,7 @@ Return all data for a document list specified by their ID.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -482,7 +483,7 @@ Return all data for a document list specified by their ID.
 
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [you_document_id1] = `AWiUunze5a6YCxlRbh4C` [Adjust this value for your documents]
@@ -555,7 +556,7 @@ Return all the data constrained by search filter on raw or transliterated field.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -573,7 +574,7 @@ Return all the data constrained by search filter on raw or transliterated field.
    
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `city.raw`
@@ -637,7 +638,7 @@ Return all the data constrained by a filter in connection with an analyzed field
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -648,7 +649,7 @@ Return all the data constrained by a filter in connection with an analyzed field
   
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `city`
@@ -725,7 +726,7 @@ based on the keywords provided.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -735,7 +736,7 @@ based on the keywords provided.
   
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [autopromote] = `1` 
@@ -801,7 +802,7 @@ You can specify the order filter on a **raw or transliterated** field.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -812,7 +813,7 @@ You can specify the order filter on a **raw or transliterated** field.
   
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name] = `entity.raw`
@@ -914,7 +915,7 @@ If your main search failed for the current channel, a suggestion, based on the s
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -925,7 +926,7 @@ If your main search failed for the current channel, a suggestion, based on the s
   
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `entity`
@@ -1003,7 +1004,7 @@ You can highlight the search terms if those ones were found in specified fields.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1032,7 +1033,7 @@ You can highlight the search terms if those ones were found in specified fields.
   
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_term] = `Adimeo`
@@ -1072,7 +1073,7 @@ for the relevant index.
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1083,7 +1084,7 @@ for the relevant index.
   
 * **Example :**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_raw_field_1] = `entity.raw` 
@@ -1177,7 +1178,7 @@ The fingerprint analyzer is a specialist analyzer which creates a fingerprint wh
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1187,7 +1188,7 @@ The fingerprint analyzer is a specialist analyzer which creates a fingerprint wh
   
 * **Example :**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [analyzer] = `whitespace` 
@@ -1210,7 +1211,7 @@ These make it possible to adjust the relevance of the engine according to certai
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1220,7 +1221,7 @@ These make it possible to adjust the relevance of the engine according to certai
   
 * **Example :**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [apply_boosting] = `1` 
@@ -1243,7 +1244,7 @@ Returns json data corresponding to the partial or complete text from the paramet
 
   `GET`
   
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1268,7 +1269,7 @@ Returns json data corresponding to the partial or complete text from the paramet
   
   * **Content:** 
   
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_field_name] = `entity.raw`
@@ -1321,7 +1322,7 @@ Find documents that are similar to a given document or a set of documents.
 
     `GET`
 
-* **URL Params**
+* **URL Parameters**
 
   **Required:**
    
@@ -1332,7 +1333,7 @@ Find documents that are similar to a given document or a set of documents.
   
 * **Success Response:**
   
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_fields_concerned] = `entity, body`
@@ -1359,7 +1360,7 @@ Make your own and custom query by-passing ADS filter.
 
     `POST`
 
-* **URL Params**
+* **URL Parameters**
 
     **Required:**
 
@@ -1374,7 +1375,7 @@ Make your own and custom query by-passing ADS filter.
 
 * **Success Response:**
 
-    Let's try to make an sample call cURL with this parameters:
+    Let's try to make a sample call cURL with these parameters:
     * [your_index] = `api_demo`
     * [your_size] = `10`
     * [your_raw_data] = `{"query":{"bool":{"must":{"term":{"entity":"adimeo"}}}}}` 
@@ -1384,7 +1385,7 @@ Make your own and custom query by-passing ADS filter.
         curl -d '{"query":{"bool":{"must":{"term":{"entity":"adimeo"}}}}}' -H "Content-Type: application/json" -X POST http://localhost:8888/index.php/search-api/v2/custom\?index\=\api_demo\&size\=10
     ``` 
 
-    * **Code:** 200
+    * **Code:** 200@
     
     * **Content:**    
     ```json
