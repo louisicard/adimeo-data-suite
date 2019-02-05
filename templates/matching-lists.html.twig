@@ -48,17 +48,22 @@
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_matching_list'}})}}
   {%endif%}
-  <ul class="actions clearfix">
-  {%if init_from_index_action is defined%}
-    <li>{{init_from_index_action|raw}}</li>
+  {%if init_from_index_action is defined or import_file_link is defined or export_link is defined %}
+  <div class="widget">
+    <div class="widget-title">{% trans %}Import/Export{% endtrans %}</div>
+    <div class="widget-content">
+      <form class="actions clearfix">
+      {%if init_from_index_action is defined%}
+        <p>{{init_from_index_action|raw}}</p>
+      {%endif%}
+      {%if import_file_link is defined%}
+        <p><a href="{{import_file_link}}" class="fa fa-file-import">{{'Import file'|trans}}</a></p>
+      {%endif%}
+      {%if export_link is defined%}
+        <p><a href="{{export_link}}" class="fa fa-file-export">{{'Export'|trans}}</a></p>
+      {%endif%}
+      </form>
+    </div>
+  </div>
   {%endif%}
-  {%if import_file_link is defined%}
-    <li><a href="{{import_file_link}}">{{'Import file'|trans}}</a></li>
-  {%endif%}
-  {%if export_link is defined%}
-    <li><a href="{{export_link}}">{{'Export'|trans}}</a></li>
-  {%endif%}
-  </ul>
-  <script type="text/javascript">
-  </script>
 {%endblock%}

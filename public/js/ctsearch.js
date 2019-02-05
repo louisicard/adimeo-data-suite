@@ -284,7 +284,10 @@
           modal: true,
           autoOpen: false,
           title: 'Select datasource siblings',
-          width: 600,
+          width: $(window).width() > 600 ? 600 : $(window).width(),
+          open: function(){
+            $(this).dialog('option', 'maxHeight', $(window).height() - 150);
+          },
           create: function () {
             $.ajax({
               url: __database_list_ajax_url
@@ -915,7 +918,7 @@
       modal: true,
       autoOpen: false,
       title: 'Filter settings',
-      width: 600,
+      width: $(window).width() > 600 ? 600 : $(window).width(),
       open: function(){
         $(this).dialog('option', 'maxHeight', $(window).height() - 150);
       },
@@ -1042,8 +1045,8 @@
   }
 
   function initMatchingListAssistant() {
-    $('#matching-list-table').detach();
-    var table = $('<table id="matching-list-table"><thead><tr><th>Input</th><th>Output</th><th>&nbsp;</th></tr></thead><tbody></tbody></table>').insertBefore($('#matching-list-json-toggle-container'));
+    $('#matching-list-table-widget').detach();
+    var table = $('<div class="widget" id="matching-list-table-widget"><div class="widget-title">' + __ctsearch_js_translations.MatchingListDefinition + '</div><div class="widget-content"><table id="matching-list-table"><thead><tr><th>Input</th><th>Output</th><th>&nbsp;</th></tr></thead><tbody></tbody></table></div></div>').insertBefore($('#matching-list-json-toggle-container'));
     var json = JSON.parse($('#form_matching_list #form_list').val());
     for (var key in json) {
       table.find('tbody').append('<tr><td>' + key + '</td><td>' + json[key] + '</td><td><a href="javascript:void(0);" class="delete action-delete">Delete</a></td></tr>');
@@ -1076,7 +1079,7 @@
     var def = JSON.parse($('#form_search_page #form_definition').val());
     if(mapping != ''){
       $('#search-page-configurator').detach();
-      var container = $('<div id="search-page-configurator"><h2>Configuration</h2><div class="content">Loading</div></div>');
+      var container = $('<div class="widget" id="search-page-configurator"><div class="widget-title">Configuration</div><div class="widget-content content">Loading</div></div>');
       container.insertBefore($('#form_definition').parent());
       $.ajax({
         url: __ctsearch_base_url + 'search-pages/fields/' + mapping
@@ -1106,9 +1109,11 @@
           $('#sp-def-size').val(def.size);
         }
 
-        var facets = $('<div id="sp-def-facets"></div>');
+        var facets = $('<div id="sp-def-facets" class="sub-widget"></div>');
         facets.append($('<h3>Facets</h3>'));
         container.find('.content').append(facets);
+        var facetOptionsTable = $('<div class="field-option-table"></div>');
+        facets.append(facetOptionsTable);
         if (typeof def.facets !== 'undefined') {
           for (var i = 0; i < def.facets.length; i++) {
             var facet_name = '';
@@ -1116,7 +1121,7 @@
             for (var k in def.facets[i]) {
               facet_name = k;
             }
-            var facet_option_container = $('<div class="facet-option sortable-option"></div>');
+            var facet_option_container = $('<div class="facet-option sortable-option field-option-tr"></div>');
 
             var select = fieldSelect.clone();
             select.attr('id', 'facet-field-' + rnd);
@@ -1125,44 +1130,54 @@
                 $(this).attr('selected', 'selected');
               }
             });
-            facet_option_container.append(select);
-            $('<label for="facet-field-' + rnd + '">Field</label>').insertBefore(select);
+            var selectItem = $('<div class="field-option-td"></div>');
+            selectItem.append(select);
+            facet_option_container.append($('<label for="facet-field-' + rnd + '" class="field-option-td">Field</label>'));
+            facet_option_container.append(selectItem);
 
             var label = $('<input type="text" id="facet-label-' + rnd + '" />');
             if(typeof def.facets[i][facet_name].label !== 'undefined')
               label.val(def.facets[i][facet_name].label);
-            facet_option_container.append(label);
-            $('<label for="facet-label-' + rnd + '">Facet label</label>').insertBefore(label);
+            var labelItem = $('<div class="field-option-td"></div>');
+            labelItem.append(label);
+            facet_option_container.append($('<label for="facet-label-' + rnd + '" class="field-option-td">Facet label</label>'));
+            facet_option_container.append(labelItem);
 
             var stickyLbl = $('<label for="facet-sticky-' + rnd + '">Sticky</label>');
             var stickyChb = $('<input type="checkbox" id="facet-sticky-' + rnd + '" class="sticky-facet" />');
             if(typeof def.facets[i][facet_name].sticky !== 'undefined' && def.facets[i][facet_name].sticky){
               stickyChb.attr('checked', 'checked');
             }
-            facet_option_container.append(stickyLbl);
-            facet_option_container.append(stickyChb);
+            var stickyItem = $('<div class="field-option-td"></div>');
+            stickyItem.append(stickyLbl);
+            stickyItem.append(stickyChb);
+            facet_option_container.append(stickyItem);
 
             var isDateLbl = $('<label for="facet-isdate-' + rnd + '">Is date?</label>');
             var isDateChb = $('<input type="checkbox" id="facet-isdate-' + rnd + '" class="isdate-facet" />');
             if(typeof def.facets[i][facet_name].isDate !== 'undefined' && def.facets[i][facet_name].isDate){
               isDateChb.attr('checked', 'checked');
             }
-            facet_option_container.append(isDateLbl);
-            facet_option_container.append(isDateChb);
+            var isDateItem = $('<div class="field-option-td"></div>');
+            isDateItem.append(isDateLbl);
+            isDateItem.append(isDateChb);
+            facet_option_container.append(isDateItem);
 
             var up = $('<a href="#" class="up">Move up</a>');
             var down = $('<a href="#" class="down">Move down</a>');
             var remove = $('<a href="#" class="remove">Remove</a>');
-            facet_option_container.append(up);
-            facet_option_container.append(down);
-            facet_option_container.append(remove);
+            var actionsItem = $('<div class="field-option-td"></div>');
+            actionsItem.append(up);
+            actionsItem.append(down);
+            actionsItem.append(remove);
+            facet_option_container.append(actionsItem);
 
-            facets.append(facet_option_container);
+            facetOptionsTable.append(facet_option_container);
           }
         }
-        facets.append($('<div class="action"><a href="#" class="add">Add facet</a></div>'));
+        facets.append($('<div class="action"><a href="#" class="add fa fa-plus">Add facet</a></div>'));
 
-        var sorting = $('<div id="sp-def-sorting"></div>');
+        var sorting = $('<div id="sp-def-sorting" class="sub-widget"></div>');
         sorting.append($('<h3>Sorting</h3>'));
         container.find('.content').append(sorting);
         var defaultSorting = $('<div class="form-item required"><label for="sp-def-default-sorting">Empty search sorting field:</label></div>');
@@ -1181,15 +1196,18 @@
         if (typeof def.sorting !== 'undefined') {
           $('#sp-def-default-sorting-order').val(def.sorting.default.order);
         }
+        var sortingOptionsTable = $('<div class="field-option-table"></div>');
+        sorting.append(sortingOptionsTable);
         if (typeof def.sorting !== 'undefined' && typeof def.sorting.fields !== 'undefined') {
           for (var i = 0; i < def.sorting.fields.length; i++) {
             var field = '';
             for (var k in def.sorting.fields[i]) {
               field = k;
             }
-            var sorting_option_container = $('<div class="sorting-option sortable-option"></div>');
+            var sorting_option_container = $('<div class="sorting-option sortable-option field-option-tr"></div>');
             var rnd = Math.floor(Math.random() * 1000);
 
+            sorting_option_container.append($('<label for="sorting-field-' + rnd + '" class="field-option-td">Field</label>'));
             var sortingFieldSelect = fieldSelect.clone();
             sortingFieldSelect.attr('id', 'sorting-field-' + rnd);
             sortingFieldSelect.find('option[value="_id"]').detach();
@@ -1199,27 +1217,33 @@
                 $(this).attr('selected', 'selected');
               }
             });
-            sorting_option_container.append(sortingFieldSelect);
-            $('<label for="sorting-field-' + rnd + '">Field</label>').insertBefore(sortingFieldSelect);
+            var selectWrap = $('<div class="field-option-td"></div>');
+            selectWrap.append(sortingFieldSelect);
+            sorting_option_container.append(selectWrap);
 
+
+            sorting_option_container.append($('<label for="sorting-label-' + rnd + '" class="field-option-td">Sorting option label</label>'));
             var label = $('<input type="text" id="sorting-label-' + rnd + '" />');
             label.val(def.sorting.fields[i][field]);
-            sorting_option_container.append(label);
-            $('<label for="sorting-label-' + rnd + '">Sorting option label</label>').insertBefore(label);
+            var labelWrap = $('<div class="field-option-td"></div>');
+            labelWrap.append(label);
+            sorting_option_container.append(labelWrap);
 
+            var actionWrap = $('<div class="field-option-td"></div>');
             var up = $('<a href="#" class="up">Move up</a>');
             var down = $('<a href="#" class="down">Move down</a>');
             var remove = $('<a href="#" class="remove">Remove</a>');
-            sorting_option_container.append(up);
-            sorting_option_container.append(down);
-            sorting_option_container.append(remove);
+            actionWrap.append(up);
+            actionWrap.append(down);
+            actionWrap.append(remove);
+            sorting_option_container.append(actionWrap);
 
-            sorting.append(sorting_option_container);
+            sortingOptionsTable.append(sorting_option_container);
           }
         }
-        sorting.append($('<div class="action"><a href="#" class="add">Add sorting option</a></div>'));
+        sorting.append($('<div class="action"><a href="#" class="add fa fa-plus">Add sorting option</a></div>'));
 
-        var results = $('<div id="sp-def-results"></div>');
+        var results = $('<div id="sp-def-results" class="sub-widget"></div>');
         results.append($('<h3>Results</h3>'));
         container.find('.content').append(results);
         var results_mapping = ['title', 'thumbnail', 'url', 'excerp'];
@@ -1285,7 +1309,7 @@
           });
         }
 
-        var autocomplete = $('<div id="sp-def-autocomplete"></div>');
+        var autocomplete = $('<div id="sp-def-autocomplete" class="sub-widget"></div>');
         autocomplete.append($('<h3>Autocomplete</h3>'));
         container.find('.content').append(autocomplete);
         var autoCompleteField = $('<div class="form-item"><label for="sp-def-autocomplete-field">Autocomplete field:</label></div>');
@@ -1333,39 +1357,49 @@
   }
 
   function handleSearchPageConfigurationAddFieldOption(target, fieldSelect, containerClass, fieldLabel, fieldLabelLabel){
-    var container = $('<div class="' + containerClass + ' sortable-option"></div>');
+    var container = $('<div class="' + containerClass + ' sortable-option field-option-tr"></div>');
 
     var rnd = Math.floor(Math.random() * 1000);
 
     var select = fieldSelect.clone();
     select.attr('id', 'sortable-field-' + rnd);
-    container.append(select);
-    $('<label for="sortable-field-' + rnd + '">' + fieldLabel + '</label>').insertBefore(select);
+    var selectWrap = $('<div class="field-option-td"></div>');
+    selectWrap.append(select);
+    container.append($('<label for="sortable-field-' + rnd + '" class="field-option-td">' + fieldLabel + '</label>'));
+    container.append(selectWrap);
 
+    var labelWrap =  $('<div class="field-option-td"></div>');
     var label = $('<input type="text" id="sortable-label-' + rnd + '" />');
-    container.append(label);
-    $('<label for="sortable-label-' + rnd + '">' + fieldLabelLabel + '</label>').insertBefore(label);
+    labelWrap.append(label);
+    container.append($('<label for="sortable-label-' + rnd + '" class="field-option-td">' + fieldLabelLabel + '</label>'));
+    container.append(labelWrap);
 
     if(containerClass == 'facet-option'){
+      var stickyLblWrap =  $('<div class="field-option-td"></div>');
       var stickyLbl = $('<label for="sortable-sticky-' + rnd + '">Sticky</label>');
-      var stickyChb = $('<input type="checkbox" id="sortable-sticky-' + rnd + '" />');
-      container.append(stickyLbl);
-      container.append(stickyChb);
+      var stickyChb = $('<input type="checkbox" id="sortable-sticky-' + rnd + '" class="sticky-facet" />');
+      stickyLblWrap.append(stickyLbl);
+      stickyLblWrap.append(stickyChb);
+      container.append(stickyLblWrap);
 
+      var isDateLblWrap =  $('<div class="field-option-td"></div>');
       var isDateLbl = $('<label for="facet-isdate-' + rnd + '">Is date?</label>');
       var isDateChb = $('<input type="checkbox" id="facet-isdate-' + rnd + '" class="isdate-facet" />');
-      container.append(isDateLbl);
-      container.append(isDateChb);
+      isDateLblWrap.append(isDateLbl);
+      isDateLblWrap.append(isDateChb);
+      container.append(isDateLblWrap);
     }
 
+    var actionsWrap =  $('<div class="field-option-td"></div>');
     var up = $('<a href="#" class="up">Move up</a>');
     var down = $('<a href="#" class="down">Move down</a>');
     var remove = $('<a href="#" class="remove">Remove</a>');
-    container.append(up);
-    container.append(down);
-    container.append(remove);
+    actionsWrap.append(up);
+    actionsWrap.append(down);
+    actionsWrap.append(remove);
+    container.append(actionsWrap);
 
-    container.insertBefore(target);
+    target.parent().find('.field-option-table').append(container);
     bindEventsOnSearchPageConfigurator();
   }
 

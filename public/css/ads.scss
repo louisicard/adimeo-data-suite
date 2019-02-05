@@ -1,4 +1,5 @@
 $darkGrey: #333;
+$superLightGrey: #f8f9fa;
 $lightGrey: #eee;
 $grey: #bbb;
 $mediumGrey: #666;
@@ -431,7 +432,17 @@ body {
     }
   }
 
+  .sub-widget {
+    padding-left: 0.75rem;
+    background: $superLightGrey;
+    border-radius: 3px;
+    margin:1rem 0;
+    padding:1rem;
 
+    h3 {
+      margin-bottom:1rem;
+    }
+  }
 
 }
 
@@ -464,6 +475,14 @@ table {
 
 i.fas {
   padding-right:0.25rem;
+}
+a.fa {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  &:before {
+    font:$faFont;
+    margin-right:0.35rem;
+  }
 }
 /*  END WIDGET & TABLE  */
 
@@ -501,6 +520,8 @@ form {
       z-index:9;
     }
     select {
+      padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+
       option {
         padding-right:3rem;
       }
@@ -581,6 +602,7 @@ form {
     }
   }
 }
+.page-index-add-mapping,
 .page-index-edit-mapping {
   .new-field-row td {
     vertical-align: top;
@@ -958,3 +980,79 @@ form#form_processor {
   }
 }
 /*  END PROCESSOR  */
+
+/*  MATCHING LIST  */
+.page-matching-list-edit,
+.page-matching-list-add {
+  label[for="form_list"] {
+    display:none;
+  }
+  select {
+    margin: 0.5rem 0;
+  }
+  form.actions {
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+}
+/*  END MATCHING LIST  */
+
+/*  SEARCH PAGE  */
+#form_search_page {
+  .field-option-table {
+    display: table;
+  }
+  .field-option-tr {
+    display: table-row;
+  }
+  .field-option-td {
+    display: table-cell;
+    vertical-align: middle;
+    padding:1rem;
+  }
+
+  a.up,
+  a.down,
+  a.remove {
+    display: inline-block;
+    width: 17px;
+    height: 12px;
+    overflow: hidden;
+    text-indent: 999px;
+
+    &:before {
+      content: "\f077";
+      text-indent: 0;
+      font: normal normal 900 14px/1 "Font Awesome 5 Free";
+      display:block;
+    }
+    &.down:before {
+      content:"\f078";
+    }
+    &.remove:before {
+      content:"\f00d";
+    }
+  }
+
+  #sp-def-results > .result-mapping {
+    margin: 1rem 0;
+  }
+  #sp-def-results > .result-mapping > * {
+    display:inline;
+  }
+  #sp-def-results > .result-mapping > .result-mapping-field {
+    padding-right:1rem;
+  }
+  #sp-def-results > .result-mapping > label {
+    padding-right: 0.5rem;
+  }
+  #sp-def-results select {
+    width:auto;
+  }
+  #sp-def-results #suggest-container,
+  #sp-def-results #mlt-container {
+    margin: 1rem 0;
+  }
+}
+/*  END SEARCH PAGE */
