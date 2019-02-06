@@ -1,0 +1,78 @@
+.menu-toggle-wrapper {
+  display: block; }
+
+body #main-wrapper main,
+body.menu-collapsed #main-wrapper main {
+  margin-left: 0;
+  width: 100%; }
+
+body.page-login {
+  background: #fff; }
+body header figure {
+  margin-right: 0.8rem; }
+  body header figure figcaption {
+    display: none; }
+body #main-wrapper aside#main-menu {
+  width: 100%;
+  transition: all 0.3s ease;
+  background: #fff;
+  position: fixed;
+  top: 3rem;
+  height: auto;
+  left: 0;
+  z-index: 1;
+  border-right: none;
+  display: none; }
+  body #main-wrapper aside#main-menu.collapsed {
+    display: block;
+    /*In smartphone mode menu is displayed only when toggler is activated (opposite to normal mode)*/
+    width: 100%; }
+    body #main-wrapper aside#main-menu.collapsed #main-nav > ul > li > a {
+      overflow: hidden;
+      color: #333; }
+    body #main-wrapper aside#main-menu.collapsed #main-nav > ul > li > ul {
+      position: relative;
+      display: none;
+      max-height: none;
+      width: 100%;
+      right: 0;
+      top: 0;
+      background: none;
+      border: none; }
+      body #main-wrapper aside#main-menu.collapsed #main-nav > ul > li > ul.active {
+        display: block; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li > a {
+    overflow: hidden;
+    color: #333; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li > ul {
+    position: relative;
+    display: none;
+    max-height: none;
+    width: 100%;
+    right: 0;
+    top: 0;
+    background: none;
+    border: none; }
+    body #main-wrapper aside#main-menu #main-nav > ul > li > ul > li {
+      margin-left: 1rem; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li:hover > ul {
+    display: block; }
+
+#login-container {
+  max-width: none;
+  background: #fff;
+  margin: 0;
+  padding: 2rem;
+  border: none;
+  border-radius: 0; }
+  #login-container form label {
+    width: 100%;
+    float: none;
+    margin: 0.5rem 0;
+    display: block;
+    text-align: left; }
+  #login-container form .form-widget {
+    width: 100%;
+    float: none; }
+
+/*# sourceMappingURL=rwd-450.css.map */

@@ -3,55 +3,67 @@
 
 {%block main_content%}
   {%if matching_lists is defined %}
-    {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
-    <ul class="actions">
-      <li><a href="{{path('matching-list-add')}}">{{'Add a new matching list'|trans}}</a></li>
-    </ul>
-    {% endif %}
-  {%if matching_lists|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'List name'|trans}}</th>
-          <th>{{'Value count'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for matchingList in matching_lists%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{matchingList.name}}</td>
-            <td class="numeric">{{matchingList.list|jsonDecode|length}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{path('matching-list-edit', {'id': matchingList.id})}}">{{'Edit'|trans}}</a></li>
-                {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
-                <li><a href="{{path('matching-list-delete', {'id': matchingList.id})}}" class="matching-list-delete">{{'Delete'|trans}}</a></li>
-                {% endif %}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of matching lists{%endtrans%}</div>
+      {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
+      <div class="widget-actions">
+        <a href="{{path('matching-list-add')}}" class="fa fa-plus">{{'Add a new matching list'|trans}}</a>
+      </div>
+      {% endif %}
+      <div class="widget-content">
+        {%if matching_lists|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'List name'|trans}}</th>
+              <th>{{'Value count'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for matchingList in matching_lists%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{matchingList.name}}</td>
+                <td class="numeric">{{matchingList.list|jsonDecode|length}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{path('matching-list-edit', {'id': matchingList.id})}}">{{'Edit'|trans}}</a></li>
+                    {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
+                    <li><a href="{{path('matching-list-delete', {'id': matchingList.id})}}" class="matching-list-delete">{{'Delete'|trans}}</a></li>
+                    {% endif %}
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_matching_list'}})}}
   {%endif%}
-  <ul class="actions clearfix">
-  {%if init_from_index_action is defined%}
-    <li>{{init_from_index_action|raw}}</li>
+  {%if init_from_index_action is defined or import_file_link is defined or export_link is defined %}
+  <div class="widget">
+    <div class="widget-title">{% trans %}Import/Export{% endtrans %}</div>
+    <div class="widget-content">
+      <form class="actions clearfix">
+      {%if init_from_index_action is defined%}
+        <p>{{init_from_index_action|raw}}</p>
+      {%endif%}
+      {%if import_file_link is defined%}
+        <p><a href="{{import_file_link}}" class="fa fa-file-import">{{'Import file'|trans}}</a></p>
+      {%endif%}
+      {%if export_link is defined%}
+        <p><a href="{{export_link}}" class="fa fa-file-export">{{'Export'|trans}}</a></p>
+      {%endif%}
+      </form>
+    </div>
+  </div>
   {%endif%}
-  {%if import_file_link is defined%}
-    <li><a href="{{import_file_link}}">{{'Import file'|trans}}</a></li>
-  {%endif%}
-  {%if export_link is defined%}
-    <li><a href="{{export_link}}">{{'Export'|trans}}</a></li>
-  {%endif%}
-  </ul>
-  <script type="text/javascript">
-  </script>
 {%endblock%}

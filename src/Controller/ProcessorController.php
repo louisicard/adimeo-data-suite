@@ -143,7 +143,7 @@ class ProcessorController extends AdimeoDataSuiteController
       ))
       ->add('targetSiblings', HiddenType::class, array())
       ->add('definition', TextareaType::class, array(
-        'label' => $this->get('translator')->trans('JSON Definition'),
+        'label' => $this->get('translator')->trans('Processor chain'),
         'required' => true
       ))
       ->add('save', SubmitType::class, array('label' => $this->get('translator')->trans('Save')))

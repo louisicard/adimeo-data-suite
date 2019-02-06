@@ -7,7 +7,8 @@
   {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/png" href="{{ asset('images/logo48.png') }}" />
 </head>
-<body class="page-{{ app.request.get('_route') }}">
+{% set userPrefs = app.session.get('userPrefs') %}
+<body class="page-{{ app.request.get('_route') }}{% if userPrefs.menuState is defined and userPrefs.menuState == 'collapsed' %} menu-collapsed{% endif %}">
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
 </body>

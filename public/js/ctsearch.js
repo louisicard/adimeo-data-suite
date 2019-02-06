@@ -1,6 +1,7 @@
 (function ($) {
   $(document).ready(function () {
 
+    /*
     $('nav#main-menu li.expandable a').click(function(e){
       e.preventDefault();
       var ul = $(this).parents('li.expandable').find('ul');
@@ -13,12 +14,84 @@
     });
     $('nav#main-menu li.expandable li a').unbind('click');
 
+
     $(window).click(function(e){
       if(e.clientX > 0 && e.clientY > 0 && $(e.target).parents('nav#main-menu li.expandable').size() == 0){
         $('nav#main-menu li.expandable ul').hide();
       }
     });
 
+    */
+
+    $('nav#main-nav > ul > li.expandable > a').click(function(e) {
+      e.preventDefault();
+      $('nav#main-nav > ul > li > a').removeClass('active');
+      $('nav#main-nav > ul > li > ul').removeClass('active');
+      $(this).addClass('active');
+      $(this).siblings('ul').addClass('active');
+      return false;
+    });
+
+    var toggleMenu = function() {
+      if($('aside#main-menu').hasClass('collapsed')) {
+        $('aside#main-menu').removeClass('collapsed');
+        $('aside#main-menu').addClass('expanded');
+        $('body').removeClass('menu-collapsed');
+        if($(window).width() > 450) {
+          $.ajax({
+            url: '/api/save-user-prefs',
+            method: 'POST',
+            data: JSON.stringify({menuState: "expanded"})
+          });
+        }
+      }
+      else {
+        $('aside#main-menu').removeClass('expanded');
+        $('aside#main-menu').addClass('collapsed');
+        $('body').addClass('menu-collapsed');
+        if($(window).width() > 450) {
+          $.ajax({
+            url: '/api/save-user-prefs',
+            method: 'POST',
+            data: JSON.stringify({menuState: "collapsed"})
+          });
+        }
+      }
+    }
+
+    $('.menu-toggle-wrapper a').click(function(e) {
+      toggleMenu();
+    });
+
+    $('.widget.collapsible .widget-title').click(function() {
+      if($(this).parents('.widget').hasClass('collapsed')) {
+        $(this).parents('.widget').find('.widget-content').slideDown();
+      }
+      else {
+        $(this).parents('.widget').find('.widget-content').slideUp();
+      }
+      $(this).parents('.widget').toggleClass('collapsed');
+    });
+
+    var wrapSelects = function() {
+      $('select').each(function() {
+        if(!$(this).parent().hasClass('select-wrapper')) {
+          $(this).wrap('<div class="select-wrapper"></div>');
+        }
+      });
+    }
+
+    wrapSelects();
+    $('table').wrap('<div class="table-wrapper"></div>')
+
+    var lastSelectCheck = 0;
+    setInterval(function() {
+      var count = $('*').length;
+      if(count != lastSelectCheck) {
+        wrapSelects();
+      }
+      lastSelectCheck = count;
+    }, 100);
 
     $('a.index-delete').click(function (e) {
       e.preventDefault();
@@ -199,14 +272,14 @@
       });
       $('<div id="mapping-json-toggle-container"><a href="javascript:void(0)" id="mapping-json-toggle" class="json-link">' + __ctsearch_js_translations.ShowHideJSONDef + '</a></div>').insertBefore($('#form_mappingDefinition'));
       initMappingAssistant();
-      $('#form_mappingDefinition').width($('#mapping-table').width());
+      //$('#form_mappingDefinition').width($('#mapping-table').width());
       $('#form_mappingDefinition').css('display', 'none');
       $('#mapping-json-toggle').click(function () {
         $('#form_mappingDefinition').slideToggle();
       });
     }
     if($('#form_processor #form_datasourceName').size() > 0){
-      var siblingsLink = $('<a href="#">Siblings (0)</a>');
+      var siblingsLink = $('<a href="#" class="fa fa-clone siblings-link">Siblings (0)</a>');
       var updateSiblingsText = function(){
         var siblings = [];
         if($('#form_targetSiblings').val().length > 0) {
@@ -226,12 +299,15 @@
           modal: true,
           autoOpen: false,
           title: 'Select datasource siblings',
-          width: 600,
+          width: $(window).width() > 600 ? 600 : $(window).width(),
+          open: function(){
+            $(this).dialog('option', 'maxHeight', $(window).height() - 150);
+          },
           create: function () {
             $.ajax({
               url: __database_list_ajax_url
             }).success(function(list){
-              var html = '<div class="datasource-list"><ul>';
+              var html = '<div class="datasource-list"><form><div class="form-item"><div><ul>';
               var selectedDS = $('#form_targetSiblings').val().split(',');
               for(var i in list){
                 var ds = list[i];
@@ -239,7 +315,7 @@
                   html += '<li><input type="checkbox" id="cb-siblings-' + ds.id + '" value="' + ds.id + '"' + (selectedDS.indexOf(ds.id) >= 0 ? ' checked="checked"' : '') + ' /><label for="cb-siblings-' + ds.id + '">' + ds.name + '</label></li>';
                 }
               }
-              html += '</ul><div class="actions"><button>OK</button></div></div>';
+              html += '</ul></div></div></form><div class="actions"><button>OK</button></div></div>';
               mainDialog.html(html);
               mainDialog.find('.actions button').click(function(e){
                 e.preventDefault();
@@ -265,7 +341,7 @@
     if ($('#form_processor #form_definition').size() > 0) {
       $('<div id="mapping-json-toggle-container"><a href="javascript:void(0)" id="mapping-json-toggle" class="json-link">' + __ctsearch_js_translations.ShowHideJSONDef + '</a></div>').insertBefore($('#form_processor #form_definition'));
       initProcessorStack();
-      $('#form_processor #form_definition').width($('#processor-stack').width());
+      //$('#form_processor #form_definition').width($('#processor-stack').width());
       $('#form_processor #form_definition').css('display', 'none');
       $('#mapping-json-toggle').click(function () {
         $('#form_processor #form_definition').slideToggle();
@@ -383,6 +459,7 @@
       $('body.page-analytics #stat-display').html('Loading. Please wait.');
       $('body.page-analytics #stat-display').removeClass("chart-loaded");
       $('body.page-analytics #table-stat-display').html('');
+      $('body.page-analytics #table-stat-display-widget').hide();
       $.ajax({
         url: __ctsearch_base_url + 'analytics/compile',
         method: 'post',
@@ -414,9 +491,11 @@
           }
           html += '</tbody></table>'
           $('body.page-analytics #table-stat-display').html(html);
+          $('body.page-analytics #table-stat-display-widget').show();
         }
         else{
           $('body.page-analytics #table-stat-display').html('No data available');
+          $('body.page-analytics #table-stat-display-widget').show();
         }
       });
     });
@@ -552,7 +631,7 @@
       boost_select += '<option value="' + i + '">' + i + '</option>';
     }
     boost_select += '</select>';
-    table.find('tbody').append('<tr><td><input type="text" id="mapping-definition-field-name" placeholder="' + __ctsearch_js_translations.FieldName + '" tabindex="1" /><br /><a href="javascript:void(0)" id="mapping-add-field" tabindex="7">' + __ctsearch_js_translations.FieldAdd + '</a></td><td>' + type_select + '</td><td>' + format_select + '</td><td>' + analysis_select + '</td><td><input id="mapping-definition-field-include-raw" type="checkbox" disabled="disabled" /></td><td><input id="mapping-definition-field-include-transliterated" type="checkbox" disabled="disabled" /></td><td>' + store_select + '</td><td>' + boost_select + '</td><td></td></tr>');
+    table.find('tbody').append('<tr class="new-field-row"><td><input type="text" id="mapping-definition-field-name" placeholder="' + __ctsearch_js_translations.FieldName + '" tabindex="1" /><br /><a href="javascript:void(0)" id="mapping-add-field" tabindex="7">' + __ctsearch_js_translations.FieldAdd + '</a></td><td>' + type_select + '</td><td>' + format_select + '</td><td>' + analysis_select + '</td><td><input id="mapping-definition-field-include-raw" type="checkbox" disabled="disabled" /></td><td><input id="mapping-definition-field-include-transliterated" type="checkbox" disabled="disabled" /></td><td>' + store_select + '</td><td>' + boost_select + '</td><td></td></tr>');
     table.wrap('<div class="mapping-table-container"></div>');
     $('#mapping-definition-field-type, #mapping-definition-field-analysis').change(function(){
       if($('#mapping-definition-field-analysis').val() == 'not_analyzed'){
@@ -650,6 +729,7 @@
   function initProcessorStack() {
     $('#processor-stack').detach();
     var stack = $('<div id="processor-stack" class="clearfix"></div>').insertBefore($('#mapping-json-toggle-container'));
+    var processorChain = $('<div class="processor-chain"></div>').appendTo(stack);
     var json = JSON.parse($('#form_processor #form_definition').val());
     for (var i = 0; i < __datasource_fields.length; i++) {
       if ($.inArray(__datasource_fields[i], json.datasource.fields, 0) < 0) {
@@ -661,22 +741,22 @@
         json.datasource.fields.splice(i, 1);
     }
     var available_inputs = [];
-    var ds_html = '<div class="datasource stack-item"><div class="inside"><div class="name">Datasource</div><div class="display-name  ">' + json.datasource.name + '</div>';
-    ds_html += '<div class="fields"><div class="legend">Output</div><ul>';
+    var ds_html = '<div class="datasource stack-item"><div class="inside"><div class="header"><div class="name">Datasource</div></div>';
+    ds_html += '<div class="display-name  ">' + json.datasource.name + '</div><div class="collapsible"><div class="fields"><div class="legend">Output</div><ul>';
     for (var i = 0; i < json.datasource.fields.length; i++) {
       available_inputs.push('datasource.' + json.datasource.fields[i]);
       ds_html += '<li><em>' + json.datasource.fields[i] + '</em></li>';
     }
-    ds_html += '</ul></div>';
+    ds_html += '</ul></div></div>';
     ds_html += '</div></div>';
-    stack.append(ds_html);
+    processorChain.append(ds_html);
 
     var error_filters = [];
     for (var i = 0; i < json.filters.length; i++) {
       var filters_html = '';
-      filters_html = '<div class="filter stack-item" id="filter-' + json.filters[i].id + '"><div class="inside"><div class="edit-filter"><a href="javascript:void(0);">Edit</a></div><div class="move-filter"><a href="javascript:void(0);" class="move-left">&lt;</a><a href="javascript:void(0);" class="move-right">&gt;</a></div><div class="filter-id">ID = ' + json.filters[i].id + '</div><div class="remove-filter"><a href="javascript:void(0);">Remove</a></div><div class="name">Filter #' + (i + 1) + '</div><div class="in-stack-name">' + (typeof json.filters[i].inStackName != 'undefined' ? json.filters[i].inStackName : '') + '</div><div class="display-name">' + json.filters[i].filterDisplayName + '</div>';
+      filters_html = '<div class="filter stack-item" id="filter-' + json.filters[i].id + '"><div class="inside"><div class="edit-filter"><a href="javascript:void(0);">Edit</a></div><div class="move-filter"><a href="javascript:void(0);" class="move-left">&lt;</a><a href="javascript:void(0);" class="move-right">&gt;</a></div><div class="remove-filter"><a href="javascript:void(0);">Remove</a></div><div class="header"><div class="name">Filter #' + (i + 1) + '</div><div class="in-stack-name">' + (typeof json.filters[i].inStackName != 'undefined' ? json.filters[i].inStackName : '') + '</div><div class="filter-id">ID = ' + json.filters[i].id + '</div></div><div class="display-name">' + json.filters[i].filterDisplayName + '</div>';
 
-      filters_html += '<div class="fields"><div class="legend">Input</div>';
+      filters_html += '<div class="collapsible"><div class="fields"><div class="legend">Input</div>';
       if (json.filters[i].arguments.length > 0) {
         filters_html += '<ul>';
         var error = false;
@@ -702,10 +782,10 @@
         available_inputs.push('filter_' + json.filters[i].id + '.' + json.filters[i].fields[j]);
         filters_html += '<li><em>' + json.filters[i].fields[j] + '</em></li>';
       }
-      filters_html += '</ul></div>';
+      filters_html += '</ul></div></div>';
 
       filters_html += '</div></div>';
-      stack.append(filters_html);
+      processorChain.append(filters_html);
     }
 
     $('#processor-stack').sortable({
@@ -739,7 +819,7 @@
       add_filter_html += '<option value="' + __filter_types[i].split('#')[0] + '">' + __filter_types[i].split('#')[1] + '</option>';
     }
     add_filter_html += '</select>';
-    add_filter_html += '<a href="javascript:void(0)">Add filter</a>';
+    add_filter_html += '<a href="javascript:void(0)" class="fa fa-plus">Add filter</a>';
     add_filter_html += '</div>';
     stack.append(add_filter_html);
     $('#processor-stack #add-filter-container a').click(function () {
@@ -800,17 +880,21 @@
         }
       }
     });
+    $('#processor-stack .stack-item .header').click(function(e) {
+      $(this).parent().find('.collapsible').slideToggle();
+      $(this).toggleClass('expanded');
+    });
 
     if (typeof json.mapping == 'undefined') {
       json['mapping'] = {};
     }
-    var mapping_html = '<div class="mapping-container"><h2>Mapping</h2>';
+    var mapping_html = '<div class="mapping-container widget"><div class="widget-title">Mapping</div><div class="widget-content">';
     mapping_html += '<table id="mapping-table"><thead><tr><th>Input</th><th>Target</th></tr></thead><tbody>';
     mapping_html += '<tr><td class="input">' + getMappingInputSelect(json, '_id') + '</td><td class="target">' + __mapping_name + '._id</td></tr>';
     for (var i = 0; i < __target_fields.length; i++) {
       mapping_html += '<tr><td class="input">' + getMappingInputSelect(json, __target_fields[i]) + '</td><td class="target">' + __mapping_name + '.' + __target_fields[i] + '</td></tr>';
     }
-    mapping_html += '</tbody></table></div>';
+    mapping_html += '</tbody></table></div></div>';
     stack.append(mapping_html);
     stack.find('.mapping-select').change(function () {
       var target_field = $(this).attr('id').split('-')[1];
@@ -852,7 +936,7 @@
       modal: true,
       autoOpen: false,
       title: 'Filter settings',
-      width: 600,
+      width: $(window).width() > 600 ? 600 : $(window).width(),
       open: function(){
         $(this).dialog('option', 'maxHeight', $(window).height() - 150);
       },
@@ -979,8 +1063,8 @@
   }
 
   function initMatchingListAssistant() {
-    $('#matching-list-table').detach();
-    var table = $('<table id="matching-list-table"><thead><tr><th>Input</th><th>Output</th><th>&nbsp;</th></tr></thead><tbody></tbody></table>').insertBefore($('#matching-list-json-toggle-container'));
+    $('#matching-list-table-widget').detach();
+    var table = $('<div class="widget" id="matching-list-table-widget"><div class="widget-title">' + __ctsearch_js_translations.MatchingListDefinition + '</div><div class="widget-content"><table id="matching-list-table"><thead><tr><th>Input</th><th>Output</th><th>&nbsp;</th></tr></thead><tbody></tbody></table></div></div>').insertBefore($('#matching-list-json-toggle-container'));
     var json = JSON.parse($('#form_matching_list #form_list').val());
     for (var key in json) {
       table.find('tbody').append('<tr><td>' + key + '</td><td>' + json[key] + '</td><td><a href="javascript:void(0);" class="delete action-delete">Delete</a></td></tr>');
@@ -1013,7 +1097,7 @@
     var def = JSON.parse($('#form_search_page #form_definition').val());
     if(mapping != ''){
       $('#search-page-configurator').detach();
-      var container = $('<div id="search-page-configurator"><h2>Configuration</h2><div class="content">Loading</div></div>');
+      var container = $('<div class="widget" id="search-page-configurator"><div class="widget-title">Configuration</div><div class="widget-content content">Loading</div></div>');
       container.insertBefore($('#form_definition').parent());
       $.ajax({
         url: __ctsearch_base_url + 'search-pages/fields/' + mapping
@@ -1043,9 +1127,11 @@
           $('#sp-def-size').val(def.size);
         }
 
-        var facets = $('<div id="sp-def-facets"></div>');
+        var facets = $('<div id="sp-def-facets" class="sub-widget"></div>');
         facets.append($('<h3>Facets</h3>'));
         container.find('.content').append(facets);
+        var facetOptionsTable = $('<div class="field-option-table"></div>');
+        facets.append(facetOptionsTable);
         if (typeof def.facets !== 'undefined') {
           for (var i = 0; i < def.facets.length; i++) {
             var facet_name = '';
@@ -1053,7 +1139,7 @@
             for (var k in def.facets[i]) {
               facet_name = k;
             }
-            var facet_option_container = $('<div class="facet-option sortable-option"></div>');
+            var facet_option_container = $('<div class="facet-option sortable-option field-option-tr"></div>');
 
             var select = fieldSelect.clone();
             select.attr('id', 'facet-field-' + rnd);
@@ -1062,44 +1148,54 @@
                 $(this).attr('selected', 'selected');
               }
             });
-            facet_option_container.append(select);
-            $('<label for="facet-field-' + rnd + '">Field</label>').insertBefore(select);
+            var selectItem = $('<div class="field-option-td"></div>');
+            selectItem.append(select);
+            facet_option_container.append($('<label for="facet-field-' + rnd + '" class="field-option-td">Field</label>'));
+            facet_option_container.append(selectItem);
 
             var label = $('<input type="text" id="facet-label-' + rnd + '" />');
             if(typeof def.facets[i][facet_name].label !== 'undefined')
               label.val(def.facets[i][facet_name].label);
-            facet_option_container.append(label);
-            $('<label for="facet-label-' + rnd + '">Facet label</label>').insertBefore(label);
+            var labelItem = $('<div class="field-option-td"></div>');
+            labelItem.append(label);
+            facet_option_container.append($('<label for="facet-label-' + rnd + '" class="field-option-td">Facet label</label>'));
+            facet_option_container.append(labelItem);
 
             var stickyLbl = $('<label for="facet-sticky-' + rnd + '">Sticky</label>');
             var stickyChb = $('<input type="checkbox" id="facet-sticky-' + rnd + '" class="sticky-facet" />');
             if(typeof def.facets[i][facet_name].sticky !== 'undefined' && def.facets[i][facet_name].sticky){
               stickyChb.attr('checked', 'checked');
             }
-            facet_option_container.append(stickyLbl);
-            facet_option_container.append(stickyChb);
+            var stickyItem = $('<div class="field-option-td"></div>');
+            stickyItem.append(stickyLbl);
+            stickyItem.append(stickyChb);
+            facet_option_container.append(stickyItem);
 
             var isDateLbl = $('<label for="facet-isdate-' + rnd + '">Is date?</label>');
             var isDateChb = $('<input type="checkbox" id="facet-isdate-' + rnd + '" class="isdate-facet" />');
             if(typeof def.facets[i][facet_name].isDate !== 'undefined' && def.facets[i][facet_name].isDate){
               isDateChb.attr('checked', 'checked');
             }
-            facet_option_container.append(isDateLbl);
-            facet_option_container.append(isDateChb);
+            var isDateItem = $('<div class="field-option-td"></div>');
+            isDateItem.append(isDateLbl);
+            isDateItem.append(isDateChb);
+            facet_option_container.append(isDateItem);
 
             var up = $('<a href="#" class="up">Move up</a>');
             var down = $('<a href="#" class="down">Move down</a>');
             var remove = $('<a href="#" class="remove">Remove</a>');
-            facet_option_container.append(up);
-            facet_option_container.append(down);
-            facet_option_container.append(remove);
+            var actionsItem = $('<div class="field-option-td"></div>');
+            actionsItem.append(up);
+            actionsItem.append(down);
+            actionsItem.append(remove);
+            facet_option_container.append(actionsItem);
 
-            facets.append(facet_option_container);
+            facetOptionsTable.append(facet_option_container);
           }
         }
-        facets.append($('<div class="action"><a href="#" class="add">Add facet</a></div>'));
+        facets.append($('<div class="action"><a href="#" class="add fa fa-plus">Add facet</a></div>'));
 
-        var sorting = $('<div id="sp-def-sorting"></div>');
+        var sorting = $('<div id="sp-def-sorting" class="sub-widget"></div>');
         sorting.append($('<h3>Sorting</h3>'));
         container.find('.content').append(sorting);
         var defaultSorting = $('<div class="form-item required"><label for="sp-def-default-sorting">Empty search sorting field:</label></div>');
@@ -1118,15 +1214,18 @@
         if (typeof def.sorting !== 'undefined') {
           $('#sp-def-default-sorting-order').val(def.sorting.default.order);
         }
+        var sortingOptionsTable = $('<div class="field-option-table"></div>');
+        sorting.append(sortingOptionsTable);
         if (typeof def.sorting !== 'undefined' && typeof def.sorting.fields !== 'undefined') {
           for (var i = 0; i < def.sorting.fields.length; i++) {
             var field = '';
             for (var k in def.sorting.fields[i]) {
               field = k;
             }
-            var sorting_option_container = $('<div class="sorting-option sortable-option"></div>');
+            var sorting_option_container = $('<div class="sorting-option sortable-option field-option-tr"></div>');
             var rnd = Math.floor(Math.random() * 1000);
 
+            sorting_option_container.append($('<label for="sorting-field-' + rnd + '" class="field-option-td">Field</label>'));
             var sortingFieldSelect = fieldSelect.clone();
             sortingFieldSelect.attr('id', 'sorting-field-' + rnd);
             sortingFieldSelect.find('option[value="_id"]').detach();
@@ -1136,27 +1235,33 @@
                 $(this).attr('selected', 'selected');
               }
             });
-            sorting_option_container.append(sortingFieldSelect);
-            $('<label for="sorting-field-' + rnd + '">Field</label>').insertBefore(sortingFieldSelect);
+            var selectWrap = $('<div class="field-option-td"></div>');
+            selectWrap.append(sortingFieldSelect);
+            sorting_option_container.append(selectWrap);
 
+
+            sorting_option_container.append($('<label for="sorting-label-' + rnd + '" class="field-option-td">Sorting option label</label>'));
             var label = $('<input type="text" id="sorting-label-' + rnd + '" />');
             label.val(def.sorting.fields[i][field]);
-            sorting_option_container.append(label);
-            $('<label for="sorting-label-' + rnd + '">Sorting option label</label>').insertBefore(label);
+            var labelWrap = $('<div class="field-option-td"></div>');
+            labelWrap.append(label);
+            sorting_option_container.append(labelWrap);
 
+            var actionWrap = $('<div class="field-option-td"></div>');
             var up = $('<a href="#" class="up">Move up</a>');
             var down = $('<a href="#" class="down">Move down</a>');
             var remove = $('<a href="#" class="remove">Remove</a>');
-            sorting_option_container.append(up);
-            sorting_option_container.append(down);
-            sorting_option_container.append(remove);
+            actionWrap.append(up);
+            actionWrap.append(down);
+            actionWrap.append(remove);
+            sorting_option_container.append(actionWrap);
 
-            sorting.append(sorting_option_container);
+            sortingOptionsTable.append(sorting_option_container);
           }
         }
-        sorting.append($('<div class="action"><a href="#" class="add">Add sorting option</a></div>'));
+        sorting.append($('<div class="action"><a href="#" class="add fa fa-plus">Add sorting option</a></div>'));
 
-        var results = $('<div id="sp-def-results"></div>');
+        var results = $('<div id="sp-def-results" class="sub-widget"></div>');
         results.append($('<h3>Results</h3>'));
         container.find('.content').append(results);
         var results_mapping = ['title', 'thumbnail', 'url', 'excerp'];
@@ -1222,7 +1327,7 @@
           });
         }
 
-        var autocomplete = $('<div id="sp-def-autocomplete"></div>');
+        var autocomplete = $('<div id="sp-def-autocomplete" class="sub-widget"></div>');
         autocomplete.append($('<h3>Autocomplete</h3>'));
         container.find('.content').append(autocomplete);
         var autoCompleteField = $('<div class="form-item"><label for="sp-def-autocomplete-field">Autocomplete field:</label></div>');
@@ -1270,39 +1375,49 @@
   }
 
   function handleSearchPageConfigurationAddFieldOption(target, fieldSelect, containerClass, fieldLabel, fieldLabelLabel){
-    var container = $('<div class="' + containerClass + ' sortable-option"></div>');
+    var container = $('<div class="' + containerClass + ' sortable-option field-option-tr"></div>');
 
     var rnd = Math.floor(Math.random() * 1000);
 
     var select = fieldSelect.clone();
     select.attr('id', 'sortable-field-' + rnd);
-    container.append(select);
-    $('<label for="sortable-field-' + rnd + '">' + fieldLabel + '</label>').insertBefore(select);
+    var selectWrap = $('<div class="field-option-td"></div>');
+    selectWrap.append(select);
+    container.append($('<label for="sortable-field-' + rnd + '" class="field-option-td">' + fieldLabel + '</label>'));
+    container.append(selectWrap);
 
+    var labelWrap =  $('<div class="field-option-td"></div>');
     var label = $('<input type="text" id="sortable-label-' + rnd + '" />');
-    container.append(label);
-    $('<label for="sortable-label-' + rnd + '">' + fieldLabelLabel + '</label>').insertBefore(label);
+    labelWrap.append(label);
+    container.append($('<label for="sortable-label-' + rnd + '" class="field-option-td">' + fieldLabelLabel + '</label>'));
+    container.append(labelWrap);
 
     if(containerClass == 'facet-option'){
+      var stickyLblWrap =  $('<div class="field-option-td"></div>');
       var stickyLbl = $('<label for="sortable-sticky-' + rnd + '">Sticky</label>');
-      var stickyChb = $('<input type="checkbox" id="sortable-sticky-' + rnd + '" />');
-      container.append(stickyLbl);
-      container.append(stickyChb);
+      var stickyChb = $('<input type="checkbox" id="sortable-sticky-' + rnd + '" class="sticky-facet" />');
+      stickyLblWrap.append(stickyLbl);
+      stickyLblWrap.append(stickyChb);
+      container.append(stickyLblWrap);
 
+      var isDateLblWrap =  $('<div class="field-option-td"></div>');
       var isDateLbl = $('<label for="facet-isdate-' + rnd + '">Is date?</label>');
       var isDateChb = $('<input type="checkbox" id="facet-isdate-' + rnd + '" class="isdate-facet" />');
-      container.append(isDateLbl);
-      container.append(isDateChb);
+      isDateLblWrap.append(isDateLbl);
+      isDateLblWrap.append(isDateChb);
+      container.append(isDateLblWrap);
     }
 
+    var actionsWrap =  $('<div class="field-option-td"></div>');
     var up = $('<a href="#" class="up">Move up</a>');
     var down = $('<a href="#" class="down">Move down</a>');
     var remove = $('<a href="#" class="remove">Remove</a>');
-    container.append(up);
-    container.append(down);
-    container.append(remove);
+    actionsWrap.append(up);
+    actionsWrap.append(down);
+    actionsWrap.append(remove);
+    container.append(actionsWrap);
 
-    container.insertBefore(target);
+    target.parent().find('.field-option-table').append(container);
     bindEventsOnSearchPageConfigurator();
   }
 
@@ -1435,7 +1550,7 @@
       title: '',
       modal: true,
       minWidth: 300,
-      dialogClass: 'adv-alert',
+      dialogClass: 'adv-confirm',
       resizable: false,
       close: function () {
         $(this).dialog('destroy').remove();

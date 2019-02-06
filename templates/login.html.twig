@@ -1,33 +1,48 @@
-{% extends "base.html.twig" %}
+{% extends "base_wrapper.html.twig" %}
 
-{%block main_content%}
+{%block body%}
 
   {% if noCluster %}
     <p>{{ 'Elastic server is unavailable. Please check your settings'|trans }}</p>
   {% else %}
 
-    {% if error %}
-      <div>{{ errorText }}</div>
-    {% endif %}
+    <div class="login-view">
+      <div id="login-container">
+        <div class="logo"><img src="{{ asset('images/logo48.png') }}" alt="Logo" /></div>
+        <h1>{{ "Login"|trans }}</h1>
+        {% if error %}
+          <div class="form-error">{{ errorText }}</div>
+        {% endif %}
+        <form method="post" action="{{ path('login') }}">
+          <div class="form-item">
+            <label for="username">{{ "Username"|trans }}</label>
+            <div class="form-widget username">
+              <input type="text" id="username" name="_username" placeholder="{{ "Username"|trans }}" value="{{ lastUsername }}" />
+            </div>
+          </div>
+          <div class="form-item">
+            <label for="password">{{ "Password"|trans }}</label>
+            <div class="form-widget password">
+              <input type="password" id="password" name="_password" placeholder="{{ "Password"|trans }}" />
+            </div>
+          </div>
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-    <form action="{{ path('login') }}" method="post">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="_username" value="{{ lastUsername }}" />
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="_password" />
-
-      {#
-          If you want to control the URL the user
-          is redirected to on success (more details below)
-          <input type="hidden" name="_target_path" value="/account" />
-      #}
-      <input type="hidden" name="_csrf_token"
-             value="{{ csrf_token('authenticate') }}"
-      >
-      <button type="submit">login</button>
-    </form>
+          <div class="form-item submit">
+            <input type="submit" value="{{ "Sign in"|trans }}" />
+          </div>
+        </form>
+      </div>
+    </div>
 
   {% endif %}
 
+{% endblock %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('fontawesome/css/all.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/ads.css')}}" />
+  <link rel="stylesheet" href="{{asset('js/jquery-ui/jquery-ui.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/jquery.jsonview.min.css')}}" />
+  <link rel="stylesheet" media="screen and (max-width: 1024px)" href="{{asset('css/rwd-1024.css')}}" type="text/css" />
+  <link rel="stylesheet" media="screen and (max-width: 450px)" href="{{asset('css/rwd-450.css')}}" type="text/css" />
 {% endblock %}

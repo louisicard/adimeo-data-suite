@@ -49,7 +49,7 @@ class MatchingListController extends AdimeoDataSuiteController
         'required' => true,
       ))
       ->add('list', TextareaType::class, array(
-        'label' => $this->get('translator')->trans('JSON Definition'),
+        'label' => $this->get('translator')->trans('Matching list definition'),
         'required' => true
       ))
       ->add('save', SubmitType::class, array('label' => $this->get('translator')->trans('Save')))
@@ -108,7 +108,7 @@ class MatchingListController extends AdimeoDataSuiteController
       $select_size .= '<option value="200">200</option>';
       $select_size .= '<option value="300">300</option>';
       $select_size .= '</select>';
-      $vars['init_from_index_action'] = $select . $select_size . '<a href="' . $this->generateUrl('matching-init-from-index', array('id' => $id)) . '">' . $this->get('translator')->trans('Initialize from index') . '</a>';
+      $vars['init_from_index_action'] = $select . $select_size . '<a href="' . $this->generateUrl('matching-init-from-index', array('id' => $id)) . '" class="fa fa-play-circle">' . $this->get('translator')->trans('Initialize from index') . '</a>';
       $vars['import_file_link'] = $this->generateUrl('matching-import-file', array('id' => $id));
       $vars['export_link'] = $this->generateUrl('matching-export', array('id' => $id));
     }

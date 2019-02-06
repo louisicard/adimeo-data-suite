@@ -1,0 +1,120 @@
+.menu-toggle-wrapper {
+  display:block;
+}
+body,
+body.menu-collapsed {
+  #main-wrapper {
+    main {
+      margin-left: 0;
+      width:100%;
+    }
+  }
+}
+body {
+  &.page-login {
+    background:#fff;
+  }
+  header {
+    figure {
+      margin-right: 0.8rem;
+
+      figcaption {
+        display:none;
+      }
+    }
+  }
+  #main-wrapper {
+    aside#main-menu {
+      width: 100%;
+      transition: all 0.3s ease;
+      background: #fff;
+      position: fixed;
+      top: 3rem;
+      height: auto;
+      left: 0;
+      z-index: 1;
+      border-right: none;
+      display: none;
+
+      &.collapsed {
+        display: block; /*In smartphone mode menu is displayed only when toggler is activated (opposite to normal mode)*/
+        width: 100%;
+
+        #main-nav {
+          & > ul {
+            & > li {
+              & > a {
+                overflow: hidden;
+                color: #333;
+              }
+              & > ul {
+                position: relative;
+                display: none;
+                max-height: none;
+                width: 100%;
+                right: 0;
+                top: 0;
+                background: none;
+                border: none;
+
+                &.active {
+                  display: block;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      #main-nav {
+        & > ul {
+          & > li {
+            & > a {
+              overflow: hidden;
+              color: #333;
+            }
+            & > ul {
+              position: relative;
+              display: none;
+              max-height: none;
+              width: 100%;
+              right: 0;
+              top: 0;
+              background: none;
+              border: none;
+
+              & > li {
+                margin-left: 1rem;
+              }
+            }
+            &:hover > ul {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#login-container {
+  max-width:none;
+  background:#fff;
+  margin:0;
+  padding:2rem;
+  border:none;
+  border-radius:0;
+
+  form {
+    label {
+      width:100%;
+      float:none;
+      margin:0.5rem 0;
+      display:block;
+      text-align: left;
+    }
+    .form-widget {
+      width:100%;
+      float:none;
+    }
+  }
+}
