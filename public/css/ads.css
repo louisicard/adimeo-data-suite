@@ -119,7 +119,8 @@ body {
 /*  END LOGIN  */
 /*  MAIN LAYOUT  */
 body.menu-collapsed #main-wrapper main {
-  margin-left: 60px; }
+  margin-left: 60px;
+  width: calc(100% - 60px); }
 body.menu-collapsed header figure {
   margin-right: 0.8rem; }
   body.menu-collapsed header figure figcaption {
@@ -197,6 +198,8 @@ body #main-wrapper {
             content: "\f085"; }
           body #main-wrapper aside#main-menu #main-nav > ul > li > a.item-logout:before {
             content: "\f2f5"; }
+        body #main-wrapper aside#main-menu #main-nav > ul > li > ul > li.active {
+          font-weight: 600; }
         body #main-wrapper aside#main-menu #main-nav > ul > li > ul > li > a {
           color: #666; }
     body #main-wrapper aside#main-menu nav ul {
@@ -239,7 +242,7 @@ body #main-wrapper {
     margin-top: 3.25rem;
     transition: all 0.3s ease;
     padding: 1rem;
-    width: 100%; }
+    width: calc(100% - 250px); }
 
 /*  END MAIN LAYOUT  */
 /*  WIDGET & TABLE  */
@@ -314,6 +317,10 @@ table {
     padding: 0;
     margin: 0; }
 
+.table-wrapper {
+  max-width: 100%;
+  overflow: auto; }
+
 i.fas {
   padding-right: 0.25rem; }
 
@@ -327,6 +334,7 @@ a.fa {
 /*  END WIDGET & TABLE  */
 /*  FORMS  */
 form input[type="text"],
+form input[type="date"],
 form input[type="number"],
 form input[type="password"],
 form input[type="file"],
@@ -338,6 +346,7 @@ form textarea {
   border-radius: 3px;
   background: #fff; }
   form input[type="text"][disabled],
+  form input[type="date"][disabled],
   form input[type="number"][disabled],
   form input[type="password"][disabled],
   form input[type="file"][disabled],
@@ -734,5 +743,31 @@ form#form_processor .actions {
   margin: 1rem 0; }
 
 /*  END SEARCH PAGE */
+/*  ANALYTICS */
+#stat-form {
+  display: table; }
+  #stat-form .form-elements {
+    display: table-row; }
+    #stat-form .form-elements .form-item,
+    #stat-form .form-elements .actions {
+      display: table-cell;
+      vertical-align: top;
+      padding-right: 1rem; }
+    #stat-form .form-elements .actions {
+      padding-top: 1.8rem; }
+
+#stat-display {
+  margin: 1.5rem 0; }
+
+#table-stat-display-widget {
+  display: none; }
+
+/*  END ANALYTICS */
+/*  USERS */
+#form_group .choice-container label,
+#form_user .choice-container label {
+  font-weight: normal; }
+
+/*  END USERS */
 
 /*# sourceMappingURL=ads.css.map */

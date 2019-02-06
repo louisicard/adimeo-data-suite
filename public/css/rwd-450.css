@@ -16,7 +16,7 @@ body #main-wrapper aside#main-menu {
   width: 100%;
   transition: all 0.3s ease;
   background: #fff;
-  position: absolute;
+  position: fixed;
   top: 3rem;
   height: auto;
   left: 0;

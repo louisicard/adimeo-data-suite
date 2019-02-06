@@ -4,7 +4,7 @@
 {%block main_content%}
   {%if matching_lists is defined %}
     <div class="widget">
-      <div class="widget-title">{%trans%}List of datasources{%endtrans%}</div>
+      <div class="widget-title">{%trans%}List of matching lists{%endtrans%}</div>
       {% if is_granted('ROLE_MATCHING_LIST_CREATOR') %}
       <div class="widget-actions">
         <a href="{{path('matching-list-add')}}" class="fa fa-plus">{{'Add a new matching list'|trans}}</a>

@@ -48,8 +48,8 @@
             </li>
           {% endif %}
           <li class="expandable">
-            <a href="javascript:void(0)" class="item-search">Search</a>
-            <ul>
+            <a href="javascript:void(0)" class="item-search{%if main_menu_item=='search-pages' or  main_menu_item=='autopromotes' or  main_menu_item=='boost-queries'%} active{%endif%}">Search</a>
+            <ul{%if main_menu_item=='search-pages' or  main_menu_item=='autopromotes' or  main_menu_item=='boost-queries'%} class="active"{%endif%}>
               {% if is_granted("ROLE_SEARCH_PAGE_MANAGER") %}
                 <li{%if main_menu_item=='search-pages'%} class="active"{%endif%}><a href="{{path('search-pages')}}" title="{{'Search pages'|trans}}">{{'Search pages'|trans}}</a></li>
               {% endif %}
@@ -63,8 +63,8 @@
           </li>
           {% if is_granted("ROLE_ANALYTICS_USER") or is_granted("ROLE_LOGS_VIEWER") or is_granted("ROLE_BACKUP_USER") or is_granted("ROLE_CONSOLE_USER") %}
             <li class="expandable">
-              <a href="javascript:void(0)" class="item-tools">Tools</a>
-              <ul>
+              <a href="javascript:void(0)" class="item-tools{%if main_menu_item=='analytics' or  main_menu_item=='logs' or  main_menu_item=='backups' or  main_menu_item=='console'%} active{%endif%}">Tools</a>
+              <ul{%if main_menu_item=='analytics' or  main_menu_item=='logs' or  main_menu_item=='backups' or  main_menu_item=='console'%} class="active"{%endif%}>
                 {% if is_granted("ROLE_ANALYTICS_USER") %}
                   <li{%if main_menu_item=='analytics'%} class="active"{%endif%}><a href="{{path('analytics')}}" title="{{'Analytics'|trans}}">{{'Analytics'|trans}}</a></li>
                 {% endif %}
@@ -82,8 +82,8 @@
           {% endif %}
           {% if is_granted("ROLE_ADMIN") %}
             <li class="expandable">
-              <a href="javascript:void(0)" class="item-admin">Admin</a>
-              <ul>
+              <a href="javascript:void(0)" class="item-admin{%if main_menu_item=='users' or  main_menu_item=='groups'%} active{%endif%}">Admin</a>
+              <ul{%if main_menu_item=='users' or  main_menu_item=='groups'%} class="active"{%endif%}>
                 <li><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
                 <li><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
               </ul>

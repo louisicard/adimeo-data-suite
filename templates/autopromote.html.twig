@@ -3,36 +3,43 @@
 
 {%block main_content%}
   {%if autopromotes is defined%}
-    <ul class="actions">
-      <li id="add-autopromote"><a href="{{ path('autopromote-add') }}">Add an autopromote</a></li>
-    </ul>
-    {%if autopromotes|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Title'|trans}}</th>
-          <th>{{'Index'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for autopromote in autopromotes%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{autopromote.name}}</td>
-            <td>{{autopromote.index}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('autopromote-edit', {id: autopromote.id, index: autopromote.index}) }}">{{'Edit'|trans}}</a></li>
-                <li><a href="{{ path('autopromote-delete', {id: autopromote.id, index: autopromote.index}) }}" class="autopromote-delete action-delete">{{'Delete'|trans}}</a></li>
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of autopromotes{%endtrans%}</div>
+      <div class="widget-actions">
+        <a href="{{path('autopromote-add')}}" class="fa fa-plus">{{'Add an autopromote'|trans}}</a>
+      </div>
+      <div class="widget-content">
+        {%if autopromotes|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'Title'|trans}}</th>
+              <th>{{'Index'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for autopromote in autopromotes%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{autopromote.name}}</td>
+                <td>{{autopromote.index}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('autopromote-edit', {id: autopromote.id, index: autopromote.index}) }}">{{'Edit'|trans}}</a></li>
+                    <li><a href="{{ path('autopromote-delete', {id: autopromote.id, index: autopromote.index}) }}" class="autopromote-delete action-delete">{{'Delete'|trans}}</a></li>
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_autopromote'}})}}

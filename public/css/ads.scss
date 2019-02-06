@@ -172,6 +172,7 @@ body {
   &.menu-collapsed {
     #main-wrapper main {
       margin-left: 60px;
+      width: calc(100% - 60px);
     }
 
     header figure {
@@ -287,6 +288,10 @@ body {
 
           & > ul > li {
 
+            &.active {
+              font-weight: 600;
+            }
+
             & > a {
               color:#666;
             }
@@ -361,7 +366,7 @@ body {
       margin-top: 3.25rem;
       transition: all 0.3s ease;
       padding: 1rem;
-      width: 100%;
+      width: calc(100% - 250px);
     }
   }
 }
@@ -473,6 +478,11 @@ table {
   }
 }
 
+.table-wrapper {
+  max-width: 100%;
+  overflow: auto;
+}
+
 i.fas {
   padding-right:0.25rem;
 }
@@ -488,6 +498,7 @@ a.fa {
 
 /*  FORMS  */
 form input[type="text"],
+form input[type="date"],
 form input[type="number"],
 form input[type="password"],
 form input[type="file"],
@@ -1056,3 +1067,40 @@ form#form_processor {
   }
 }
 /*  END SEARCH PAGE */
+
+/*  ANALYTICS */
+#stat-form {
+  display:table;
+
+  .form-elements {
+    display: table-row;
+    
+    .form-item,
+    .actions {
+      display: table-cell;
+      vertical-align: top;
+      padding-right:1rem;
+    }
+    .actions {
+      padding-top:1.8rem;
+    }
+  }
+}
+#stat-display {
+  margin:1.5rem 0;
+}
+#table-stat-display-widget {
+  display:none;
+}
+/*  END ANALYTICS */
+
+/*  USERS */
+#form_group,
+#form_user {
+  .choice-container {
+    label {
+      font-weight:normal;
+    }
+  }
+}
+/*  END USERS */

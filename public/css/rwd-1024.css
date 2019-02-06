@@ -36,4 +36,18 @@ body header figure {
   max-width: 100%;
   overflow: auto; }
 
+/*  ANALYTICS */
+#stat-form {
+  display: block; }
+  #stat-form .form-elements {
+    display: block; }
+    #stat-form .form-elements .form-item,
+    #stat-form .form-elements .actions {
+      display: block;
+      padding-right: 0; }
+    #stat-form .form-elements .actions {
+      padding-top: 0; }
+
+/*  END ANALYTICS */
+
 /*# sourceMappingURL=rwd-1024.css.map */

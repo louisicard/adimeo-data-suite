@@ -66,3 +66,22 @@ body {
     overflow:auto;
   }
 }
+
+/*  ANALYTICS */
+#stat-form {
+  display:block;
+
+  .form-elements {
+    display: block;
+
+    .form-item,
+    .actions {
+      display: block;
+      padding-right:0;
+    }
+    .actions {
+      padding-top:0;
+    }
+  }
+}
+/*  END ANALYTICS */

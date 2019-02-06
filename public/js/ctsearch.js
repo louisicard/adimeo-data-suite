@@ -68,6 +68,7 @@
     }
 
     wrapSelects();
+    $('table').wrap('<div class="table-wrapper"></div>')
 
     var lastSelectCheck = 0;
     setInterval(function() {
@@ -444,6 +445,7 @@
       $('body.page-analytics #stat-display').html('Loading. Please wait.');
       $('body.page-analytics #stat-display').removeClass("chart-loaded");
       $('body.page-analytics #table-stat-display').html('');
+      $('body.page-analytics #table-stat-display-widget').hide();
       $.ajax({
         url: __ctsearch_base_url + 'analytics/compile',
         method: 'post',
@@ -475,9 +477,11 @@
           }
           html += '</tbody></table>'
           $('body.page-analytics #table-stat-display').html(html);
+          $('body.page-analytics #table-stat-display-widget').show();
         }
         else{
           $('body.page-analytics #table-stat-display').html('No data available');
+          $('body.page-analytics #table-stat-display-widget').show();
         }
       });
     });
