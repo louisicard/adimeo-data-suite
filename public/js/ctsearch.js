@@ -37,11 +37,25 @@
         $('aside#main-menu').removeClass('collapsed');
         $('aside#main-menu').addClass('expanded');
         $('body').removeClass('menu-collapsed');
+        if($(window).width() > 450) {
+          $.ajax({
+            url: '/api/save-user-prefs',
+            method: 'POST',
+            data: JSON.stringify({menuState: "expanded"})
+          });
+        }
       }
       else {
         $('aside#main-menu').removeClass('expanded');
         $('aside#main-menu').addClass('collapsed');
         $('body').addClass('menu-collapsed');
+        if($(window).width() > 450) {
+          $.ajax({
+            url: '/api/save-user-prefs',
+            method: 'POST',
+            data: JSON.stringify({menuState: "collapsed"})
+          });
+        }
       }
     }
 

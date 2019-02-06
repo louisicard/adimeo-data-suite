@@ -231,6 +231,9 @@ api-update:
 api-sp-def:
   path: /api/sp-definition/{id}
   controller: App\Controller\RestController::getSearchPageAction
+user-prefs:
+  path: /api/save-user-prefs
+  controller: App\Controller\RestController::saveUserPrefs
 search-api-v2:
   path: /search-api/v2
   controller: App\Controller\SearchAPIController::searchAPIV2Action

@@ -1,5 +1,7 @@
 {% extends 'base_wrapper.html.twig' %}
 
+{% set userPrefs = app.session.get('userPrefs') %}
+
 {% if form is defined %}
   {% form_theme form 'forms.html.twig' %}
 {% endif %}
@@ -21,7 +23,7 @@
   </header>
 
   <div id="main-wrapper">
-    <aside id="main-menu" class="expanded">
+    <aside id="main-menu" class="{% if userPrefs.menuState is defined and userPrefs.menuState == 'collapsed' %}collapsed{% else %}expanded{% endif %}">
       <nav id="main-nav">
         <ul>
           <li{%if main_menu_item=='home'%} class="active"{%endif%}><a href="{{path('homepage')}}" title="{{'Dashboard'|trans}}">{{'Dashboard'|trans}}</a></li>
