@@ -86,8 +86,8 @@
             <li class="expandable">
               <a href="javascript:void(0)" class="item-admin{%if main_menu_item=='users' or  main_menu_item=='groups'%} active{%endif%}">Admin</a>
               <ul{%if main_menu_item=='users' or  main_menu_item=='groups'%} class="active"{%endif%}>
-                <li><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
-                <li><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
+                <li{%if main_menu_item=='users'%} class="active"{%endif%}><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
+                <li{%if main_menu_item=='groups'%} class="active"{%endif%}><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
               </ul>
             </li>
           {% endif %}

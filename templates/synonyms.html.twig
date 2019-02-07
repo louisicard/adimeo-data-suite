@@ -3,47 +3,55 @@
 
 {%block main_content%}
   {% if dictionaries is defined %}
-    <h2>{%trans%}Synonyms dictionaries{%endtrans%}</h2>
-    {% if is_granted('ROLE_ADMIN') %}
-    <ul class="actions">
-      <li><a href="{{path('synonyms-add')}}" class="synonyms-add">{{'Add a new dictionary'|trans}}</a></li>
-    </ul>
-    {% endif %}
-    {%if dictionaries|length > 0%}
-      <table>
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Full path</th>
-          <th>&nbsp;</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for dictionary in dictionaries %}
-        <tr>
-          <td>{{ dictionary.name }}</td>
-          <td>{{ dictionary.path }}</td>
-          <td class="actions">
-            <ul>
-              <li><a href="{{ path('synonyms-edit', {fileName: dictionary.name}) }}">{{ "Edit"|trans }}</a></li>
-              {% if is_granted('ROLE_ADMIN') %}
-              <li><a href="{{ path('synonyms-delete', {fileName: dictionary.name}) }}">{{ "Delete"|trans }}</a></li>
-              {% endif %}
-            </ul>
-          </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      {{ 'No dictionaries defined yet'|trans }}
-    {% endif %}
+    <div class="widget">
+      <div class="widget-title">{%trans%}Synonyms dictionaries{%endtrans%}</div>
+      {% if is_granted('ROLE_ADMIN') %}
+        <div class="widget-actions">
+          <a href="{{path('synonyms-add')}}" class="fa fa-plus">{{'Add a new dictionary'|trans}}</a>
+        </div>
+      {% endif %}
+      <div class="widget-content">
+        {%if dictionaries|length > 0%}
+          <table>
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Full path</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dictionary in dictionaries %}
+            <tr>
+              <td>{{ dictionary.name }}</td>
+              <td>{{ dictionary.path }}</td>
+              <td class="actions">
+                <ul>
+                  <li><a href="{{ path('synonyms-edit', {fileName: dictionary.name}) }}">{{ "Edit"|trans }}</a></li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                  <li><a href="{{ path('synonyms-delete', {fileName: dictionary.name}) }}">{{ "Delete"|trans }}</a></li>
+                  {% endif %}
+                </ul>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          {{ 'No dictionaries defined yet'|trans }}
+        {% endif %}
+      </div>
+    </div>
   {% endif %}
   {% if form is defined %}
-    <h2>{{ sub_title }}</h2>
-    <ul class="actions">
-      <li><a href="{{ path('synonyms-list') }}">{{ "Back to list"|trans }}</a></li>
-    </ul>
-    {{ form(form, {id: "synomyms-form"}) }}
+    <div class="widget">
+      <div class="widget-title">{{ sub_title }}</div>
+      <div class="widget-actions">
+        <a href="{{path('synonyms-list')}}" class="fa fa-chevron-left">{{'Back to list'|trans}}</a>
+      </div>
+      <div class="widget-content">
+        {{ form(form, {id: "synomyms-form"}) }}
+      </div>
+    </div>
   {% endif %}
 {%endblock%}
