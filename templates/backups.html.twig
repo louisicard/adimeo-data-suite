@@ -2,84 +2,92 @@
 
 
 {%block main_content%}
-  <h2>{{ "Repositories"|trans }}</h2>
-  <div id="repositories-list">
-    {% if repos|length > 0 %}
-      <table>
-        <thead>
-        <tr>
-          <th>{{ "Name"|trans }}</th>
-          <th>{{ "Type"|trans }}</th>
-          <th>{{ "Location"|trans }}</th>
-          <th>{{ "Compress"|trans }}</th>
-          <th>&nbsp;</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for repo_name,repo in repos %}
-          <tr>
-            <td>{{ repo_name }}</td>
-            <td>{{ repo.type }}</td>
-            <td>{% if repo.settings.location is defined %}{{ repo.settings.location }}{% else %}-{% endif %}</td>
-            <td>{% if repo.settings.compress is defined %}{{ repo.settings.compress == 'true' ? "Yes"|trans : "No"|trans }}{% else %}-{% endif %}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('backups_edit_repo', {repositoryName: repo_name}) }}" class="edit-repo">{{ "Edit"|trans }}</a></li>
-                <li><a href="{{ path('backups_delete_repo', {repositoryName: repo_name}) }}" class="delete-repo">{{ "Delete"|trans }}</a></li>
-              </ul>
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      {{ "No repositories found"|trans }}
-    {% endif %}
-    <ul class="actions">
-      <li><a href="{{ path('backups_create_repo') }}" class="create-repo">{{ "Create repository"|trans }}</a></li>
-    </ul>
+  <div class="widget">
+    <div class="widget-title">{%trans%}Repositories{%endtrans%}</div>
+    <div class="widget-actions">
+      <a href="{{path('backups_create_repo')}}" class="fa fa-plus">{{'Create repository'|trans}}</a>
+    </div>
+    <div class="widget-content">
+      <div id="repositories-list">
+        {% if repos|length > 0 %}
+          <table>
+            <thead>
+            <tr>
+              <th>{{ "Name"|trans }}</th>
+              <th>{{ "Type"|trans }}</th>
+              <th>{{ "Location"|trans }}</th>
+              <th>{{ "Compress"|trans }}</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for repo_name,repo in repos %}
+              <tr>
+                <td>{{ repo_name }}</td>
+                <td>{{ repo.type }}</td>
+                <td>{% if repo.settings.location is defined %}{{ repo.settings.location }}{% else %}-{% endif %}</td>
+                <td>{% if repo.settings.compress is defined %}{{ repo.settings.compress == 'true' ? "Yes"|trans : "No"|trans }}{% else %}-{% endif %}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('backups_edit_repo', {repositoryName: repo_name}) }}" class="edit-repo">{{ "Edit"|trans }}</a></li>
+                    <li><a href="{{ path('backups_delete_repo', {repositoryName: repo_name}) }}" class="delete-repo">{{ "Delete"|trans }}</a></li>
+                  </ul>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          {{ "No repositories found"|trans }}
+        {% endif %}
+      </div>
+    </div>
   </div>
-  <h2>{{ "Snapshots"|trans }}</h2>
-  <div id="snapshots-list">
-    {% if snapshots|length > 0 %}
-      <table>
-        <thead>
-        <tr>
-          <th>{{ "Repository"|trans }}</th>
-          <th>{{ "Name"|trans }}</th>
-          <th>{{ "Indexes"|trans }}</th>
-          <th>{{ "Status"|trans }}</th>
-          <th>{{ "Duration"|trans }}</th>
-          <th>{{ "End time"|trans }}</th>
-          <th>&nbsp;</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for repo_name,snaps in snapshots %}
-          {% for snap in snaps %}
-          <tr>
-            <td>{{ repo_name }}</td>
-            <td>{{ snap.snapshot}}</td>
-            <td>{{ snap.indices|join(', ') }}</td>
-            <td>{{ snap.state}}</td>
-            <td>{% if snap.duration_in_millis is defined %}{{ snap.duration_in_millis}} ms{% else %}-{% endif %}</td>
-            <td>{% if snap.end_time_clean is defined %}{{ snap.end_time_clean}}{% else %}-{% endif %}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('backups_restore_snapshot', {repositoryName: repo_name, snapshotName: snap.snapshot}) }}" class="restore-snapshot">{{ "Restore"|trans }}</a></li>
-                <li><a href="{{ path('backups_delete_snapshot', {repositoryName: repo_name, snapshotName: snap.snapshot}) }}" class="delete-snapshot">{{ "Delete"|trans }}</a></li>
-              </ul>
-            </td>
-          </tr>
-          {% endfor %}
-        {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      {{ "No snapshots found"|trans }}
-    {% endif %}
-    <ul class="actions">
-      <li><a href="{{ path('backups_create_snapshot') }}" class="create-snapshot">{{ "Create snapshot"|trans }}</a></li>
-    </ul>
+  <div class="widget">
+    <div class="widget-title">{%trans%}Snapshots{%endtrans%}</div>
+    <div class="widget-actions">
+      <a href="{{path('backups_create_snapshot')}}" class="fa fa-plus">{{'Create snapshot'|trans}}</a>
+    </div>
+    <div class="widget-content">
+      <div id="snapshots-list">
+        {% if snapshots|length > 0 %}
+          <table>
+            <thead>
+            <tr>
+              <th>{{ "Repository"|trans }}</th>
+              <th>{{ "Name"|trans }}</th>
+              <th>{{ "Indexes"|trans }}</th>
+              <th>{{ "Status"|trans }}</th>
+              <th>{{ "Duration"|trans }}</th>
+              <th>{{ "End time"|trans }}</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for repo_name,snaps in snapshots %}
+              {% for snap in snaps %}
+              <tr>
+                <td>{{ repo_name }}</td>
+                <td>{{ snap.snapshot}}</td>
+                <td>{{ snap.indices|join(', ') }}</td>
+                <td>{{ snap.state}}</td>
+                <td>{% if snap.duration_in_millis is defined %}{{ snap.duration_in_millis}} ms{% else %}-{% endif %}</td>
+                <td>{% if snap.end_time_clean is defined %}{{ snap.end_time_clean}}{% else %}-{% endif %}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('backups_restore_snapshot', {repositoryName: repo_name, snapshotName: snap.snapshot}) }}" class="restore-snapshot">{{ "Restore"|trans }}</a></li>
+                    <li><a href="{{ path('backups_delete_snapshot', {repositoryName: repo_name, snapshotName: snap.snapshot}) }}" class="delete-snapshot">{{ "Delete"|trans }}</a></li>
+                  </ul>
+                </td>
+              </tr>
+              {% endfor %}
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          {{ "No snapshots found"|trans }}
+        {% endif %}
+      </div>
+    </div>
   </div>
 {%endblock%}
