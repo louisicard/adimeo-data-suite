@@ -43,7 +43,7 @@ class SearchAPIController extends AdimeoDataSuiteController
           $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
           $cache->set('ads_search_' . $request->get('mapping'), $mapping);
         }
-        $definition = $mapping['properties'];
+        $definition = is_array($mapping['properties']) ? $mapping['properties'] : [];
         $analyzed_fields = array();
         $nested_analyzed_fields = array();
         $stickyFacets = $request->get('sticky_facets') != NULL ? array_map('trim', explode(',', $request->get('sticky_facets'))) : [];
