@@ -3,45 +3,49 @@
 
 {%block main_content%}
   {%if parameters is defined%}
-    {%if is_granted('ROLE_ADMIN')%}
-    <ul class="actions">
-      <li id="add-parameter"><a href="{{ path('parameter-add') }}">Add parameter</a></li>
-    </ul>
-    {% endif %}
-    {%if parameters|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Name'|trans}}</th>
-          <th>{{'Value'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for parameter in parameters%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{parameter.name}}</td>
-            <td>{{parameter.value}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('parameter-edit', {name: parameter.name}) }}">{{'Edit'|trans}}</a></li>
-                {%if is_granted('ROLE_ADMIN')%}
-                  <li><a href="{{ path('parameter-delete', {name: parameter.name}) }}" class="parameter-delete action-delete">{{'Delete'|trans}}</a></li>
-                {% endif %}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of parameters{%endtrans%}</div>
+      {% if is_granted('ROLE_ADMIN') %}
+        <div class="widget-actions">
+          <a href="{{path('parameter-add')}}" class="fa fa-plus">{{'Add parameter'|trans}}</a>
+        </div>
+      {% endif %}
+      <div class="widget-content">
+        {%if parameters|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'Name'|trans}}</th>
+              <th>{{'Value'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for parameter in parameters%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{parameter.name}}</td>
+                <td>{{parameter.value}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('parameter-edit', {name: parameter.name}) }}">{{'Edit'|trans}}</a></li>
+                    {%if is_granted('ROLE_ADMIN')%}
+                      <li><a href="{{ path('parameter-delete', {name: parameter.name}) }}" class="parameter-delete action-delete">{{'Delete'|trans}}</a></li>
+                    {% endif %}
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_parameter'}})}}
   {%endif%}
-  <script type="text/javascript">
-    
-  </script>
 {%endblock%}

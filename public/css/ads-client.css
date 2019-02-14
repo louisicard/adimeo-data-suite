@@ -1,0 +1,27 @@
+[ads-block="pager"] ul{
+  display:block;
+  margin:10px 0;
+  padding:0;
+}
+[ads-block="pager"] li {
+  display:inline-block;
+  margin:0;
+  padding:0;
+  margin-right:10px;
+}
+[ads-block="pager"] li.active a {
+  color:#000;
+  text-decoration:none;
+}
+.ads--facet ul,
+.ads--facet li {
+  display:block;
+  margin:0;
+  padding:0;
+}
+.ads--facet {
+  margin:12px 0;
+}
+.ads--facet .ads--facet-title {
+  font-weight:bold;
+}

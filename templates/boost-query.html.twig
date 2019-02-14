@@ -3,40 +3,47 @@
 
 {%block main_content%}
   {%if boostQueries is defined%}
-    {%if is_granted('ROLE_BOOST_QUERY_CREATOR')%}
-    <ul class="actions">
-      <li id="add-boost-query"><a href="{{ path('boost-query-add') }}">Add boost query</a></li>
-    </ul>
-    {% endif %}
-    {%if boostQueries|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Target'|trans}}</th>
-          <th>{{'Definition'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for boostQuery in boostQueries%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{boostQuery.target}}</td>
-            <td>{{boostQuery.definition}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('boost-query-edit', {id: boostQuery.id}) }}">{{'Edit'|trans}}</a></li>
-                {%if is_granted('ROLE_BOOST_QUERY_CREATOR')%}
-                <li><a href="{{ path('boost-query-delete', {id: boostQuery.id}) }}" class="boost-query-delete action-delete">{{'Delete'|trans}}</a></li>
-                {% endif %}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of bosst queries{%endtrans%}</div>
+      {% if is_granted('ROLE_BOOST_QUERY_CREATOR') %}
+        <div class="widget-actions">
+          <a href="{{path('boost-query-add')}}" class="fa fa-plus">{{'Add boost query'|trans}}</a>
+        </div>
+      {% endif %}
+      <div class="widget-content">
+        {%if boostQueries|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'Target'|trans}}</th>
+              <th>{{'Definition'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for boostQuery in boostQueries%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{boostQuery.target}}</td>
+                <td>{{boostQuery.definition}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('boost-query-edit', {id: boostQuery.id}) }}">{{'Edit'|trans}}</a></li>
+                    {%if is_granted('ROLE_BOOST_QUERY_CREATOR')%}
+                    <li><a href="{{ path('boost-query-delete', {id: boostQuery.id}) }}" class="boost-query-delete action-delete">{{'Delete'|trans}}</a></li>
+                    {% endif %}
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_boost_query'}})}}

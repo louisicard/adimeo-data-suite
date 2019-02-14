@@ -1,0 +1,53 @@
+.menu-toggle-wrapper {
+  display: none; }
+
+body #main-wrapper aside#main-menu {
+  width: 60px; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li > a {
+    overflow: hidden;
+    color: transparent; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li > ul {
+    position: absolute;
+    display: none;
+    max-height: none;
+    width: 180px;
+    right: -180px;
+    top: 0;
+    background: #fff;
+    border: 1px solid #ccc; }
+    body #main-wrapper aside#main-menu #main-nav > ul > li > ul > li {
+      margin-left: 1rem; }
+  body #main-wrapper aside#main-menu #main-nav > ul > li:hover > ul {
+    display: block; }
+body #main-wrapper main {
+  margin-left: 60px;
+  width: calc(100% - 60px); }
+body header figure {
+  margin-right: 0.8rem; }
+
+.widget .widget-actions a {
+  display: inline-block;
+  width: 0.75rem;
+  overflow: hidden;
+  white-space: nowrap; }
+.widget .widget-actions a:before {
+  margin-right: 0; }
+.widget .widget-content {
+  max-width: 100%;
+  overflow: auto; }
+
+/*  ANALYTICS */
+#stat-form {
+  display: block; }
+  #stat-form .form-elements {
+    display: block; }
+    #stat-form .form-elements .form-item,
+    #stat-form .form-elements .actions {
+      display: block;
+      padding-right: 0; }
+    #stat-form .form-elements .actions {
+      padding-top: 0; }
+
+/*  END ANALYTICS */
+
+/*# sourceMappingURL=rwd-1024.css.map */

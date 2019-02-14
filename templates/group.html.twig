@@ -3,34 +3,41 @@
 
 {%block main_content%}
   {%if groups is defined%}
-    <ul class="actions">
-      <li id="add-group"><a href="{{ path('group-add') }}">Add group</a></li>
-    </ul>
-    {%if groups|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Name'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for group in groups%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{group.name}}</td>
-            <td class="actions">
-              <ul>
-                <li><a href="{{ path('group-edit', {id: group.id}) }}">{{'Edit'|trans}}</a></li>
-                <li><a href="{{ path('group-delete', {id: group.id}) }}" class="group-delete action-delete">{{'Delete'|trans}}</a></li>
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{% trans %}List of groups{% endtrans %}</div>
+      <div class="widget-actions">
+        <a href="{{path('group-add')}}" class="fa fa-plus">{{'Add group'|trans}}</a>
+      </div>
+      <div class="widget-content">
+        {%if groups|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'Name'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for group in groups%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{group.name}}</td>
+                <td class="actions">
+                  <ul>
+                    <li><a href="{{ path('group-edit', {id: group.id}) }}">{{'Edit'|trans}}</a></li>
+                    <li><a href="{{ path('group-delete', {id: group.id}) }}" class="group-delete action-delete">{{'Delete'|trans}}</a></li>
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>{% trans %}No items!{% endtrans %}</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_group'}})}}

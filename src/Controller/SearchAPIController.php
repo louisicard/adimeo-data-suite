@@ -43,7 +43,7 @@ class SearchAPIController extends AdimeoDataSuiteController
           $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
           $cache->set('ads_search_' . $request->get('mapping'), $mapping);
         }
-        $definition = $mapping['properties'];
+        $definition = is_array($mapping['properties']) ? $mapping['properties'] : [];
         $analyzed_fields = array();
         $nested_analyzed_fields = array();
         $stickyFacets = $request->get('sticky_facets') != NULL ? array_map('trim', explode(',', $request->get('sticky_facets'))) : [];
@@ -111,7 +111,7 @@ class SearchAPIController extends AdimeoDataSuiteController
 
         $applied_facets = array();
         $refactor_for_boolean_query = FALSE;
-        if ($request->get('filter') != null) {
+        if (is_array($request->get('filter'))) {
           $filters = array();
           foreach ($request->get('filter') as $filter) {
             preg_match('/(?P<name>[^!=><]*)(?P<operator>[!=><]+)"(?P<value>[^"]*)"/', $filter, $matches);
@@ -625,7 +625,12 @@ class SearchAPIController extends AdimeoDataSuiteController
     $field = $request->get('field');
     $group = $request->get('group');
     $text = $request->get('text');
-    $text = $this->transliterate($text);
+    try {
+      $text = $this->transliterate($text);
+    }
+    catch(\Exception $e) {
+      return new Response('{"error": "'.$e->getMessage().'"}', 400, array('Content-type' => 'application/json;charset=utf-8'));
+    }
     $size = $request->get('size') != null ? (int)$request->get('size') : 20;
     $sizePerGroup = $request->get('size_per_group') != null ? (int)$request->get('size_per_group') : 10;
     $words = explode(' ', $text);
@@ -686,6 +691,7 @@ class SearchAPIController extends AdimeoDataSuiteController
         'size' => $size
       );
     }
+
     if($request->get('filterQuerystring') != null){
       $body['query']['bool']['must'][] = array(
         'query_string' => array(
@@ -724,10 +730,24 @@ class SearchAPIController extends AdimeoDataSuiteController
     return new Response(json_encode($ret, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json; charset=utf8', 'Access-Control-Allow-Origin' => '*'));
   }
 
-  private function transliterate($str){
+  /**
+   * @param $str
+   * @return string
+   * @throws \Exception
+   */
+  private function transliterate($str)
+  {
     $chars = array("aàáâãäåāąă","AÀÁÂÃÄÅĀĄĂ","cçćč","CÇĆČ","dđď","DĐĎ","eèéêëěēę","EÈÉÊËĚĒĘ","iìíîïī","IÌÍÎÏĪ","lł","LŁ","nñňń","NÑŇŃ","oòóôõöøō","OÒÓÔÕÖØŌ","rř","RŘ","sšśș","SŠŚȘ","tťț","TŤȚ","uùúûüůū","UÙÚÛÜŮŪ","yÿý","YŸÝ","zžżź","ZŽŻŹ");
     $str_c = preg_split('/(?<!^)(?!$)/u', $str );
     $out = '';
+
+    if(is_array($str_c)) {
+      $str_c = array_filter($str_c);
+    }
+    else {
+      throw new \Exception("Cannot transliterate the following text: ".$str);
+    }
+
     foreach($str_c as $c){
       $repl = false;
       foreach($chars as $char_seq){

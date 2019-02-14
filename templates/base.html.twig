@@ -1,5 +1,7 @@
 {% extends 'base_wrapper.html.twig' %}
 
+{% set userPrefs = app.session.get('userPrefs') %}
+
 {% if form is defined %}
   {% form_theme form 'forms.html.twig' %}
 {% endif %}
@@ -12,108 +14,111 @@
 {% block body %}
   <header>
     <figure id="logo">
-      <a href="{{path('homepage')}}" title="{{'Home'|trans}}"><img src="{{asset('images/logo48.png')}}" alt="Ct search" /></a>
-      <figcaption class="element-invisible">Logo Ct search</figcaption>
+      <img src="{{asset('images/logo-white.png')}}" alt="Adimeo Data Suite" />
+      <figcaption class="element-invisible">Adimeo Data Suite</figcaption>
     </figure>
-    <nav id="main-menu" class="clearfix">
-      <ul>
-        {% if no_menu is not defined or not no_menu %}
-        <li{%if main_menu_item=='home'%} class="active"{%endif%}><a href="{{path('homepage')}}" title="{{'Dashboard'|trans}}">{{'Dashboard'|trans}}</a></li>
-        {% if is_granted("ROLE_INDEX_MANAGER") or is_granted("ROLE_DATASOURCE_MANAGER") or is_granted("ROLE_MATCHING_LIST_MANAGER") or is_granted("ROLE_PROCESSOR_MANAGER") %}
-        <li class="expandable">
-          <a href="javascript:void(0)">Data studio</a>
-          <ul>
-            {% if is_granted("ROLE_INDEX_MANAGER") %}
-            <li{%if main_menu_item=='indexes'%} class="active"{%endif%}><a href="{{path('indexes')}}" title="{{'Indexes'|trans}}">{{'Indexes'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_DATASOURCE_MANAGER") %}
-            <li{%if main_menu_item=='datasources'%} class="active"{%endif%}><a href="{{path('datasources')}}" title="{{'Datasources'|trans}}">{{'Datasources'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_MATCHING_LIST_MANAGER") %}
-            <li{%if main_menu_item=='matching-lists'%} class="active"{%endif%}><a href="{{path('matching-lists')}}" title="{{'Matching lists'|trans}}">{{'Matching lists'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_PROCESSOR_MANAGER") %}
-              <li{%if main_menu_item=='processors'%} class="active"{%endif%}><a href="{{path('processors')}}" title="{{'Processors'|trans}}">{{'Processors'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-              <li{%if main_menu_item=='parameters'%} class="active"{%endif%}><a href="{{path('parameters')}}" title="{{'Parameters'|trans}}">{{'Parameters'|trans}}</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        {% endif %}
-        <li class="expandable">
-          <a href="javascript:void(0)">Search</a>
-          <ul>
-            {% if is_granted("ROLE_SEARCH_PAGE_MANAGER") %}
-              <li{%if main_menu_item=='search-pages'%} class="active"{%endif%}><a href="{{path('search-pages')}}" title="{{'Search pages'|trans}}">{{'Search pages'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_AUTOPROMOTE_USER") %}
-              <li{%if main_menu_item=='autopromotes'%} class="active"{%endif%}><a href="{{path('autopromotes')}}" title="{{'Auto-promote'|trans}}">{{'Auto-promote'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_BOOST_QUERY_MANAGER") %}
-              <li{%if main_menu_item=='boost-queries'%} class="active"{%endif%}><a href="{{path('boost-queries')}}" title="{{'Boost queries'|trans}}">{{'Boost queries'|trans}}</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        {% if is_granted("ROLE_ANALYTICS_USER") or is_granted("ROLE_LOGS_VIEWER") or is_granted("ROLE_BACKUP_USER") or is_granted("ROLE_CONSOLE_USER") %}
-        <li class="expandable">
-          <a href="javascript:void(0)">Tools</a>
-          <ul>
-            {% if is_granted("ROLE_ANALYTICS_USER") %}
-            <li{%if main_menu_item=='analytics'%} class="active"{%endif%}><a href="{{path('analytics')}}" title="{{'Analytics'|trans}}">{{'Analytics'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_LOGS_VIEWER") %}
-            <li{%if main_menu_item=='logs'%} class="active"{%endif%}><a href="{{path('show-logs')}}" title="{{'Logs'|trans}}">{{'Logs'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_BACKUP_USER") %}
-            <li{%if main_menu_item=='backups'%} class="active"{%endif%}><a href="{{path('backups')}}" title="{{'Backups'|trans}}">{{'Backups'|trans}}</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_CONSOLE_USER") %}
-            <li{%if main_menu_item=='console'%} class="active"{%endif%}><a href="{{path('console')}}" title="{{'Console'|trans}}">{{'Console'|trans}}</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        {% endif %}
-        {% if is_granted("ROLE_ADMIN") %}
-        <li class="expandable">
-          <a href="javascript:void(0)">Admin</a>
-          <ul>
-            <li><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
-            <li><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
-          </ul>
-        </li>
-        {% endif %}
-        {% endif %}
-      </ul>
-    </nav>
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <div id="userinfo">
-      <div class="username">{{ app.user.fullName }} ({{ app.user.username }})</div>
-      <div class="logout"><a><a href="{{ logout_path('main') }}">{{'Logout'|trans}}</a></a></div>
+    <div class="menu-toggle-wrapper">
+      <a href="javascript:void(0);"><i class="fa fa-bars" aria-hidden="true"></i></a>
     </div>
-    {% endif %}
   </header>
-  <section id="container">
-    <h1>{{title}}</h1>
-    {% if app.session.get('messages') is defined and app.session.get('messages') is not null %}
-      <div id="messages">
+
+  <div id="main-wrapper">
+    <aside id="main-menu" class="{% if userPrefs.menuState is defined and userPrefs.menuState == 'collapsed' %}collapsed{% else %}expanded{% endif %}">
+      <nav id="main-nav">
         <ul>
-          {%for message in app.session.get('messages')%}
-            <li class="message-type-{{message.type}}">{{message.text|raw}}</li>
-          {%endfor%}
+          <li{%if main_menu_item=='home'%} class="active"{%endif%}><a href="{{path('homepage')}}" title="{{'Dashboard'|trans}}">{{'Dashboard'|trans}}</a></li>
+          {% if is_granted("ROLE_INDEX_MANAGER") or is_granted("ROLE_DATASOURCE_MANAGER") or is_granted("ROLE_MATCHING_LIST_MANAGER") or is_granted("ROLE_PROCESSOR_MANAGER") %}
+            <li class="expandable">
+              <a href="javascript:void(0)" class="item-datastudio{%if main_menu_item=='indexes' or  main_menu_item=='datasources' or  main_menu_item=='matching-lists' or  main_menu_item=='processors' or  main_menu_item=='parameters'%} active{%endif%}">Data studio</a>
+              <ul{%if main_menu_item=='indexes' or  main_menu_item=='datasources' or  main_menu_item=='matching-lists' or  main_menu_item=='processors' or  main_menu_item=='parameters'%} class="active"{%endif%}>
+                {% if is_granted("ROLE_INDEX_MANAGER") %}
+                  <li{%if main_menu_item=='indexes'%} class="active"{%endif%}><a href="{{path('indexes')}}" title="{{'Indexes'|trans}}">{{'Indexes'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_DATASOURCE_MANAGER") %}
+                  <li{%if main_menu_item=='datasources'%} class="active"{%endif%}><a href="{{path('datasources')}}" title="{{'Datasources'|trans}}">{{'Datasources'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_MATCHING_LIST_MANAGER") %}
+                  <li{%if main_menu_item=='matching-lists'%} class="active"{%endif%}><a href="{{path('matching-lists')}}" title="{{'Matching lists'|trans}}">{{'Matching lists'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_PROCESSOR_MANAGER") %}
+                  <li{%if main_menu_item=='processors'%} class="active"{%endif%}><a href="{{path('processors')}}" title="{{'Processors'|trans}}">{{'Processors'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") %}
+                  <li{%if main_menu_item=='parameters'%} class="active"{%endif%}><a href="{{path('parameters')}}" title="{{'Parameters'|trans}}">{{'Parameters'|trans}}</a></li>
+                {% endif %}
+              </ul>
+            </li>
+          {% endif %}
+          <li class="expandable">
+            <a href="javascript:void(0)" class="item-search{%if main_menu_item=='search-pages' or  main_menu_item=='autopromotes' or  main_menu_item=='boost-queries'%} active{%endif%}">Search</a>
+            <ul{%if main_menu_item=='search-pages' or  main_menu_item=='autopromotes' or  main_menu_item=='boost-queries'%} class="active"{%endif%}>
+              {% if is_granted("ROLE_SEARCH_PAGE_MANAGER") %}
+                <li{%if main_menu_item=='search-pages'%} class="active"{%endif%}><a href="{{path('search-pages')}}" title="{{'Search pages'|trans}}">{{'Search pages'|trans}}</a></li>
+              {% endif %}
+              {% if is_granted("ROLE_AUTOPROMOTE_USER") %}
+                <li{%if main_menu_item=='autopromotes'%} class="active"{%endif%}><a href="{{path('autopromotes')}}" title="{{'Auto-promote'|trans}}">{{'Auto-promote'|trans}}</a></li>
+              {% endif %}
+              {% if is_granted("ROLE_BOOST_QUERY_MANAGER") %}
+                <li{%if main_menu_item=='boost-queries'%} class="active"{%endif%}><a href="{{path('boost-queries')}}" title="{{'Boost queries'|trans}}">{{'Boost queries'|trans}}</a></li>
+              {% endif %}
+            </ul>
+          </li>
+          {% if is_granted("ROLE_ANALYTICS_USER") or is_granted("ROLE_LOGS_VIEWER") or is_granted("ROLE_BACKUP_USER") or is_granted("ROLE_CONSOLE_USER") %}
+            <li class="expandable">
+              <a href="javascript:void(0)" class="item-tools{%if main_menu_item=='analytics' or  main_menu_item=='logs' or  main_menu_item=='backups' or  main_menu_item=='console'%} active{%endif%}">Tools</a>
+              <ul{%if main_menu_item=='analytics' or  main_menu_item=='logs' or  main_menu_item=='backups' or  main_menu_item=='console'%} class="active"{%endif%}>
+                {% if is_granted("ROLE_ANALYTICS_USER") %}
+                  <li{%if main_menu_item=='analytics'%} class="active"{%endif%}><a href="{{path('analytics')}}" title="{{'Analytics'|trans}}">{{'Analytics'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_LOGS_VIEWER") %}
+                  <li{%if main_menu_item=='logs'%} class="active"{%endif%}><a href="{{path('show-logs')}}" title="{{'Logs'|trans}}">{{'Logs'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_BACKUP_USER") %}
+                  <li{%if main_menu_item=='backups'%} class="active"{%endif%}><a href="{{path('backups')}}" title="{{'Backups'|trans}}">{{'Backups'|trans}}</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_CONSOLE_USER") %}
+                  <li{%if main_menu_item=='console'%} class="active"{%endif%}><a href="{{path('console')}}" title="{{'Console'|trans}}">{{'Console'|trans}}</a></li>
+                {% endif %}
+              </ul>
+            </li>
+          {% endif %}
+          {% if is_granted("ROLE_ADMIN") %}
+            <li class="expandable">
+              <a href="javascript:void(0)" class="item-admin{%if main_menu_item=='users' or  main_menu_item=='groups'%} active{%endif%}">Admin</a>
+              <ul{%if main_menu_item=='users' or  main_menu_item=='groups'%} class="active"{%endif%}>
+                <li{%if main_menu_item=='users'%} class="active"{%endif%}><a href="{{path('users')}}" title="{{'Users'|trans}}">{{'Users'|trans}}</a></li>
+                <li{%if main_menu_item=='groups'%} class="active"{%endif%}><a href="{{path('groups')}}" title="{{'Groups'|trans}}">{{'Groups'|trans}}</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          <li><a href="{{path('logout')}}" title="{{'Logout'|trans}}" class="item-logout">{{'Logout'|trans}}</a></li>
         </ul>
-      </div>
-      {{ app.session.set('messages',null) }}
-    {%endif%}
-    {% block main_content %}{% endblock %}
-  </section>
+      </nav>
+    </aside>
+    <main>
+      <h1>{{title}}</h1>
+      {% if app.session.get('messages') is defined and app.session.get('messages') is not null %}
+        <div id="messages">
+          <ul>
+            {%for message in app.session.get('messages')%}
+              <li class="message-type-{{message.type}}">{{message.text|raw}}</li>
+            {%endfor%}
+          </ul>
+        </div>
+        {{ app.session.set('messages',null) }}
+      {%endif%}
+      {% block main_content %}{% endblock %}
+    </main>
+  </div>
 {% endblock %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="{{asset('css/normalize.css')}}" />
+  <link rel="stylesheet" href="{{asset('fontawesome/css/all.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/ads.css')}}" />
   <link rel="stylesheet" href="{{asset('js/jquery-ui/jquery-ui.min.css')}}" />
-  <link rel="stylesheet" href="{{asset('css/global.css')}}" />
   <link rel="stylesheet" href="{{asset('css/jquery.jsonview.min.css')}}" />
+  <link rel="stylesheet" media="screen and (max-width: 1024px)" href="{{asset('css/rwd-1024.css')}}" type="text/css" />
+  <link rel="stylesheet" media="screen and (max-width: 450px)" href="{{asset('css/rwd-450.css')}}" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -157,7 +162,8 @@
       UserDeleteConfirm: "{{'You are about to delete a user.\\nDo you wish to proceed?'|trans}}",
       AutopromoteDeleteConfirm: "{{'You are about to delete an autopromote.\\nDo you wish to proceed?'|trans}}",
       BoostQueryDeleteConfirm: "{{'You are about to delete a boost query.\\nDo you wish to proceed?'|trans}}",
-      ParameterDeleteConfirm: "{{'You are about to delete a parameter.\\nDo you wish to proceed?'|trans}}"
+      ParameterDeleteConfirm: "{{'You are about to delete a parameter.\\nDo you wish to proceed?'|trans}}",
+      MatchingListDefinition: "{{'Matching list definition'|trans}}"
     };
   </script>
   <script type="text/javascript" src="{{asset('js/jquery-1.11.3.min.js')}}"></script>

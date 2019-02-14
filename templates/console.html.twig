@@ -3,8 +3,16 @@
 
 {%block main_content%}
   {%if form is defined%}
-    <ul class="actions"><li><a href="{{path('console-load')}}">{{ "Load an existing query"|trans }}</a></li></ul>
-    {{form(form, {'attr': {'id': 'form_console'}})}}
+    <div class="widget">
+      <div class="widget-title">{% trans %}Query definition{% endtrans %}</div>
+      <div class="widget-actions">
+        <a href="{{path('console-load')}}" class="fa fa-folder-open">{{'Load an existing query'|trans}}</a>
+      </div>
+      <div class="widget-content">
+        {{form(form, {'attr': {'id': 'form_console'}})}}
+      </div>
+    </div>
+
   {%endif%}
   <!--
   {%if results is defined%}
@@ -12,59 +20,67 @@
   {%endif%}
   -->
   {%if engine_response is defined%}
-    <h3>{{"Query results"|trans}}</h3>
-    <div class="console-sumary">
-      <p><strong>{{"Total results"|trans}}:</strong> {{engine_response.total}}
-      <p><strong>{{"Displayed results count"|trans}}:</strong> {{engine_response.hits|length}}
-      <ul class="actions">
-      {% if save_url is defined %}
-        <li><a href="{{ save_url }}">{{ "Save this query"|trans }}</a></li>
-      {% endif %}
-      {% if clone_url is defined %}
-        <li><a href="{{ clone_url }}">{{ "Clone this query"|trans }}</a></li>
-      {% endif %}
-      </ul>
-    </div>
 
     {% if facets is defined %}
-      <h3>Facets</h3>
-      <div class="facets">{{ facets|raw }}</div>
+    <div class="widget">
+      <div class="widget-title">{% trans %}Facets{% endtrans %}</div>
+      <div class="widget-content">
+        <div class="facets">{{ facets|raw }}</div>
+      </div>
+    </div>
     {% endif %}
-    <div class="console-table-wrapper">
-      <table class="console-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Type</th>
-            <th>Score</th>
-            {%for col in engine_response.cols%}
-            <th>{{col}}</th>  
-            {%endfor%}
-          </tr>
-        </thead>
-        <tbody>
-          {%for hit in engine_response.hits%}
-          <tr>
-            <td>{{hit._id}}</td>
-            <td>{{hit._type}}</td>
-            <td>{{hit._score}}</td>
-            {%for col in engine_response.cols%}
-              {%if hit._source[col] is defined%}
-                <td>
-                  {%if hit._source[col] is not iterable %}
-                    {{hit._source[col]|raw}}
+    <div class="widget">
+      <div class="widget-title">{% trans %}Query results{% endtrans %}</div>
+      <div class="widget-actions">
+        {% if save_url is defined %}
+          <a href="{{ save_url }}" class="fa fa-save">{{'Save this query'|trans}}</a>
+        {% endif %}
+        {% if clone_url is defined %}
+          <a href="{{ clone_url }}" class="fa fa-copy">{{'Clone this query'|trans}}</a>
+        {% endif %}
+      </div>
+      <div class="widget-content">
+        <div class="console-sumary">
+          <p><strong>{{"Total results"|trans}}:</strong> {{engine_response.total}}
+          <p><strong>{{"Displayed results count"|trans}}:</strong> {{engine_response.hits|length}}
+        </div>
+        <div class="console-table-wrapper">
+          <table class="console-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Score</th>
+                {%for col in engine_response.cols%}
+                <th>{{col}}</th>
+                {%endfor%}
+              </tr>
+            </thead>
+            <tbody>
+              {%for hit in engine_response.hits%}
+              <tr>
+                <td>{{hit._id}}</td>
+                <td>{{hit._type}}</td>
+                <td>{{hit._score}}</td>
+                {%for col in engine_response.cols%}
+                  {%if hit._source[col] is defined%}
+                    <td>
+                      {%if hit._source[col] is not iterable %}
+                        {{hit._source[col]|raw}}
+                      {%else%}
+                        Array
+                      {%endif%}
+                    </td>
                   {%else%}
-                    Array
+                    <td>-</td>
                   {%endif%}
-                </td>
-              {%else%}
-                <td>-</td>
-              {%endif%}
-            {%endfor%}
-          </tr>
-          {%endfor%}
-        </tbody>
-      </table>
+                {%endfor%}
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   {%endif%}
   {%if exception is defined%}
@@ -72,32 +88,37 @@
   {%endif%}
 
   {%if list is defined%}
-    <table id="saved-queries-table">
-      <thead>
-      <tr>
-        <th>{{'Target'|trans}}</th>
-        <th>{{'Query'|trans}}</th>
-        <th>{{'ID'|trans}}</th>
-        <th>&nbsp;</th>
-      </tr>
-      </thead>
-      <tbody>
-      {%set class='even'%}
-      {%for query in list%}
-        {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-        <tr class="{{class}}">
-          <td>{{query.target}}</td>
-          <td>{{query.definition}}</td>
-          <td>{{query.id}}</td>
-          <td class="actions">
-            <ul>
-              <li><a href="{{path('console', {'id': query.id})}}">{{'Load'|trans}}</a></li>
-              <li><a href="{{path('console-delete', {'id': query.id})}}">{{'Delete'|trans}}</a></li>
-            </ul>
-          </td>
+  <div class="widget">
+    <div class="widget-title">{% trans %}Saved queries{% endtrans %}</div>
+    <div class="widget-content">
+      <table id="saved-queries-table">
+        <thead>
+        <tr>
+          <th>{{'Target'|trans}}</th>
+          <th>{{'Query'|trans}}</th>
+          <th>{{'ID'|trans}}</th>
+          <th>&nbsp;</th>
         </tr>
-      {%endfor%}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        {%set class='even'%}
+        {%for query in list%}
+          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+          <tr class="{{class}}">
+            <td>{{query.target}}</td>
+            <td>{{query.definition}}</td>
+            <td>{{query.id}}</td>
+            <td class="actions">
+              <ul>
+                <li><a href="{{path('console', {'id': query.id})}}">{{'Load'|trans}}</a></li>
+                <li><a href="{{path('console-delete', {'id': query.id})}}">{{'Delete'|trans}}</a></li>
+              </ul>
+            </td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
   {% endif %}
 {%endblock%}

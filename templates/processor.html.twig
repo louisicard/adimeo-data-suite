@@ -3,52 +3,71 @@
 
 {%block main_content%}
   {%if processors is defined%}
-    {% if is_granted('ROLE_ADMIN') %}
-    <ul class="actions">
-      <li><a href="{{path('processor-import')}}">{{'Import'|trans}}</a></li>
-    </ul>
-    {%endif%}
     {%if form_add_processor is defined and is_granted('ROLE_PROCESSOR_CREATOR')%}
-      {{ form(form_add_processor, {'attr': {'id': 'form_add_processor'}}) }}
+      <div class="widget collapsible collapsed">
+        <div class="widget-title">{%trans%}Add a new processor{%endtrans%}</div>
+        {% if is_granted('ROLE_ADMIN') %}
+          <div class="widget-actions">
+            <a href="{{path('processor-import')}}" class="fa fa-file-import">{{'Import'|trans}}</a>
+          </div>
+        {% endif %}
+        <div class="widget-content">
+          {% form_theme form_add_processor 'forms.html.twig' %}
+          {{ form(form_add_processor, {'attr': {'id': 'form_add_processor'}}) }}
+        </div>
+      </div>
     {%endif%}
-    {%if processors|length > 0%}
-    <table>
-      <thead>
-        <tr>
-          <th>{{'Datasource'|trans}}</th>
-          <th>{{'Target'|trans}}</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {%set class='even'%}
-        {%for processor in processors%}
-          {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
-          <tr class="{{class}}">
-            <td>{{processor.datasource_name}}</td>
-            <td>{{processor.target}}</td>
-            <td class="actions">
-              <ul>
-                {% if not processor.delete_only %}
-                <li><a href="{{path('processor-edit', {'id': processor.id})}}">{{'Edit'|trans}}</a></li>
-                <li><a href="{{path('processor-export', {'id': processor.id})}}">{{'Export'|trans}}</a></li>
-                {% endif %}
-                {% if is_granted('ROLE_PROCESSOR_CREATOR') %}
-                <li><a href="{{path('processor-delete', {'id': processor.id})}}" class="processor-delete action-delete">{{'Delete'|trans}}</a></li>
-                {%endif%}
-              </ul>
-            </td>
-          </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-    {%endif%}
+    <div class="widget">
+      <div class="widget-title">{%trans%}List of processors{%endtrans%}</div>
+      <div class="widget-content">
+        {%if processors|length > 0%}
+        <table>
+          <thead>
+            <tr>
+              <th>{{'Datasource'|trans}}</th>
+              <th>{{'Target'|trans}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%set class='even'%}
+            {%for processor in processors%}
+              {%if class=='even'%}{%set class='odd'%}{%else%}{%set class='even'%}{%endif%}
+              <tr class="{{class}}">
+                <td>{{processor.datasource_name}}</td>
+                <td>{{processor.target}}</td>
+                <td class="actions">
+                  <ul>
+                    {% if not processor.delete_only %}
+                    <li><a href="{{path('processor-edit', {'id': processor.id})}}">{{'Edit'|trans}}</a></li>
+                    <li><a href="{{path('processor-export', {'id': processor.id})}}">{{'Export'|trans}}</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_PROCESSOR_CREATOR') %}
+                    <li><a href="{{path('processor-delete', {'id': processor.id})}}" class="processor-delete action-delete">{{'Delete'|trans}}</a></li>
+                    {%endif%}
+                  </ul>
+                </td>
+              </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        {% else %}
+          <p>No items!</p>
+        {%endif%}
+      </div>
+    </div>
   {%endif%}
   {%if form is defined%}
     {{form(form, {'attr': {'id': 'form_processor'}})}}
   {%endif%}
   {%if import_form is defined%}
-    {{form(import_form, {'attr': {'id': 'import_form_processor'}})}}
+    <div class="widget">
+      <div class="widget-title">{%trans%}Import a processor{%endtrans%}</div>
+      <div class="widget-content">
+        {% form_theme import_form 'forms.html.twig' %}
+        {{form(import_form, {'attr': {'id': 'import_form_processor'}})}}
+      </div>
+    </div>
   {%endif%}
   <script type="text/javascript">
     var __filter_types = [];

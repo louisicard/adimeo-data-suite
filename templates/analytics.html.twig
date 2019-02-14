@@ -3,55 +3,62 @@
 
 {%block main_content%}
   <form id="stat-form" class="clearfix">
-    <div class="form-item">
-      <label for="">{{ "Mapping"|trans() }}</label>
-      <select id="mapping-choice">
-        <option value="">{{ "Select a mapping"|trans() }}</option>
-        {% for index, choices in mappingChoices %}
-          <optgroup label="{{ index }}">
-          {% for k, v in choices %}
-            <option value="{{ k }}">{{ v }}</option>
+    <div class="form-elements">
+      <div class="form-item">
+        <label for="">{{ "Mapping"|trans() }}</label>
+        <select id="mapping-choice">
+          <option value="">{{ "Select a mapping"|trans() }}</option>
+          {% for index, choices in mappingChoices %}
+            <optgroup label="{{ index }}">
+            {% for k, v in choices %}
+              <option value="{{ k }}">{{ v }}</option>
+            {% endfor %}
+            </optgroup>
           {% endfor %}
-          </optgroup>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-item">
-      <label for="">{{ "Stat"|trans() }}</label>
-      <select id="stat-choice">
-        {% for class, choice in statChoices %}
-          <option value="{{ class }}">{{ choice }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-item">
-      <label for="">{{ "From"|trans() }}</label>
-      <input type="date" id="date-from" placeholder="Format YYYY-MM-DD" />
-    </div>
-    <div class="form-item">
-      <label for="">{{ "To"|trans() }}</label>
-      <input type="date" id="date-to" placeholder="Format YYYY-MM-DD" />
-    </div>
-    <div class="form-item">
-      <label for="">{{ "Granularity"|trans() }}</label>
-      <select id="granularity">
-        <option value="">Default</option>
-        <option value="1">Minute</option>
-        <option value="2">Hour</option>
-        <option value="3">Day</option>
-        <option value="4">Week</option>
-        <option value="5">Month</option>
-        <option value="6">Year</option>
-      </select>
-    </div>
-    <div class="actions">
-      <input type="submit" value="Display stats" />
+        </select>
+      </div>
+      <div class="form-item">
+        <label for="">{{ "Stat"|trans() }}</label>
+        <select id="stat-choice">
+          {% for class, choice in statChoices %}
+            <option value="{{ class }}">{{ choice }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-item">
+        <label for="">{{ "From"|trans() }}</label>
+        <input type="date" id="date-from" placeholder="Format YYYY-MM-DD" />
+      </div>
+      <div class="form-item">
+        <label for="">{{ "To"|trans() }}</label>
+        <input type="date" id="date-to" placeholder="Format YYYY-MM-DD" />
+      </div>
+      <div class="form-item">
+        <label for="">{{ "Granularity"|trans() }}</label>
+        <select id="granularity">
+          <option value="">Default</option>
+          <option value="1">Minute</option>
+          <option value="2">Hour</option>
+          <option value="3">Day</option>
+          <option value="4">Week</option>
+          <option value="5">Month</option>
+          <option value="6">Year</option>
+        </select>
+      </div>
+      <div class="actions">
+        <input type="submit" value="Display stats" />
+      </div>
     </div>
   </form>
   <div id="stat-display">
 
   </div>
-  <div id="table-stat-display">
+  <div class="widget collapsible collapsed" id="table-stat-display-widget">
+    <div class="widget-title">{% trans %}Data{% endtrans %}</div>
+    <div class="widget-content">
+      <div id="table-stat-display">
 
+      </div>
+    </div>
   </div>
 {%endblock%}
