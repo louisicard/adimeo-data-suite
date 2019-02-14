@@ -1,11 +1,10 @@
 # Adimeo Data Suite: Documentation Search API
 
 ## Requirement
-In order to run the examples in this documentation, please install the API DEMO database as follows.
+In order to run the examples in this documentation, please install the API_DEMO database as follows.<br />
+[ Skip the step ](#summary)
 
-[ Skip this step ](#summary)
-
-### API DEMO database installation
+### Data installation
 #### Create index
 * In `DataStudio > Indexes`, click on `Add a new index`:
     * Fill the `Index name` field with the value `api_demo`
@@ -136,20 +135,20 @@ In order to run the examples in this documentation, please install the API DEMO 
         ```     
         * Save the configuration by clicking on `Save mapping` button
 
-#### Import processors
+#### Create processor
 * In `DataStudio > Processors`, click on `import`:
     * Select `documentation\processor_api_demo.data_demo.json` file
     * Import the configuration by clicking on `Import` button
     
-#### Import data
+#### Import data in data source
 * In `DataStudio > Datasources`, select the `API_Examples` row and click on `Execute` action:
     * Fill the `File path` field with the local path of the `documentation\Api_Examples.csv`    
     * Click on `Execute` button to proceed import    
 
 <a name="summary"></a>
 ## Summary
-1. [ Search: Main call ](#search-main)
-2. [ Search: Optional additional parameters ](#search-optional-additional-parameters)
+1. [ Search : Main call ](#search-main)
+2. [ Search : Optional additional parameters ](#search-optional-additional-parameters)
     1. [ Searching for a string into indexed fields ](#search-query)  
     2. [ View a single document ](#search-single-document)  
     3. [ View a document list ](#search-document-list)         
@@ -167,8 +166,8 @@ In order to run the examples in this documentation, please install the API DEMO 
 5. [ Custom search ](#custom-search)
 ----
 <a name="search-main"></a>
-### Search: Main call
-Main call returns all data for an index and a mapping.
+### Search : Main call
+Main call return all data for an index and a mapping.
 
 * **URL**
 
@@ -178,7 +177,7 @@ Main call returns all data for an index and a mapping.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -187,7 +186,7 @@ Main call returns all data for an index and a mapping.
 
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
 
@@ -200,8 +199,8 @@ Main call returns all data for an index and a mapping.
     
     * **Content:**<br />
       ```json  
-        {
-            "took": 16,
+        {   
+            "took": 4,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -210,16 +209,30 @@ Main call returns all data for an index and a mapping.
                 "failed": 0
             },
             "hits": {
-                "total": 4,
+                "total": 3,
                 "max_score": 5,
                 "hits": [
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
+                        "_id": "AWhxHI0E5a6YCxlRadcQ",
                         "_score": 5,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Nous sommes  l\u054ecoute de vos problmatiques pour dterminer laccompagnement le plus pertinent en fonction de votre contexte, de vos dlais et de votre budget. Contactez-nous pour connatre nos tarifs et disponibilits.",
+                            "city": "Metz",
+                            "entity": "Opcoding",
+                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079",
+                            "url": "https:\/\/www.opcoding.eu",
+                            "color": "bleu"
+                        }
+                    },
+                    {
+                        "_index": "api_demo",
+                        "_type": "data_demo",
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
+                        "_score": 5,
+                        "_source": {
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
@@ -230,43 +243,15 @@ Main call returns all data for an index and a mapping.
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunze5a6YCxlRbh4C",
+                        "_id": "AWhxHJV45a6YCxlRadce",
                         "_score": 5,
                         "_source": {
-                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.",
+                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
                             "city": "Paris",
                             "entity": "Comexplorer",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
                             "url": "https:\/\/www.comexplorer.com",
                             "color": "vert"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUun5T5a6YCxlRbh4D",
-                        "_score": 5,
-                        "_source": {
-                            "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "CoreTech devient Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUunFB5a6YCxlRbh3l",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Nous sommes \u00e0 l\u2019\u00e9coute de vos probl\u00e9matiques pour d\u00e9terminer l\u2019accompagnement le plus pertinent en fonction de votre contexte, de vos d\u00e9lais et de votre budget. Contactez-nous pour conna\u00eetre nos tarifs et disponibilit\u00e9s.",
-                            "city": "Metz",
-                            "entity": "Opcoding",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079",
-                            "url": "https:\/\/www.opcoding.eu",
-                            "color": "bleu"
                         }
                     }
                 ]
@@ -279,7 +264,7 @@ Main call returns all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when the elasticsearch query fails:
+      Occurs when the elasticsearch query fails :
       ```json  
         {    
             "error": "Search failed"
@@ -289,7 +274,7 @@ Main call returns all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when index or mapping not exists:
+      Occurs when index or mapping not exists :
       ```json  
         {    
             "error": "Mapping does not exists"
@@ -299,7 +284,7 @@ Main call returns all data for an index and a mapping.
     * **Code:** 400
     
     * **Content:** <br />
-      Occurs when index or mapping parameters is missing:
+      Occurs when index or mapping parameters is missing :
       ```json  
         {    
             "error": "Missing mapping parameter"
@@ -307,7 +292,7 @@ Main call returns all data for an index and a mapping.
       ```      
 
 <a name="search-optional-additional-parameters"></a>
-### Search: Optional additional parameters
+### Search : Optional additional parameters
 Optional additional parameters can be combined with each other based on the main call.
 
 <a name="search-query"></a>
@@ -323,7 +308,7 @@ The partial search can be done thanks to the joker (*).
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -333,7 +318,7 @@ The partial search can be done thanks to the joker (*).
 
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_character_search] = `digit*`
@@ -347,8 +332,8 @@ The partial search can be done thanks to the joker (*).
     
     * **Content:** <br />    
       ```json    
-        {
-            "took": 26,
+         {
+            "took": 17,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -357,32 +342,18 @@ The partial search can be done thanks to the joker (*).
                 "failed": 0
             },
             "hits": {
-                "total": 2,
+                "total": 1,
                 "max_score": 5,
                 "hits": [
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
                         "_score": 5,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUun5T5a6YCxlRbh4D",
-                        "_score": 5,
-                        "_source": {
-                            "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "CoreTech devient Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
                             "url": "https:\/\/adimeo.com",
                             "color": "rouge"
@@ -390,7 +361,7 @@ The partial search can be done thanks to the joker (*).
                     }
                 ]
             }
-        }
+         }
       ```  
 
 <a name="search-single-document"></a>
@@ -405,7 +376,7 @@ Return all data for a single document with its ID.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -415,14 +386,14 @@ Return all data for a single document with its ID.
 
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id] = `AWiUunlU5a6YCxlRbh4B` [Adjust this value for your documents]
+    * [you_document_id] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
     
     * **Call:**    
       ```console
-        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&doc_id\=AWiUunlU5a6YCxlRbh4B
+        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&doc_id\=AWhxHJQs5a6YCxlRadcd
       ```    
 
     * **Code:** 200
@@ -430,7 +401,7 @@ Return all data for a single document with its ID.
     * **Content:** <br />
       ```json
         {
-            "took": 1,
+            "took": 6,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -445,10 +416,10 @@ Return all data for a single document with its ID.
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
                         "_score": 1,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
@@ -473,7 +444,7 @@ Return all data for a document list specified by their ID.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -483,65 +454,65 @@ Return all data for a document list specified by their ID.
 
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id1] = `AWiUunze5a6YCxlRbh4C` [Adjust this value for your documents]
-    * [you_document_id2] = `AWiUun5T5a6YCxlRbh4D` [Adjust this value for your documents]
+    * [you_document_id1] = `AWhxHJV45a6YCxlRadce` [Adjust this value for your documents]
+    * [you_document_id2] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
 
     * **Call:**    
       ```console
-        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&ids\=AWiUunze5a6YCxlRbh4C,AWiUun5T5a6YCxlRbh4D
+        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&ids\=AWhxHJV45a6YCxlRadce,AWhxHJQs5a6YCxlRadcd
       ```
 
     * **Code:** 200
   
     * **Content:** <br /> 
       ```json
-        {
-            "took": 34,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 2,
-                "max_score": 6,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUunze5a6YCxlRbh4C",
-                        "_score": 6,
-                        "_source": {
-                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.",
-                            "city": "Paris",
-                            "entity": "Comexplorer",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
-                            "url": "https:\/\/www.comexplorer.com",
-                            "color": "vert"
+          {
+                "took": 3,
+                "timed_out": false,
+                "_shards": {
+                    "total": 5,
+                    "successful": 5,
+                    "skipped": 0,
+                    "failed": 0
+                },
+                "hits": {
+                    "total": 2,
+                    "max_score": 6,
+                    "hits": [
+                        {
+                            "_index": "api_demo",
+                            "_type": "data_demo",
+                            "_id": "AWhxHJQs5a6YCxlRadcd",
+                            "_score": 6,
+                            "_source": {
+                                "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
+                                "city": "Paris",
+                                "entity": "Adimeo",
+                                "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
+                                "url": "https:\/\/adimeo.com",
+                                "color": "rouge"
+                            }
+                        },
+                        {
+                            "_index": "api_demo",
+                            "_type": "data_demo",
+                            "_id": "AWhxHJV45a6YCxlRadce",
+                            "_score": 6,
+                            "_source": {
+                                "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
+                                "city": "Paris",
+                                "entity": "Comexplorer",
+                                "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
+                                "url": "https:\/\/www.comexplorer.com",
+                                "color": "vert"
+                            }
                         }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUun5T5a6YCxlRbh4D",
-                        "_score": 6,
-                        "_source": {
-                            "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "CoreTech devient Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
-        }
+                    ]
+                }
+          }
       ```
 
 <a name="search-filter"></a>
@@ -556,7 +527,7 @@ Return all the data constrained by search filter on raw or transliterated field.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -574,7 +545,7 @@ Return all the data constrained by search filter on raw or transliterated field.
    
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `city.raw`
@@ -594,8 +565,8 @@ Return all the data constrained by search filter on raw or transliterated field.
   
     * **Content:** 
       ```json  
-        {
-            "took": 2,
+          {
+            "took": 1,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -610,10 +581,10 @@ Return all the data constrained by search filter on raw or transliterated field.
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
                         "_score": 5,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
@@ -623,7 +594,7 @@ Return all the data constrained by search filter on raw or transliterated field.
                     }
                 ]
             }
-        }
+          } 
       ```      
 
 <a name="search-query-string"></a>
@@ -638,7 +609,7 @@ Return all the data constrained by a filter in connection with an analyzed field
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -649,7 +620,7 @@ Return all the data constrained by a filter in connection with an analyzed field
   
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `city`
@@ -668,7 +639,7 @@ Return all the data constrained by a filter in connection with an analyzed field
     * **Content:** <br />  
       ```json  
         {
-            "took": 6,
+            "took": 2,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -677,32 +648,18 @@ Return all the data constrained by a filter in connection with an analyzed field
                 "failed": 0
             },
             "hits": {
-                "total": 2,
-                "max_score": 5.6954923,
+                "total": 1,
+                "max_score": 6.3862944,
                 "hits": [
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
-                        "_score": 5.6954923,
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
+                        "_score": 6.3862944,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUun5T5a6YCxlRbh4D",
-                        "_score": 5.432378,
-                        "_source": {
-                            "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "CoreTech devient Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
                             "url": "https:\/\/adimeo.com",
                             "color": "rouge"
@@ -710,7 +667,7 @@ Return all the data constrained by a filter in connection with an analyzed field
                     }
                 ]
             }
-        }
+        } 
       ```  
   
 <a name="activation-auto-promote"></a>
@@ -726,7 +683,7 @@ based on the keywords provided.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -736,7 +693,7 @@ based on the keywords provided.
   
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [autopromote] = `1` 
@@ -769,7 +726,7 @@ based on the keywords provided.
                         "_id": "AWhxHJQs5a6YCxlRadcd",
                         "_score": 2.7330778,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
@@ -802,7 +759,7 @@ You can specify the order filter on a **raw or transliterated** field.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -813,7 +770,7 @@ You can specify the order filter on a **raw or transliterated** field.
   
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name] = `entity.raw`
@@ -828,8 +785,8 @@ You can specify the order filter on a **raw or transliterated** field.
     
     * **Content:** <br /> 
       ```json
-        {
-            "took": 5,
+          {
+            "took": 2,
             "timed_out": false,
             "_shards": {
                 "total": 5,
@@ -838,16 +795,16 @@ You can specify the order filter on a **raw or transliterated** field.
                 "failed": 0
             },
             "hits": {
-                "total": 4,
+                "total": 3,
                 "max_score": null,
                 "hits": [
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunFB5a6YCxlRbh3l",
+                        "_id": "AWhxHI0E5a6YCxlRadcQ",
                         "_score": null,
                         "_source": {
-                            "body": "Nous sommes \u00e0 l\u2019\u00e9coute de vos probl\u00e9matiques pour d\u00e9terminer l\u2019accompagnement le plus pertinent en fonction de votre contexte, de vos d\u00e9lais et de votre budget. Contactez-nous pour conna\u00eetre nos tarifs et disponibilit\u00e9s.",
+                            "body": "Nous sommes  l\u054ecoute de vos problmatiques pour dterminer laccompagnement le plus pertinent en fonction de votre contexte, de vos dlais et de votre budget. Contactez-nous pour connatre nos tarifs et disponibilits.",
                             "city": "Metz",
                             "entity": "Opcoding",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079",
@@ -858,24 +815,10 @@ You can specify the order filter on a **raw or transliterated** field.
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUun5T5a6YCxlRbh4D",
+                        "_id": "AWhxHJV45a6YCxlRadce",
                         "_score": null,
                         "_source": {
-                            "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "CoreTech devient Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWiUunze5a6YCxlRbh4C",
-                        "_score": null,
-                        "_source": {
-                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.",
+                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
                             "city": "Paris",
                             "entity": "Comexplorer",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
@@ -886,10 +829,10 @@ You can specify the order filter on a **raw or transliterated** field.
                     {
                         "_index": "api_demo",
                         "_type": "data_demo",
-                        "_id": "AWiUunlU5a6YCxlRbh4B",
+                        "_id": "AWhxHJQs5a6YCxlRadcd",
                         "_score": null,
                         "_source": {
-                            "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.",
+                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                             "city": "Paris",
                             "entity": "Adimeo",
                             "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
@@ -899,7 +842,7 @@ You can specify the order filter on a **raw or transliterated** field.
                     }
                 ]
             }
-        }
+          }
       ```        
 
 <a name="search-suggestion-field"></a>
@@ -909,13 +852,13 @@ If your main search failed for the current channel, a suggestion, based on the s
 
 * **URL**
 
-  `/search-api/v2?mapping=`[your_index].[your_mapping]`&suggest[]=`[field_name_1],[field_name_2]`&query=`[your_query]
+  `/search-api/v2?mapping=`[your_index].[your_mapping]`&suggest[]=`[field_name_1],[field_name_2]
   
 * **Method:**
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -926,12 +869,11 @@ If your main search failed for the current channel, a suggestion, based on the s
   
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [field_name_1] = `entity`
-    * [field_name_2] = `city`  
-    * [your_query] = `Ademo`  
+    * [field_name_2] = `city`    
 
     * **Call:**    
     ```console
@@ -1004,7 +946,7 @@ You can highlight the search terms if those ones were found in specified fields.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1024,16 +966,14 @@ You can highlight the search terms if those ones were found in specified fields.
   The size of the highlighted fragment in characters. Defaults to 100.
   
   * **number_of_fragments**<br />
-  The maximum number of fragments to return. If the number of fragments is set to 0, no fragments are returned. Instead, the entire field contents are highlighted and returned. 
-  This can be handy when you need to highlight short texts such as a title or address, but fragmentation is not required. If number_of_fragments is 0, fragment_size is ignored. 
-  Defaults to 5.
+  The maximum number of fragments to return. If the number of fragments is set to 0, no fragments are returned. Instead, the entire field contents are highlighted and returned. This can be handy when you need to highlight short texts such as a title or address, but fragmentation is not required. If number_of_fragments is 0, fragment_size is ignored. Defaults to 5.
   
   * **no_match_size**<br />
   The amount of text you want to return from the beginning of the field if there are no matching fragments to highlight. Defaults to 0 (nothing is returned).  
   
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_term] = `Adimeo`
@@ -1051,7 +991,7 @@ You can highlight the search terms if those ones were found in specified fields.
           ...
             "highlight": {
                 "body": [
-                    "<em>Adimeo<\/em> s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre"
+                    "<em>Adimeo<\/em> s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme"
                 ],
                 "entity": [
                     "<em>Adimeo<\/em>"
@@ -1073,7 +1013,7 @@ for the relevant index.
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1084,7 +1024,7 @@ for the relevant index.
   
 * **Example :**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_raw_field_1] = `entity.raw` 
@@ -1107,7 +1047,7 @@ for the relevant index.
                 "buckets": [
                     {
                         "key": "Paris",
-                        "doc_count": 3
+                        "doc_count": 2
                     },
                     {
                         "key": "Metz",
@@ -1127,10 +1067,6 @@ for the relevant index.
                         "key": "Comexplorer",
                         "doc_count": 1
                     },
-                    {
-                        "key": "CoreTech devient Adimeo",
-                        "doc_count": 1
-                    },                    
                     {
                         "key": "Opcoding",
                         "doc_count": 1
@@ -1178,7 +1114,7 @@ The fingerprint analyzer is a specialist analyzer which creates a fingerprint wh
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1188,7 +1124,7 @@ The fingerprint analyzer is a specialist analyzer which creates a fingerprint wh
   
 * **Example :**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [analyzer] = `whitespace` 
@@ -1211,7 +1147,7 @@ These make it possible to adjust the relevance of the engine according to certai
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1221,7 +1157,7 @@ These make it possible to adjust the relevance of the engine according to certai
   
 * **Example :**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [apply_boosting] = `1` 
@@ -1244,7 +1180,7 @@ Returns json data corresponding to the partial or complete text from the paramet
 
   `GET`
   
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1269,7 +1205,7 @@ Returns json data corresponding to the partial or complete text from the paramet
   
   * **Content:** 
   
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_field_name] = `entity.raw`
@@ -1322,7 +1258,7 @@ Find documents that are similar to a given document or a set of documents.
 
     `GET`
 
-* **URL Parameters**
+* **URL Params**
 
   **Required:**
    
@@ -1333,7 +1269,7 @@ Find documents that are similar to a given document or a set of documents.
   
 * **Success Response:**
   
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
     * [your_fields_concerned] = `entity, body`
@@ -1360,7 +1296,7 @@ Make your own and custom query by-passing ADS filter.
 
     `POST`
 
-* **URL Parameters**
+* **URL Params**
 
     **Required:**
 
@@ -1375,9 +1311,9 @@ Make your own and custom query by-passing ADS filter.
 
 * **Success Response:**
 
-    Let's try to make a sample call cURL with these parameters:
+    Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
-    * [your_size] = `10`
+    * [your_size] = `entity.raw`
     * [your_raw_data] = `{"query":{"bool":{"must":{"term":{"entity":"adimeo"}}}}}` 
     
     * **Call:**    
@@ -1385,7 +1321,7 @@ Make your own and custom query by-passing ADS filter.
         curl -d '{"query":{"bool":{"must":{"term":{"entity":"adimeo"}}}}}' -H "Content-Type: application/json" -X POST http://localhost:8888/index.php/search-api/v2/custom\?index\=\api_demo\&size\=10
     ``` 
 
-    * **Code:** 200@
+    * **Code:** 200
     
     * **Content:**    
     ```json
@@ -1405,10 +1341,10 @@ Make your own and custom query by-passing ADS filter.
                 {
                     "_index": "api_demo",
                     "_type": "data_demo",
-                    "_id": "AWiUunlU5a6YCxlRbh4B",
+                    "_id": "AWhxHJQs5a6YCxlRadcd",
                     "_score": 0.6931472,
                     "_source": {
-                        "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                        "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
                         "city": "Paris",
                         "entity": "Adimeo",
                         "thumbnail": "https://picsum.photos/200/300/?image=921",
