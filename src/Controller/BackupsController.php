@@ -162,6 +162,7 @@ class BackupsController extends AdimeoDataSuiteController
         foreach ($info as $k => $data) {
             $indexChoices[$k] = $k;
         }
+        ksort($indexChoices);
         $form = $this->createFormBuilder(null)
             ->add('name', TextType::class, array(
                 'label' => $this->get('translator')->trans('Snapshot name'),
@@ -184,7 +185,7 @@ class BackupsController extends AdimeoDataSuiteController
                 'required' => false,
             ))
             ->add('includeGlobalState', CheckboxType::class, array(
-                'label' => $this->get('translator')->trans('Iclude global state'),
+                'label' => $this->get('translator')->trans('Include global state'),
                 'required' => false,
             ))
             ->add('submit', SubmitType::class, array(
@@ -250,6 +251,7 @@ class BackupsController extends AdimeoDataSuiteController
         foreach ($snapshot['indices'] as $index) {
             $indexesChoices[$index] = $index;
         }
+        ksort($indexesChoices);
 
         $form = $this->createFormBuilder(null)
             ->add('indexes', ChoiceType::class, array(
@@ -274,7 +276,7 @@ class BackupsController extends AdimeoDataSuiteController
                 'required' => false,
             ))
             ->add('includeGlobalState', CheckboxType::class, array(
-                'label' => $this->get('translator')->trans('Iclude global state'),
+                'label' => $this->get('translator')->trans('Include global state'),
                 'required' => false,
             ))
             ->add('submit', SubmitType::class, array(

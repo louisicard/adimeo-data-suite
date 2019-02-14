@@ -764,10 +764,34 @@ form#form_processor .actions {
 
 /*  END ANALYTICS */
 /*  USERS */
+.page-backups_create_snapshot .choice-container label,
+.page-backups_restore_snapshot .choice-container label,
 #form_group .choice-container label,
 #form_user .choice-container label {
   font-weight: normal; }
 
 /*  END USERS */
+/*  MESSAGES */
+#messages {
+  margin: 1rem 0; }
+  #messages ul,
+  #messages li {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  #messages .message-type-status {
+    border: 1px solid #4e8343;
+    color: #4e8343;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #cddccd; }
+  #messages .message-type-error {
+    border: 1px solid #fb5140;
+    color: #fb5140;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #fbd9ce; }
+
+/*  END MESSAGES */
 
 /*# sourceMappingURL=ads.css.map */

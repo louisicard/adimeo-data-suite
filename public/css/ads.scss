@@ -6,9 +6,11 @@ $mediumGrey: #666;
 $bodyBg: #f8f9fa;
 $lightBlue: #0096db;
 $lightGreen: #73b566;
+$superLightGreen: #cddccd;
 $green: #5c9a4f;
 $darkGreen: #4e8343;
 $red: #fb5140;
+$lightRed: #fbd9ce;
 $orange: #f88e11;
 $mainFont: 'Source Sans Pro', "Helvetica Neue", Helvetica, Arial, sans-serif;
 $faFont: normal normal 900 14px/1 "Font Awesome 5 Free";
@@ -370,6 +372,7 @@ body {
     }
   }
 }
+
 /*  END MAIN LAYOUT  */
 
 /*  WIDGET & TABLE  */
@@ -1095,6 +1098,8 @@ form#form_processor {
 /*  END ANALYTICS */
 
 /*  USERS */
+.page-backups_create_snapshot,
+.page-backups_restore_snapshot,
 #form_group,
 #form_user {
   .choice-container {
@@ -1104,3 +1109,29 @@ form#form_processor {
   }
 }
 /*  END USERS */
+
+/*  MESSAGES */
+#messages {
+  margin: 1rem 0;
+  ul,
+  li {
+    margin:0;
+    padding: 0;
+    list-style: none;
+  }
+  .message-type-status {
+    border:1px solid $darkGreen;
+    color:$darkGreen;
+    padding:0.5rem;
+    border-radius: 4px;
+    background: $superLightGreen;
+  }
+  .message-type-error {
+    border:1px solid $red;
+    color:$red;
+    padding:0.5rem;
+    border-radius: 4px;
+    background: $lightRed;
+  }
+}
+/*  END MESSAGES */
