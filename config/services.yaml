@@ -41,6 +41,10 @@ services:
     class: AdimeoDataSuite\Index\StatIndexManager
     arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%"]
     public: true
+  adimeo_data_suite_backups_es_server:
+    class: AdimeoDataSuite\Index\BackupsManager
+    arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%"]
+    public: true
   adimeo_data_suite_synonyms_dictionaries_manager:
     class: AdimeoDataSuite\Index\SynonymsDictionariesManager
     arguments: ["%env(SYNONYMS_DICTIONARIES_PATH)%"]

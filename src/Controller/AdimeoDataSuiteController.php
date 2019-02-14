@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\Group;
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
+use AdimeoDataSuite\Index\BackupsManager;
 use AdimeoDataSuite\Index\IndexManager;
 use AdimeoDataSuite\Index\StatIndexManager;
 use AdimeoDataSuite\Model\Datasource;
@@ -37,6 +38,13 @@ class AdimeoDataSuiteController extends Controller
    */
   protected function getStatIndexManager() {
     return $this->container->get('adimeo_data_suite_stat_es_server');
+  }
+
+  /**
+   * @return BackupsManager
+   */
+  protected function getBackupsManager() {
+    return $this->container->get('adimeo_data_suite_backups_es_server');
   }
 
   protected function addSessionMessage($type, $message) {
