@@ -46,6 +46,9 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
         if(isset($argFields[$i - 1])) {
           $args[$argFields[$i - 1]] = $datasource->injectParameters($input->getArgument('arg' . $i));
         }
+        else {
+          $args['arg' . $i] = $datasource->injectParameters($input->getArgument('arg' . $i));
+        }
       }
     }
 
@@ -61,6 +64,7 @@ class DatasourceCommand extends AdimeoDataSuiteCommand
         }
       }
     }
+
 
     $datasource->startExecution($args);
   }
