@@ -240,6 +240,24 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.querystatcompiler:
+    class: AdimeoDataSuite\Stat\QueryStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.noresultsquerystatcompiler:
+    class: AdimeoDataSuite\Stat\NoResultsQueryStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
+  adimeodatasuite.stat.popularresultsstatcompiler:
+    class: AdimeoDataSuite\Stat\PopularResultsStatCompiler
+    arguments: ["@adimeo_data_suite_stat_es_server"]
+    public: true
+    tags:
+      - { name: adimeodatasuite.stat }
 
 
   adimeodatasource.datasource.sharepointsearch:
