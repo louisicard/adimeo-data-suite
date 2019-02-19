@@ -426,6 +426,7 @@ class SearchAPIController extends AdimeoDataSuiteController
             $this->getStatIndexManager()->saveStat(
               $request->get('mapping'),
               $applied_facets,
+              $text,
               $statKeywords,
               $rawStatKeywords,
               $request->getQueryString(),
