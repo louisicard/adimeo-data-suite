@@ -28,9 +28,14 @@ class MigrateCommand extends AdimeoDataSuiteCommand
     if($json) {
       $json = json_decode($json, TRUE);
       $out = array();
+      if(isset($json['index']['settings']['legacy'])) {
+        unset($json['index']['settings']['legacy']);
+      }
       $out['index'][$json['index']['name']]['settings']['index'] = $json['index']['settings'];
       $out['mapping'][$json['mapping']['name']]['properties'] = $json['mapping']['definition'];
-      $this->upgradeMapping($out['mapping'][$json['mapping']['name']]['properties']);
+      if($this->getIndexManager()->getServerMajorVersionNumber() >= 5) {
+        $this->upgradeMapping($out['mapping'][$json['mapping']['name']]['properties']);
+      }
       if(isset($json['mapping']['dynamic_templates'])) {
         $out['mapping'][$json['mapping']['name']]['dynamic_templates'] = $json['mapping']['dynamic_templates'];
       }
@@ -46,7 +51,7 @@ class MigrateCommand extends AdimeoDataSuiteCommand
           $ml->setCreated(new \DateTime());
           $ml->setCreatedBy(null);
           $ml->setUpdated(new \DateTime());
-          $out['matching_lists'][] = serialize($ml);
+          $out['matching_lists'][] = json_encode(array('data' => serialize($ml)));
         }
       }
       $proc = new Processor();
@@ -57,8 +62,10 @@ class MigrateCommand extends AdimeoDataSuiteCommand
       $proc->setTarget($json['processor_definition']['target']);
       $proc->setDatasourceId($json['datasource']['id']);
       $siblings = [];
-      foreach($json['siblings'] as $sibling) {
-        $siblings[] = $sibling['id'];
+      if(isset($json['siblings'])) {
+        foreach ($json['siblings'] as $sibling) {
+          $siblings[] = $sibling['id'];
+        }
       }
       $proc->setTargetSiblings($siblings);
 
@@ -101,7 +108,7 @@ class MigrateCommand extends AdimeoDataSuiteCommand
       $ds->setCreatedBy(null);
       $ds->setUpdated(new \DateTime());
       $ds->setId($data['id']);
-      $ds->setHasBatchExecution((bool)$data['has_batch_execution']);
+      $ds->setHasBatchExecution(isset($data['has_batch_execution']) ? (bool)$data['has_batch_execution'] : false);
       $settings = $data['settings'];
       $settings['name'] = $data['name'];
       $ds->setSettings($settings);

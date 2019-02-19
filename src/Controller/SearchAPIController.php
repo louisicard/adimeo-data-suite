@@ -423,6 +423,14 @@ class SearchAPIController extends AdimeoDataSuiteController
                 }
               }
             }
+            $statHits = [];
+            if(isset($res['hits']['hits'])) {
+              foreach ($res['hits']['hits'] as $hit) {
+                if(isset($hit['_id'])) {
+                  $statHits[] = $hit['_id'];
+                }
+              }
+            }
             $this->getStatIndexManager()->saveStat(
               $request->get('mapping'),
               $applied_facets,
@@ -433,7 +441,8 @@ class SearchAPIController extends AdimeoDataSuiteController
               isset($res['hits']['total']) ? $res['hits']['total'] : 0,
               isset($res['took']) ? $res['took'] : 0,
               $request->get('clientIp') != null ? $request->get('clientIp') : $request->getClientIp(),
-              $request->get('tag') != null ? $request->get('tag') : ''
+              $request->get('tag') != null ? $request->get('tag') : '',
+              $statHits
             );
           }
 
