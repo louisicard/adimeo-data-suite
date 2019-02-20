@@ -135,10 +135,10 @@ In order to run the examples in this documentation, please install the API_DEMO 
         ```     
         * Save the configuration by clicking on `Save mapping` button
 
-#### Create processor
+#### Import processor
 * In `DataStudio > Processors`, click on `import`:
     * Select `documentation\processor_api_demo.data_demo.json` file
-    * Import the configuration by clicking on `Import` button
+    * Import configuration by clicking on `Import` button
     
 #### Import data in data source
 * In `DataStudio > Datasources`, select the `API_Examples` row and click on `Execute` action:
@@ -199,64 +199,74 @@ Main call return all data for an index and a mapping.
     
     * **Content:**<br />
       ```json  
-        {   
-            "took": 4,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 3,
-                "max_score": 5,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHI0E5a6YCxlRadcQ",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Nous sommes  l\u054ecoute de vos problmatiques pour dterminer laccompagnement le plus pertinent en fonction de votre contexte, de vos dlais et de votre budget. Contactez-nous pour connatre nos tarifs et disponibilits.",
-                            "city": "Metz",
-                            "entity": "Opcoding",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079",
-                            "url": "https:\/\/www.opcoding.eu",
-                            "color": "bleu"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJV45a6YCxlRadce",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
-                            "city": "Paris",
-                            "entity": "Comexplorer",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
-                            "url": "https:\/\/www.comexplorer.com",
-                            "color": "vert"
-                        }
-                    }
-                ]
-            }
-        }
+      { 
+          "took": 6, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 4, 
+              "max_score": 5, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0txSb7kLkQK8-l9A", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Nous sommes \u00e0 l\u2019\u00e9coute de vos probl\u00e9matiques pour d\u00e9terminer l\u2019accompagnement le plus pertinent en fonction de votre contexte, de vos d\u00e9lais et de votre budget. Contactez-nous pour conna\u00eetre nos tarifs et disponibilit\u00e9s.", 
+                          "city": "Metz", 
+                          "entity": "Opcoding", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079", 
+                          "url": "https:\/\/www.opcoding.eu" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uQqb7kLkQK8-l9C", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.", 
+                          "city": "Paris", 
+                          "entity": "Comexplorer", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134", 
+                          "url": "https:\/\/www.comexplorer.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      }
       ```
           
 * **Error Response:**
@@ -332,36 +342,48 @@ The partial search can be done thanks to the joker (*).
     
     * **Content:** <br />    
       ```json    
-         {
-            "took": 17,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 1,
-                "max_score": 5,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
-         }
+      { 
+          "took": 138, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 2, 
+              "max_score": 5, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      }
       ```  
 
 <a name="search-single-document"></a>
@@ -389,47 +411,46 @@ Return all data for a single document with its ID.
     Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
+    * [you_document_id] = `AWjs0uKKb7kLkQK8-l9B` [Adjust this value for your documents]
     
     * **Call:**    
       ```console
-        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&doc_id\=AWhxHJQs5a6YCxlRadcd
+        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&doc_id\=AWjs0uKKb7kLkQK8-l9B
       ```    
 
     * **Code:** 200
     
     * **Content:** <br />
       ```json
-        {
-            "took": 6,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 1,
-                "max_score": 1,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 1,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
-        }
+      { 
+          "took": 1, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 1, 
+              "max_score": 1, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 1, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      }         
       ```  
 
 <a name="view-document-list"></a>
@@ -457,67 +478,65 @@ Return all data for a document list specified by their ID.
     Let's try to make an sample call cURL with this parameters:
     * [your_index] = `api_demo`
     * [your_mapping] = `data_demo`
-    * [you_document_id1] = `AWhxHJV45a6YCxlRadce` [Adjust this value for your documents]
-    * [you_document_id2] = `AWhxHJQs5a6YCxlRadcd` [Adjust this value for your documents]
+    * [you_document_id1] = `AWjs0uKKb7kLkQK8-l9B` [Adjust this value for your documents]
+    * [you_document_id2] = `AWjs0uYOb7kLkQK8-l9D` [Adjust this value for your documents]
 
     * **Call:**    
       ```console
-        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&ids\=AWhxHJV45a6YCxlRadce,AWhxHJQs5a6YCxlRadcd
+        curl http://localhost:8888/index.php/search-api/v2\?mapping\=api_demo.data_demo\&ids\=AWjs0uKKb7kLkQK8-l9B,AWjs0uYOb7kLkQK8-l9D
       ```
 
     * **Code:** 200
   
     * **Content:** <br /> 
       ```json
-          {
-                "took": 3,
-                "timed_out": false,
-                "_shards": {
-                    "total": 5,
-                    "successful": 5,
-                    "skipped": 0,
-                    "failed": 0
-                },
-                "hits": {
-                    "total": 2,
-                    "max_score": 6,
-                    "hits": [
-                        {
-                            "_index": "api_demo",
-                            "_type": "data_demo",
-                            "_id": "AWhxHJQs5a6YCxlRadcd",
-                            "_score": 6,
-                            "_source": {
-                                "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                                "city": "Paris",
-                                "entity": "Adimeo",
-                                "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                                "url": "https:\/\/adimeo.com",
-                                "color": "rouge"
-                            }
-                        },
-                        {
-                            "_index": "api_demo",
-                            "_type": "data_demo",
-                            "_id": "AWhxHJV45a6YCxlRadce",
-                            "_score": 6,
-                            "_source": {
-                                "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
-                                "city": "Paris",
-                                "entity": "Comexplorer",
-                                "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
-                                "url": "https:\/\/www.comexplorer.com",
-                                "color": "vert"
-                            }
-                        }
-                    ]
-                }
-          }
+      { 
+          "took": 100, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 2, 
+              "max_score": 6, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 6, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": 6, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      } 
       ```
 
 <a name="search-filter"></a>
 #### Search: Filter on raw or transliterated field
-Return all the data constrained by search filter on raw or transliterated field.
+Return all data constrained by search filter on raw or transliterated field.
 
 * **URL**
 
@@ -565,41 +584,40 @@ Return all the data constrained by search filter on raw or transliterated field.
   
     * **Content:** 
       ```json  
-          {
-            "took": 1,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 1,
-                "max_score": 5,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 5,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
+      { 
+          "took": 2, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 1, 
+              "max_score": 5, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  } 
+              ] 
           } 
+      }           
       ```      
 
 <a name="search-query-string"></a>
 #### Search: Query string on analyzed field
-Return all the data constrained by a filter in connection with an analyzed field.
+Return all data constrained by a filter in connection with an analyzed field.
 
 * **URL**
 
@@ -638,36 +656,48 @@ Return all the data constrained by a filter in connection with an analyzed field
   
     * **Content:** <br />  
       ```json  
-        {
-            "took": 2,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 1,
-                "max_score": 6.3862944,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 6.3862944,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
-        } 
+      { 
+          "took": 23, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 2, 
+              "max_score": 5.4115257, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 5.4115257, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": 5.311711, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      } 
       ```  
   
 <a name="activation-auto-promote"></a>
@@ -707,44 +737,74 @@ based on the keywords provided.
     
     * **Content:** <br /> 
       ```json
-        {
-            "took": 1,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 1,
-                "max_score": 2.7330778,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": 2.7330778,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            },
-            "autopromote": [
-                {
-                    "title": "Adimeo acqui\u00e8re OpCoding",
-                    "body": "Test de contenu",
-                    "url": "https:\/\/www.adimeo.com",
-                    "image": null
-                }
-            ]
-        }
+      { 
+          "took": 5, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 4, 
+              "max_score": 5, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0txSb7kLkQK8-l9A", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Nous sommes \u00e0 l\u2019\u00e9coute de vos probl\u00e9matiques pour d\u00e9terminer l\u2019accompagnement le plus pertinent en fonction de votre contexte, de vos d\u00e9lais et de votre budget. Contactez-nous pour conna\u00eetre nos tarifs et disponibilit\u00e9s.", 
+                          "city": "Metz", 
+                          "entity": "Opcoding", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079", 
+                          "url": "https:\/\/www.opcoding.eu" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uQqb7kLkQK8-l9C", 
+                      "_score": 5, 
+                      "_source": { 
+                          "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.", 
+                          "city": "Paris", 
+                          "entity": "Comexplorer", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134", 
+                          "url": "https:\/\/www.comexplorer.com" 
+                      } 
+                  } 
+              ] 
+          } 
+      }   
       ```
 
 <a name="search-sort-filter"></a>
@@ -753,7 +813,7 @@ You can specify the order filter on a **raw or transliterated** field.
 
 * **URL**
 
-  `/search-api/v2?mapping=`[your_index].[your_mapping]`&sort[]=`[field_name],[your_order]
+  `/search-api/v2?mapping=`[your_index].[your_mapping]`&sort=`[field_name],[your_order]
   
 * **Method:**
 
@@ -765,8 +825,8 @@ You can specify the order filter on a **raw or transliterated** field.
    
   * `mapping=[string]`: Defines which index and mapping is concerned. 
     The following pattern must be respected: `[your_index].[your_mapping]`.
-  * `sort[]=[string]`: Defines which field must be sort by (ASC or DESC)<br /> 
-    The sort filter must respect the following pattern: `[field_name]`,`[ASC|DESC]`".<br />   
+  * `sort=[string]`: Defines which field must be sort by (ASC or DESC)<br /> 
+    The sort filter must respect the following pattern: `[field_name]`,`[ASC|DESC]`.<br />   
   
 * **Success Response:**
 
@@ -785,64 +845,74 @@ You can specify the order filter on a **raw or transliterated** field.
     
     * **Content:** <br /> 
       ```json
-          {
-            "took": 2,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 3,
-                "max_score": null,
-                "hits": [
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHI0E5a6YCxlRadcQ",
-                        "_score": null,
-                        "_source": {
-                            "body": "Nous sommes  l\u054ecoute de vos problmatiques pour dterminer laccompagnement le plus pertinent en fonction de votre contexte, de vos dlais et de votre budget. Contactez-nous pour connatre nos tarifs et disponibilits.",
-                            "city": "Metz",
-                            "entity": "Opcoding",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079",
-                            "url": "https:\/\/www.opcoding.eu",
-                            "color": "bleu"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJV45a6YCxlRadce",
-                        "_score": null,
-                        "_source": {
-                            "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes  gnrer des leads de faon plus directe et moins coteuse.",
-                            "city": "Paris",
-                            "entity": "Comexplorer",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134",
-                            "url": "https:\/\/www.comexplorer.com",
-                            "color": "vert"
-                        }
-                    },
-                    {
-                        "_index": "api_demo",
-                        "_type": "data_demo",
-                        "_id": "AWhxHJQs5a6YCxlRadcd",
-                        "_score": null,
-                        "_source": {
-                            "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                            "city": "Paris",
-                            "entity": "Adimeo",
-                            "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921",
-                            "url": "https:\/\/adimeo.com",
-                            "color": "rouge"
-                        }
-                    }
-                ]
-            }
-          }
+      { 
+          "took": 65, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 4, 
+              "max_score": null, 
+              "hits": [ 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0txSb7kLkQK8-l9A", 
+                      "_score": null, 
+                      "_source": { 
+                          "body": "Nous sommes \u00e0 l\u2019\u00e9coute de vos probl\u00e9matiques pour d\u00e9terminer l\u2019accompagnement le plus pertinent en fonction de votre contexte, de vos d\u00e9lais et de votre budget. Contactez-nous pour conna\u00eetre nos tarifs et disponibilit\u00e9s.", 
+                          "city": "Metz", 
+                          "entity": "Opcoding", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=1079", 
+                          "url": "https:\/\/www.opcoding.eu" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                      "_score": null, 
+                      "_source": { 
+                          "body": "CoreTech devient Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "CoreTech devient Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uQqb7kLkQK8-l9C", 
+                      "_score": null, 
+                      "_source": { 
+                          "body": "Notre agence inbound marketing met en place des dispositifs de contenus performants pour aider PME, ETI et Grands groupes \u00e0 g\u00e9n\u00e9rer des leads de fa\u00e7on plus directe et moins co\u00fbteuse.", 
+                          "city": "Paris", 
+                          "entity": "Comexplorer", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=134", 
+                          "url": "https:\/\/www.comexplorer.com" 
+                      } 
+                  }, 
+                  { 
+                      "_index": "api_demo", 
+                      "_type": "data_demo", 
+                      "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                      "_score": null, 
+                      "_source": { 
+                          "body": "Adimeo s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre \u00e9cosyst\u00e8me digital. Qu'il s'agisse de vous accompagner dans la\u00a0d\u00e9finition strat\u00e9gique\u00a0de votre positionnement digital, dans la mise en oeuvre d'une\u00a0exp\u00e9rience utilisateur efficace, ou dans le d\u00e9ploiement de\u00a0dispositifs d'acquisition, nos \u00e9quipes pluridisciplinaires (strat\u00e9gie, ux, design, content et acquisition)\u00a0vous proposent un accompagnement au quotidien.", 
+                          "city": "Paris", 
+                          "entity": "Adimeo", 
+                          "thumbnail": "https:\/\/picsum.photos\/200\/300\/?image=921", 
+                          "url": "https:\/\/adimeo.com" 
+                      } 
+                 } 
+              ] 
+          } 
+      }         
       ```        
 
 <a name="search-suggestion-field"></a>
@@ -864,8 +934,8 @@ If your main search failed for the current channel, a suggestion, based on the s
    
   * `mapping=[string]`: Defines which index and mapping is concerned. 
     The following pattern must be respected: `[your_index].[your_mapping]`.
-  * `suggest[]=[string]`: Defines which field is concerned by suggestion.<br /> 
-    The suggestion parameter must respect the following pattern: `[field_name_1]`,`[field_name_2]`".<br />   
+  * `suggest=[string]`: Defines which field is concerned by suggestion.<br /> 
+    The suggestion parameter must respect the following pattern: `[field_name_1]`,`[field_name_2]`.<br />   
   
 * **Success Response:**
 
@@ -885,53 +955,53 @@ If your main search failed for the current channel, a suggestion, based on the s
     * **Content:** <br /> 
     The main query with the string "Ademo" does not have any result. A suggestion has been found in entity field and "Adimeo" has been proposed.
       ```json
-        {
-            "took": 5,
-            "timed_out": false,
-            "_shards": {
-                "total": 5,
-                "successful": 5,
-                "skipped": 0,
-                "failed": 0
-            },
-            "hits": {
-                "total": 0,
-                "max_score": null,
-                "hits": []
-            },
-            "suggest": {
-                "city": [
-                    {
-                        "text": "ademo",
-                        "offset": 0,
-                        "length": 5,
-                        "options": []
-                    }
-                ],
-                "entity": [
-                    {
-                        "text": "ademo",
-                        "offset": 0,
-                        "length": 5,
-                        "options": [
-                            {
-                                "text": "adimeo",
-                                "score": 0.6,
-                                "freq": 1
-                            }
-                        ]
-                    }
-                ]
-            },
-            "suggest_ctsearch": [
-                {
-                    "field": "entity",
-                    "text": "adimeo",
-                    "score": 0.6,
-                    "freq": 1
-                }
-            ]
-        }
+      { 
+          "took": 212, 
+          "timed_out": false, 
+          "_shards": { 
+              "total": 5, 
+              "successful": 5, 
+              "skipped": 0, 
+              "failed": 0 
+          }, 
+          "hits": { 
+              "total": 0, 
+              "max_score": null, 
+              "hits": [] 
+          }, 
+          "suggest": { 
+              "city": [ 
+                  { 
+                      "text": "ademo", 
+                      "offset": 0, 
+                      "length": 5, 
+                      "options": [] 
+                  } 
+              ], 
+              "entity": [ 
+                  { 
+                      "text": "ademo", 
+                      "offset": 0, 
+                      "length": 5, 
+                      "options": [ 
+                          { 
+                              "text": "adimeo", 
+                              "score": 0.6, 
+                              "freq": 2 
+                          } 
+                      ] 
+                  } 
+              ] 
+          }, 
+          "suggest_ctsearch": [ 
+              { 
+                  "field": "entity", 
+                  "text": "adimeo", 
+                  "score": 0.6, 
+                  "freq": 2
+              }
+          ] 
+      }        
       ```   
 
 <a name="search-highlights"></a>
@@ -989,14 +1059,30 @@ You can highlight the search terms if those ones were found in specified fields.
     * **Content:** <br /> 
       ```
           ...
-            "highlight": {
-                "body": [
-                    "<em>Adimeo<\/em> s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme"
-                ],
-                "entity": [
-                    "<em>Adimeo<\/em>"
-                ]
-            }
+         { 
+             … 
+                         "highlight": { 
+                             "body": [ 
+                                 "<em>Adimeo<\/em> s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration dans votre" 
+                             ], 
+                             "entity": [ 
+                                 "<em>Adimeo<\/em>" 
+                             ] 
+                         } 
+                     }, 
+             … 
+                         "highlight": { 
+                             "body": [ 
+                                 "CoreTech devient <em>Adimeo<\/em> s'engage \u00e0 vos c\u00f4t\u00e9s pour concevoir les plateformes digitales\u00a0les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapt\u00e9s et leur int\u00e9gration" 
+                             ], 
+                             "entity": [ 
+                                 "CoreTech devient <em>Adimeo<\/em>" 
+                             ] 
+                         } 
+                     } 
+                 ] 
+             } 
+         }
           ...         
       ```  
 
@@ -1325,34 +1411,46 @@ Make your own and custom query by-passing ADS filter.
     
     * **Content:**    
     ```json
-    {
-        "took": 12,
-        "timed_out": false,
-        "_shards": {
-            "total": 33,
-            "successful": 33,
-            "skipped": 0,
-            "failed": 0
-        },
-        "hits": {
-            "total": 1,
-            "max_score": 0.6931472,
-            "hits": [
-                {
-                    "_index": "api_demo",
-                    "_type": "data_demo",
-                    "_id": "AWhxHJQs5a6YCxlRadcd",
-                    "_score": 0.6931472,
-                    "_source": {
-                        "body": "Adimeo s'engage  vos cts pour concevoir les plateformes digitalesles plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adapts et leur intgration dans votre cosystme digital. Qu'il s'agisse de vous accompagner dans ladfinition stratgiquede votre positionnement digital, dans la mise en oeuvre d'uneexprience utilisateur efficace, ou dans le dploiement dedispositifs d'acquisition, nos quipes pluridisciplinaires (stratgie, ux, design, content et acquisition)vous proposent un accompagnement au quotidien.",
-                        "city": "Paris",
-                        "entity": "Adimeo",
-                        "thumbnail": "https://picsum.photos/200/300/?image=921",
-                        "url": "https://adimeo.com",
-                        "color": "rouge"
-                    }
-                }
-            ]
-        }
-    }    
+    { 
+       "took": 6, 
+       "timed_out": false, 
+       "_shards": { 
+           "total": 5, 
+           "successful": 5, 
+           "skipped": 0, 
+           "failed": 0 
+       }, 
+       "hits": { 
+           "total": 2, 
+           "max_score": 0.22920427, 
+           "hits": [ 
+               { 
+                   "_index": "api_demo", 
+                   "_type": "data_demo", 
+                   "_id": "AWjs0uKKb7kLkQK8-l9B", 
+                   "_score": 0.22920427, 
+                   "_source": { 
+                       "body": "Adimeo s'engage à vos côtés pour concevoir les plateformes digitales les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adaptés et leur intégration dans votre écosystème digital. Qu'il s'agisse de vous accompagner dans la définition stratégique de votre positionnement digital, dans la mise en oeuvre d'une expérience utilisateur efficace, ou dans le déploiement de dispositifs d'acquisition, nos équipes pluridisciplinaires (stratégie, ux, design, content et acquisition) vous proposent un accompagnement au quotidien.", 
+                       "city": "Paris", 
+                       "entity": "Adimeo", 
+                       "thumbnail": "https://picsum.photos/200/300/?image=921", 
+                       "url": "https://adimeo.com" 
+                   } 
+               }, 
+               { 
+                   "_index": "api_demo", 
+                   "_type": "data_demo", 
+                   "_id": "AWjs0uYOb7kLkQK8-l9D", 
+                   "_score": 0.1293895, 
+                   "_source": { 
+                       "body": "CoreTech devient Adimeo s'engage à vos côtés pour concevoir les plateformes digitales les plus percutantes et efficaces. Nous imaginons avec vous les dispositifs les plus adaptés et leur intégration dans votre écosystème digital. Qu'il s'agisse de vous accompagner dans la définition stratégique de votre positionnement digital, dans la mise en oeuvre d'une expérience utilisateur efficace, ou dans le déploiement de dispositifs d'acquisition, nos équipes pluridisciplinaires (stratégie, ux, design, content et acquisition) vous proposent un accompagnement au quotidien.", 
+                       "city": "Paris", 
+                       "entity": "CoreTech devient Adimeo", 
+                       "thumbnail": "https://picsum.photos/200/300/?image=921", 
+                       "url": "https://adimeo.com" 
+                   } 
+               } 
+           ] 
+       } 
+   } 
     ``` 
