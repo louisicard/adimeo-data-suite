@@ -37,22 +37,24 @@ class DumpIndexCommand extends AdimeoDataSuiteCommand
 
   private function dump($index, $from = 0)
   {
-    $dumpSize = 1000;
-    $res = $this->getIndexManager()->search($index, array(
-      'query' => array(
-        'match_all' => array(
-          'boost' => 1
+    $this->getIndexManager()->scroll(
+      array(
+        'query' => array(
+          'match_all' => array(
+            'boost' => 1
+          )
         )
-      )
-    ), $from, $dumpSize);
-    if(isset($res['hits']['hits'])) {
-      foreach($res['hits']['hits'] as $hit) {
-        $this->output->writeln(json_encode($hit));
-      }
-    }
-    if(isset($res['hits']['total']) && $res['hits']['total'] > $from) {
-      $this->dump($index, $from + $dumpSize);
-    }
+      ),
+      $index,
+      null,
+      function($hits, $context) {
+        foreach($hits as $hit) {
+          $context['output']->writeln(json_encode($hit));
+        }
+      },
+      500,
+      array('output' => $this->output)
+    );
   }
 
 }
