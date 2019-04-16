@@ -353,11 +353,22 @@ class SearchAPIController extends AdimeoDataSuiteController
 
 
         if ($request->get('sort') != null && count(explode(',', $request->get('sort'))) == 2) {
-          $query['sort'] = array(
-            explode(',', $request->get('sort'))[0] => array(
-              'order' => strtolower(explode(',', $request->get('sort'))[1])
-            )
-          );
+          $field_parts = explode(',', $request->get('sort'))[0] = explode('.', explode(',', $request->get('sort'))[0]);
+          if(count($field_parts) <= 1 || $mapping['properties'][$field_parts[0]]['type'] != 'nested') {
+            $query['sort'] = array(
+              explode(',', $request->get('sort'))[0] => array(
+                'order' => strtolower(explode(',', $request->get('sort'))[1])
+              )
+            );
+          }
+          else {
+            $query['sort'] = array(
+              explode(',', $request->get('sort'))[0] => array(
+                'order' => explode(',', $request->get('sort'))[1],
+                'nested_path' => $field_parts[0]
+              )
+            );
+          }
         }
 
         if ($request->get('highlights') != null) {
