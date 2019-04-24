@@ -65,7 +65,16 @@ class SearchAPIController extends AdimeoDataSuiteController
             } elseif ($field_detail['type'] == 'nested') {
               foreach ($field_detail['properties'] as $sub_field => $sub_field_detail) {
                 if ((!isset($sub_field_detail['index']) || $sub_field_detail['index'] == 'analyzed') && ($sub_field_detail['type'] == 'string' || !$isLegacy && $sub_field_detail['type'] == 'text')) {
-                  $nested_analyzed_fields[] = $field . '.' . $sub_field;
+                  if(isset($field_detail['include_in_parent']) && $field_detail['include_in_parent']) {
+                    $nestedField = $field . '.' . $sub_field;
+                    if (isset($sub_field_detail['boost'])) {
+                      $nestedField .= '^' . $sub_field_detail['boost'];
+                    }
+                    $analyzed_fields[] = $nestedField;
+                  }
+                  else {
+                    $nested_analyzed_fields[] = $field . '.' . $sub_field;
+                  }
                 }
               }
             }
