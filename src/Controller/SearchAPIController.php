@@ -291,6 +291,7 @@ class SearchAPIController extends AdimeoDataSuiteController
               $facet_parts = explode('.', $facet);
               if (count($facet_parts) == 3 && $facet_parts[2] == 'raw') {
                 $query['aggs'][$facet]['nested']['path'] = $facet_parts[0];
+                $query['aggs'][$facet]['aggs'][$facet]['aggs']['parent_count']['reverse_nested'] = [];
                 $query['aggs'][$facet]['aggs'][$facet]['terms'] = array(
                   'field' => $facet
                 );
@@ -300,6 +301,7 @@ class SearchAPIController extends AdimeoDataSuiteController
                 );
               } elseif (count($facet_parts) == 2) {
                 $query['aggs'][$facet]['nested']['path'] = $facet_parts[0];
+                $query['aggs'][$facet]['aggs'][$facet]['aggs']['parent_count']['reverse_nested'] = [];
                 $query['aggs'][$facet]['aggs'][$facet]['terms'] = array(
                   'field' => $facet
                 );
