@@ -1,6 +1,4 @@
 .idea/
-symfony.lock
-composer.lock
 config/bootstrap.php
 config/packages/cache.yaml
 
