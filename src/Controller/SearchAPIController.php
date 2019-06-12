@@ -364,7 +364,7 @@ class SearchAPIController extends AdimeoDataSuiteController
 
 
         if ($request->get('sort') != null && count(explode(',', $request->get('sort'))) == 2) {
-          $field_parts = explode(',', $request->get('sort'))[0] = explode('.', explode(',', $request->get('sort'))[0]);
+          $field_parts = explode('.', explode(',', $request->get('sort'))[0]);
           if(count($field_parts) <= 1 || $mapping['properties'][$field_parts[0]]['type'] != 'nested') {
             $query['sort'] = array(
               explode(',', $request->get('sort'))[0] => array(
@@ -380,6 +380,28 @@ class SearchAPIController extends AdimeoDataSuiteController
               )
             );
           }
+        }
+        if ($request->get('sort') != null && count(explode(',', $request->get('sort'))) == 5 && explode(',', $request->get('sort'))[1] == 'geo_distance') {
+          $field = explode(',', $request->get('sort'))[0];
+          $lat = explode(',', $request->get('sort'))[2];
+          $lon = explode(',', $request->get('sort'))[3];
+          $order = explode(',', $request->get('sort'))[4];
+          $sorting = array(
+            '_geo_distance' => array(
+              $field => array(
+                'lat' => $lat,
+                'lon' => $lon,
+              ),
+              'order' => $order,
+              'unit' => 'km',
+              'distance_type' => 'plane'
+            )
+          );
+          $field_parts = explode('.', $field);
+          if(count($field_parts) > 1 && $mapping['properties'][$field_parts[0]]['type'] == 'nested') {
+            $sorting['_geo_distance']['nested_path'] = $field_parts[0];
+          }
+          $query['sort'] = [$sorting];
         }
 
         if ($request->get('highlights') != null) {
@@ -418,6 +440,14 @@ class SearchAPIController extends AdimeoDataSuiteController
             $query['query']['bool']['should'][] = json_decode($boostQuery->getDefinition(), true);
           }
         }
+
+        if($request->get('exclude_fields') != null) {
+          $query['_source']['excludes'] = array_map('trim', explode(',', $request->get('exclude_fields')));
+        }
+        if($request->get('include_fields') != null) {
+          $query['_source']['includes'] = array_map('trim', explode(',', $request->get('include_fields')));
+        }
+
         try {
           $res = $this->getIndexManager()->search($indexName, $query, $request->get('from') != null ? $request->get('from') : 0, $request->get('size') != null ? $request->get('size') : 10, $mappingName);
 
