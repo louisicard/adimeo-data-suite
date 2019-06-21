@@ -95,6 +95,11 @@ class MatchingListController extends AdimeoDataSuiteController
             $mapping = $this->getIndexManager()->getMapping($index, $mappingInfo['name']);
             foreach ($mapping['properties'] as $field => $info_field) {
               $select .= '<option value="' . $index . '.' . $mappingInfo['name'] . '.' . $field . '">' . $index . '.' . $mappingInfo['name'] . '.' . $field . '</option>';
+              if(isset($info_field['fields'])) {
+                foreach(array_keys($info_field['fields']) as $subField) {
+                  $select .= '<option value="' . $index . '.' . $mappingInfo['name'] . '.' . $field . '.' . $subField . '">' . $index . '.' . $mappingInfo['name'] . '.' . $field . '.' . $subField . '</option>';
+                }
+              }
             }
           }
           $select .= '</optgroup>';
@@ -108,7 +113,7 @@ class MatchingListController extends AdimeoDataSuiteController
       $select_size .= '<option value="200">200</option>';
       $select_size .= '<option value="300">300</option>';
       $select_size .= '</select>';
-      $vars['init_from_index_action'] = $select . $select_size . '<a href="' . $this->generateUrl('matching-init-from-index', array('id' => $id)) . '" class="fa fa-play-circle">' . $this->get('translator')->trans('Initialize from index') . '</a>';
+      $vars['init_from_index_action'] = $select . $select_size . '<a href="' . $this->generateUrl('matching-init-from-index', array('id' => $id)) . '" class="fa fa-play-circle init-ml-from-index-action">' . $this->get('translator')->trans('Initialize from index') . '</a>';
       $vars['import_file_link'] = $this->generateUrl('matching-import-file', array('id' => $id));
       $vars['export_link'] = $this->generateUrl('matching-export', array('id' => $id));
     }
@@ -205,7 +210,7 @@ class MatchingListController extends AdimeoDataSuiteController
       $field_data = explode('.', $request->get('field'));
       $indexName = !$dottedIndex ? $field_data[0] : '.' . $field_data[1];
       $mappingName = !$dottedIndex ? $field_data[1] : $field_data[2];
-      $field = !$dottedIndex ? $field_data[2] : $field_data[3];
+      $field = substr($request->get('field'), strlen($indexName . '.' . $mappingName) + 1);
       $query = array(
         'query' => array(
           'type' => array(

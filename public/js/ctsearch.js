@@ -366,7 +366,7 @@
       });
     }
 
-    $('#matching-list-size-selector + a').click(function (e) {
+    $('a.init-ml-from-index-action').click(function (e) {
       e.preventDefault();
       if ($('#matching-list-field-selector').val() != '' && $('#matching-list-size-selector').val() != '') {
         window.location = $(this).attr('href') + '&field=' + encodeURIComponent($('#matching-list-field-selector').val()) + '&size=' + encodeURIComponent($('#matching-list-size-selector').val());
