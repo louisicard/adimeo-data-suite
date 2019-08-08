@@ -13,6 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 class SearchAPIController extends AdimeoDataSuiteController
 {
 
+  private $applyBoostingByDefault;
+
+  public function __construct($applyBoostingByDefault = false)
+  {
+    $this->applyBoostingByDefault = $applyBoostingByDefault;
+  }
+
   public function searchAPIV2Action(Request $request)
   {
     if ($request->get('mapping') != null) {
@@ -432,7 +439,7 @@ class SearchAPIController extends AdimeoDataSuiteController
           }
         }
 
-        if($request->get('apply_boosting') == 1){
+        if($request->get('apply_boosting') == 1 || $this->applyBoostingByDefault){
           /** @var BoostQuery[] $boostQueries */
           $boostQueries = $this->getIndexManager()->listObjects('boost_query', NULL, 0, 10000, 'asc', array(
             'tags' => 'index_name=' . $indexName

@@ -13,56 +13,64 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AdimeoDataSuiteController
 {
 
-    public function loginAction(Request $request)
-    {
+  private $adsIndexNbShards;
+  private $adsIndexNbReplicas;
 
-      try {
+  public function __construct($adsIndexNbShards, $adsIndexNbReplicas)
+  {
+    $this->adsIndexNbShards = $adsIndexNbShards;
+    $this->adsIndexNbReplicas = $adsIndexNbReplicas;
+  }
 
-        $this->getIndexManager()->initStore();
-        $users = $this->getIndexManager()->listObjects('user');
-        if(empty($users)) {
-          $user = new User('admin', array('ROLE_ADMIN'), 'admin@example.com', 'Administrator', array());
-          $encoded = $this->container->get('security.password_encoder')->encodePassword($user, 'admin');
-          $user->setPassword($encoded);
-          $user->setCreatedBy('admin');
-          $user->setCreated(new \DateTime());
-          $this->getIndexManager()->persistObject($user);
-        }
+  public function loginAction(Request $request)
+  {
 
-        /** @var AuthenticationUtils $authenticationUtils */
-        $authenticationUtils = $this->get('security.authentication_utils');
+    try {
 
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        if($error != null) {
-          $errorText = get_class($error) == BadCredentialsException::class ? 'Bad credentials' : $error->getMessage();
-        }
-        else {
-          $errorText = '';
-        }
-
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        $noCluster = false;
-
-      } catch (NoNodesAvailableException $ex) {
-        $lastUsername = '';
-        $error = true;
-        $noCluster = true;
-        $errorText = $ex->getMessage();
+      $this->getIndexManager()->initStore($this->adsIndexNbShards, $this->adsIndexNbReplicas);
+      $users = $this->getIndexManager()->listObjects('user');
+      if (empty($users)) {
+        $user = new User('admin', array('ROLE_ADMIN'), 'admin@example.com', 'Administrator', array());
+        $encoded = $this->container->get('security.password_encoder')->encodePassword($user, 'admin');
+        $user->setPassword($encoded);
+        $user->setCreatedBy('admin');
+        $user->setCreated(new \DateTime());
+        $this->getIndexManager()->persistObject($user);
       }
 
-      return $this->render('login.html.twig', array(
-        'title' => $this->get('translator')->trans('Login'),
-        'main_menu_item' => 'login',
-        'no_menu' => true,
-        'error' => $error,
-        'errorText' => $errorText,
-        'lastUsername' => $lastUsername,
-        'noCluster' => $noCluster,
-      ));
+      /** @var AuthenticationUtils $authenticationUtils */
+      $authenticationUtils = $this->get('security.authentication_utils');
+
+      // get the login error if there is one
+      $error = $authenticationUtils->getLastAuthenticationError();
+      if ($error != null) {
+        $errorText = get_class($error) == BadCredentialsException::class ? 'Bad credentials' : $error->getMessage();
+      } else {
+        $errorText = '';
+      }
+
+      // last username entered by the user
+      $lastUsername = $authenticationUtils->getLastUsername();
+
+      $noCluster = false;
+
+    } catch (NoNodesAvailableException $ex) {
+      $lastUsername = '';
+      $error = true;
+      $noCluster = true;
+      $errorText = $ex->getMessage();
     }
+
+    return $this->render('login.html.twig', array(
+      'title' => $this->get('translator')->trans('Login'),
+      'main_menu_item' => 'login',
+      'no_menu' => true,
+      'error' => $error,
+      'errorText' => $errorText,
+      'lastUsername' => $lastUsername,
+      'noCluster' => $noCluster,
+    ));
+  }
 
   public function logoutAction(Request $request)
   {

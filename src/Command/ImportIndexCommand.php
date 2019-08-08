@@ -22,6 +22,7 @@ class ImportIndexCommand extends AdimeoDataSuiteCommand
   {
     $this
       ->setName('ads:restore')
+      ->addArgument('bulkSize', InputArgument::OPTIONAL, "Bulk index size", 1000)
       ->setDescription('Restoring index tool')
     ;
   }
@@ -31,7 +32,7 @@ class ImportIndexCommand extends AdimeoDataSuiteCommand
     $this->input = $input;
     $this->output = $output;
     while($line = fgets(STDIN)){
-      $this->index($line);
+      $this->index($line, $input->getArgument('bulkSize'));
     }
     $this->getIndexManager()->bulkIndex($this->buffer);
     $this->getIndexManager()->flush();
@@ -42,7 +43,7 @@ class ImportIndexCommand extends AdimeoDataSuiteCommand
   private $total = 0;
   private $buffer = [];
 
-  private function index($item) {
+  private function index($item, $bulkSize) {
     $data = json_decode($item, TRUE);
     $data['_source']['_id'] = $data['_id'];
     $this->count++;
@@ -52,8 +53,9 @@ class ImportIndexCommand extends AdimeoDataSuiteCommand
       'mappingName' => $data['_type'],
       'body' => $data['_source'],
     );
-    if($this->count >= 1000) {
+    if($this->count >= $bulkSize) {
       $this->getIndexManager()->bulkIndex($this->buffer);
+      $this->buffer = [];
       $this->count = 0;
       $this->output->writeln($this->total . ' documents indexed so far');
     }
