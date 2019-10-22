@@ -62,16 +62,16 @@
         },
         {
             "name": "adimeo-data-suite/filters",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "ba767bb024caa48add64f288911e0cf8ec9a9b72"
+                "reference": "11aafbbf3c56196a36b70155787a0fe8911b71b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/ba767bb024caa48add64f288911e0cf8ec9a9b72",
-                "reference": "ba767bb024caa48add64f288911e0cf8ec9a9b72",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/11aafbbf3c56196a36b70155787a0fe8911b71b4",
+                "reference": "11aafbbf3c56196a36b70155787a0fe8911b71b4",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-02-19T15:26:06+00:00"
+            "time": "2019-10-22T12:46:38+00:00"
         },
         {
             "name": "adimeo-data-suite/search-client",
