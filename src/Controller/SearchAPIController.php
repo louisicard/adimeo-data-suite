@@ -14,10 +14,12 @@ class SearchAPIController extends AdimeoDataSuiteController
 {
 
   private $applyBoostingByDefault;
+  private $collectStats;
 
-  public function __construct($applyBoostingByDefault = false)
+  public function __construct($applyBoostingByDefault = false, $collectStats = false)
   {
     $this->applyBoostingByDefault = $applyBoostingByDefault;
+    $this->collectStats = $collectStats;
   }
 
   public function searchAPIV2Action(Request $request)
@@ -460,7 +462,7 @@ class SearchAPIController extends AdimeoDataSuiteController
           $res = $this->getIndexManager()->search($indexName, $query, $request->get('from') != null ? $request->get('from') : 0, $request->get('size') != null ? $request->get('size') : 10, $mappingName);
 
           //Stat part
-          if($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1) {
+          if($this->collectStats && ($request->get('escapeQuery') == null || $request->get('escapeQuery') == 1)) {
             $text = $request->get('query') != null ? $request->get('query') : '';
             $analyzer = $request->get('analyzer');
             $statKeywords = [];

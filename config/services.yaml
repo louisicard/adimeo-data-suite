@@ -55,7 +55,7 @@ services:
   App\Controller\SecurityController:
     arguments: ["%env(ADS_INDEX_NB_SHARDS)%", "%env(ADS_INDEX_NB_REPLICAS)%"]
   App\Controller\SearchAPIController:
-    arguments: ["%env(ADS_API_APPLY_BOOSTING)%"]
+    arguments: ["%env(ADS_API_APPLY_BOOSTING)%", "%env(COLLECT_STATS)%"]
 
   adimeodatasource.datasource.textfileparser:
       class: AdimeoDataSuite\Datasource\TextFileParser

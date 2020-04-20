@@ -35,16 +35,16 @@
         },
         {
             "name": "adimeo-data-suite/datasources",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-datasources.git",
-                "reference": "956daae9976f13ffc388ede5c385d28816bc2af1"
+                "reference": "e8ff0bb54a2df789e3f589efc1505c1c83f3c476"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/956daae9976f13ffc388ede5c385d28816bc2af1",
-                "reference": "956daae9976f13ffc388ede5c385d28816bc2af1",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/e8ff0bb54a2df789e3f589efc1505c1c83f3c476",
+                "reference": "e8ff0bb54a2df789e3f589efc1505c1c83f3c476",
                 "shasum": ""
             },
             "require": {
@@ -58,20 +58,20 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-02-15T15:13:19+00:00"
+            "time": "2020-04-20T13:11:43+00:00"
         },
         {
             "name": "adimeo-data-suite/filters",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "11aafbbf3c56196a36b70155787a0fe8911b71b4"
+                "reference": "c3bda3ed25ceb62ff488383cac9de431325e6270"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/11aafbbf3c56196a36b70155787a0fe8911b71b4",
-                "reference": "11aafbbf3c56196a36b70155787a0fe8911b71b4",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/c3bda3ed25ceb62ff488383cac9de431325e6270",
+                "reference": "c3bda3ed25ceb62ff488383cac9de431325e6270",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2019-10-22T12:46:38+00:00"
+            "time": "2020-04-20T13:15:48+00:00"
         },
         {
             "name": "adimeo-data-suite/search-client",
@@ -1155,6 +1155,7 @@
                 }
             ],
             "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
+            "abandoned": true,
             "time": "2018-07-31T13:22:33+00:00"
         },
         {
@@ -1205,6 +1206,7 @@
                 "Guzzle",
                 "stream"
             ],
+            "abandoned": true,
             "time": "2014-10-12T19:18:40+00:00"
         },
         {
