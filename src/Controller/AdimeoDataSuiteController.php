@@ -82,8 +82,8 @@ class AdimeoDataSuiteController extends Controller
       );
       /** @var User $user */
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
-      $context->setIsAdmin(in_array('ROLE_ADMIN', $user->getRoles()));
       if ($user instanceof User) {
+        $context->setIsAdmin(in_array('ROLE_ADMIN', $user->getRoles()));
         $context->setUserUid($user->getUid());
         $groupNames = $user->getGroups();
         foreach ($groupNames as $groupName) {
