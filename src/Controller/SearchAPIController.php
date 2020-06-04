@@ -97,6 +97,7 @@ class SearchAPIController extends AdimeoDataSuiteController
           $query_string = str_replace('!', '\!', $query_string);
           $query_string = str_replace('?', '\?', $query_string);
           $query_string = str_replace('/', '\\', $query_string);
+          $query_string = str_replace('+', '\+', $query_string);
         }
 
         if (count($nested_analyzed_fields) > 0) {
