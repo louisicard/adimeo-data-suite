@@ -41,6 +41,10 @@ services:
     class: AdimeoDataSuite\Index\StatIndexManager
     arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_STAT_INDEX_NB_SHARDS)%", "%env(ADS_STAT_INDEX_NB_REPLICAS)%"]
     public: true
+  adimeo_data_suite_reco_es_server:
+    class: AdimeoDataSuite\Index\RecoIndexManager
+    arguments: ["%env(RECO_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_RECO_INDEX_NB_SHARDS)%", "%env(ADS_RECO_INDEX_NB_REPLICAS)%"]
+    public: true
   adimeo_data_suite_backups_es_server:
     class: AdimeoDataSuite\Index\BackupsManager
     arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%"]
@@ -56,6 +60,8 @@ services:
     arguments: ["%env(ADS_INDEX_NB_SHARDS)%", "%env(ADS_INDEX_NB_REPLICAS)%"]
   App\Controller\SearchAPIController:
     arguments: ["%env(ADS_API_APPLY_BOOSTING)%", "%env(COLLECT_STATS)%"]
+  App\Controller\RecommandationController:
+    arguments: ["@adimeo_data_suite_reco_es_server"]
 
   adimeodatasource.datasource.textfileparser:
       class: AdimeoDataSuite\Datasource\TextFileParser

@@ -197,13 +197,13 @@ processor-import:
   controller: App\Controller\ProcessorController::importProcessorAction
 reco-js:
   path: /reco/reco.js
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\RecommandationController::getRecoJSAction
 reco-report:
   path: /reco/report
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\RecommandationController::getRecoReport
 reco-get:
   path: /reco/get
-  controller: App\Controller\DashboardController::indexAction
+  controller: App\Controller\RecommandationController::getRecos
 api-update:
   path: /api/update
   controller: App\Controller\RestController::updateAction
