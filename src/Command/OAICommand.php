@@ -46,6 +46,7 @@ class OAICommand extends AdimeoDataSuiteCommand
         $token  = $out[count($out) - 1];
         print 'Resuming with token ' . $token . PHP_EOL;
         exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' "' . $token . '" run', $out, $code);
+        print 'Command finished with exit code ' . $code . PHP_EOL;
       }
     }
   }
