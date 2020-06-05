@@ -44,9 +44,19 @@ class OAICommand extends AdimeoDataSuiteCommand
       exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' NULL run', $out, $code);
       while($code == 9){
         $token  = $out[count($out) - 1];
-        print 'Resuming with token ' . $token . PHP_EOL;
-        exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' "' . $token . '" run', $out, $code);
-        print 'Command finished with exit code ' . $code . PHP_EOL;
+        $retry = 10;
+        while($retry > 0) {
+          print 'Resuming with token ' . $token . PHP_EOL;
+          exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' "' . $token . '" run', $out, $code);
+          if($code == 0 || $code == 9) {
+            $retry = 0;
+          }
+          else {
+            print 'OAI fetch failed (' . $code . '). Sleeping 60 seconds before retrying.' . PHP_EOL;
+            $retry--;
+            sleep(60);
+          }
+        }
       }
     }
   }
