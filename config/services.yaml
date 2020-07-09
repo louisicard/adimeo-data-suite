@@ -219,6 +219,11 @@ services:
     public: true
     tags:
       - { name: adimeodatasuite.filter }
+  adimeodatasource.filters.analysisfilter:
+    class: AdimeoDataSuite\ProcessorFilter\AnalysisFilter
+    public: true
+    tags:
+      - { name: adimeodatasuite.filter }
 
   adimeodatasuite.stat.avgresponsetimestatcompiler:
     class: AdimeoDataSuite\Stat\AvgResponseTimeStatCompiler

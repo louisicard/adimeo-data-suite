@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
-            "version": "1.1.8",
+            "version": "1.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "0ac9f6b7134527a78909cec67fa6f524cc7db3e5"
+                "reference": "7350539e69b588188dbc90932d13340c4eb231c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/0ac9f6b7134527a78909cec67fa6f524cc7db3e5",
-                "reference": "0ac9f6b7134527a78909cec67fa6f524cc7db3e5",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/7350539e69b588188dbc90932d13340c4eb231c0",
+                "reference": "7350539e69b588188dbc90932d13340c4eb231c0",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-06-05T10:06:19+00:00"
+            "time": "2020-07-09T10:38:14+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
@@ -62,16 +62,16 @@
         },
         {
             "name": "adimeo-data-suite/filters",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "c3bda3ed25ceb62ff488383cac9de431325e6270"
+                "reference": "030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/c3bda3ed25ceb62ff488383cac9de431325e6270",
-                "reference": "c3bda3ed25ceb62ff488383cac9de431325e6270",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d",
+                "reference": "030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-04-20T13:15:48+00:00"
+            "time": "2020-07-09T12:58:56+00:00"
         },
         {
             "name": "adimeo-data-suite/search-client",
