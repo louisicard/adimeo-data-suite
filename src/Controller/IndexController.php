@@ -180,7 +180,7 @@ class IndexController extends AdimeoDataSuiteController {
 
       //Clear search API cache
       $cache = new FilesystemCache();
-      $cache->delete('ads_search_' . $request->get('index_name') . '.' . $mapping['mappingName']);
+      $cache->delete('ads_search_' . $request->get('index_name'));
 
       if($mapping['dynamicTemplates'] == ''){
         $mapping['dynamicTemplates'] = NULL;

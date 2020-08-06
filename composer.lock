@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "969f091f8e8e5319fedc19185f6e58b4",
+    "content-hash": "c184f914a49f1ef9768aca015f460ac3",
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
@@ -62,20 +62,20 @@
         },
         {
             "name": "adimeo-data-suite/filters",
-            "version": "1.0.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d"
+                "reference": "f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d",
-                "reference": "030bb9bf39d69e3c24e96d110b0ebfe71f1f5b9d",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef",
+                "reference": "f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef",
                 "shasum": ""
             },
             "require": {
-                "adimeo-data-suite/commons": "*",
+                "adimeo-data-suite/commons": "dev-master",
                 "guzzlehttp/guzzle": "*",
                 "symfony/css-selector": "*"
             },
@@ -86,7 +86,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-07-09T12:58:56+00:00"
+            "time": "2020-08-06T18:28:14+00:00"
         },
         {
             "name": "adimeo-data-suite/search-client",
@@ -4167,7 +4167,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "adimeo-data-suite/commons": 20
+        "adimeo-data-suite/commons": 20,
+        "adimeo-data-suite/filters": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

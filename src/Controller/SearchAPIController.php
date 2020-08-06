@@ -29,7 +29,12 @@ class SearchAPIController extends AdimeoDataSuiteController
       if (count(explode('.', $request->get('mapping'))) >= 2) {
 
         $indexName = strpos($request->get('mapping'), '.') === 0 ? ('.' . explode('.', $request->get('mapping'))[1]) : explode('.', $request->get('mapping'))[0];
-        $mappingName = strpos($request->get('mapping'), '.') === 0 ? explode('.', $request->get('mapping'))[2] : explode('.', $request->get('mapping'))[1];
+        if($this->getIndexManager()->isLegacy()) {
+          $mappingName = strpos($request->get('mapping'), '.') === 0 ? explode('.', $request->get('mapping'))[2] : explode('.', $request->get('mapping'))[1];
+        }
+        else {
+          $mappingName = null;
+        }
 
         if ($request->get('doc_id') != null) {
 
@@ -44,10 +49,10 @@ class SearchAPIController extends AdimeoDataSuiteController
         }
 
         $cache = new FilesystemCache();
-        $mapping = $cache->get('ads_search_' . $request->get('mapping'));
+        $mapping = $cache->get('ads_search_' . $indexName);
         if($mapping == null) {
           $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
-          $cache->set('ads_search_' . $request->get('mapping'), $mapping);
+          $cache->set('ads_search_' . $indexName, $mapping);
         }
         $definition = is_array($mapping['properties']) ? $mapping['properties'] : [];
         $analyzed_fields = array();
@@ -98,14 +103,18 @@ class SearchAPIController extends AdimeoDataSuiteController
         }
 
         if (count($nested_analyzed_fields) > 0) {
-          $query['query']['bool']['must'][0]['bool']['should'][]['query_string'] = array(
+          $tmpQuery = array(
             'query' => $query_string,
             'default_operator' => $defaultOperator,
             'analyzer' => $request->get('analyzer') != null ? $request->get('analyzer') : 'standard',
             'fields' => $analyzed_fields
           );
+          if(!$this->getIndexManager()->isLegacy()) {
+            $tmpQuery['type'] = 'cross_fields';
+          }
+          $query['query']['bool']['must'][0]['bool']['should'][]['query_string'] = $tmpQuery;
           foreach ($nested_analyzed_fields as $field) {
-            $query['query']['bool']['must'][0]['bool']['should'][]['nested'] = array(
+            $nested_query = array(
               'path' => explode('.', $field)[0],
               'query' => array(
                 'query_string' => array(
@@ -116,6 +125,10 @@ class SearchAPIController extends AdimeoDataSuiteController
                 )
               )
             );
+            if(!$this->getIndexManager()->isLegacy()) {
+              $nested_query['query']['query_string']['type'] = 'cross_fields';
+            }
+            $query['query']['bool']['must'][0]['bool']['should'][]['nested'] = $nested_query;
           }
         } else {
           $query['query']['bool']['must'][0]['query_string'] = array(
@@ -124,6 +137,9 @@ class SearchAPIController extends AdimeoDataSuiteController
             'analyzer' => $request->get('analyzer') != null ? $request->get('analyzer') : 'standard',
             'fields' => $analyzed_fields
           );
+          if(!$this->getIndexManager()->isLegacy()) {
+            $query['query']['bool']['must'][0]['query_string']['type'] = 'cross_fields';
+          }
         }
 
         $applied_facets = array();
@@ -700,6 +716,7 @@ class SearchAPIController extends AdimeoDataSuiteController
     $size = $request->get('size') != null ? (int)$request->get('size') : 20;
     $sizePerGroup = $request->get('size_per_group') != null ? (int)$request->get('size_per_group') : 10;
     $words = explode(' ', $text);
+    $textQueries = [];
     if(count($words) > 1){
       foreach($words as $word){
         $textQueries[] = array(
@@ -720,9 +737,7 @@ class SearchAPIController extends AdimeoDataSuiteController
       $body = array(
         'query' => array(
           'bool' => array(
-            'must' => array(
-              $textQueries
-            )
+            'must' => $textQueries
           )
         ),
         'size' => 0,
@@ -749,9 +764,7 @@ class SearchAPIController extends AdimeoDataSuiteController
       $body = array(
         'query' => array(
           'bool' => array(
-            'must' => array(
-              $textQueries
-            )
+            'must' => $textQueries
           )
         ),
         'size' => $size
@@ -767,11 +780,7 @@ class SearchAPIController extends AdimeoDataSuiteController
     }
     $indexName = strpos($mapping, '.') === 0 ? ('.' . explode('.', $mapping)[1]) : explode('.', $mapping)[0];
     $mappingName = strpos($mapping, '.') === 0 ? explode('.', $mapping)[2] : explode('.', $mapping)[1];
-    $r = $this->getIndexManager()->getClient()->search(array(
-      'index' => $indexName,
-      'type' => $mappingName,
-      'body' => $body
-    ));
+    $r = $this->getIndexManager()->getServerClient()->search($indexName, $body, $this->getIndexManager()->isLegacy() ? $mappingName : NULL);
     $ret = array();
     if (isset($r['hits']['hits'])) {
       $ret['grouped'] = isset($r['aggregations'][$group]);
