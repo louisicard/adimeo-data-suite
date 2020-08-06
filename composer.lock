@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f265abb5673f22099ebdaca6326b018",
+    "content-hash": "969f091f8e8e5319fedc19185f6e58b4",
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
-            "version": "1.1.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "faf68e06e2d7fa3f302f89d534ed8a98c1ce87ff"
+                "reference": "463ab13c850fe5406b378180d95faa01b1a3e231"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/faf68e06e2d7fa3f302f89d534ed8a98c1ce87ff",
-                "reference": "faf68e06e2d7fa3f302f89d534ed8a98c1ce87ff",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/463ab13c850fe5406b378180d95faa01b1a3e231",
+                "reference": "463ab13c850fe5406b378180d95faa01b1a3e231",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-08-05T08:25:57+00:00"
+            "time": "2020-08-06T17:54:18+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
@@ -4166,7 +4166,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "adimeo-data-suite/commons": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

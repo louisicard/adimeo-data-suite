@@ -25,6 +25,7 @@ class IndexController extends AdimeoDataSuiteController {
         'title' => $this->get('translator')->trans('Indexes'),
         'main_menu_item' => 'indexes',
         'indexes' => $info,
+        'is_legacy' => $this->getIndexManager()->isLegacy()
     ));
   }
 
@@ -53,7 +54,7 @@ class IndexController extends AdimeoDataSuiteController {
   }
 
   public function editMappingAction(Request $request) {
-    if ($request->get('index_name') != null && $request->get('mapping_name') != null) {
+    if ($request->get('index_name') != null && (!$this->getIndexManager()->isLegacy() || $request->get('mapping_name') != null)) {
       return $this->getMappingForm($request, false);
     } else {
       $this->addSessionMessage('error', $this->get('translator')->trans('No index or mapping provided'));
@@ -142,17 +143,21 @@ class IndexController extends AdimeoDataSuiteController {
     $analyzers = $this->getIndexManager()->getAnalyzers($request->get('index_name'));
     $fieldTypes = $this->getIndexManager()->getFieldTypes();
     $dateFormats = $this->getIndexManager()->getDateFormats();
-    $form = $this->createFormBuilder($mapping)
+    $fb = $this->createFormBuilder($mapping)
       ->add('indexName', TextType::class, array(
         'label' => $this->get('translator')->trans('Index name'),
         'disabled' => true,
         'required' => true
-      ))
-      ->add('mappingName', TextType::class, array(
-        'label' => $this->get('translator')->trans('Mapping name'),
-        'disabled' => !$add,
-        'required' => true
-      ))
+      ));
+    if($this->getIndexManager()->isLegacy()) {
+      $fb
+        ->add('mappingName', TextType::class, array(
+          'label' => $this->get('translator')->trans('Mapping name'),
+          'disabled' => !$add,
+          'required' => true
+        ));
+    }
+    $fb
       ->add('wipeData', CheckboxType::class, array(
         'label' => $this->get('translator')->trans('Wipe data?'),
         'required' => false
@@ -165,7 +170,8 @@ class IndexController extends AdimeoDataSuiteController {
         'label' => $this->get('translator')->trans('Dynamic templates'),
         'required' => false
       ))
-      ->add('save', SubmitType::class, array('label' => $this->get('translator')->trans('Save mapping')))
+      ->add('save', SubmitType::class, array('label' => $this->get('translator')->trans('Save mapping')));
+    $form = $fb
       ->getForm();
     $form->handleRequest($request);
 
@@ -190,6 +196,7 @@ class IndexController extends AdimeoDataSuiteController {
         $this->addSessionMessage('status', $this->get('translator')->trans('Mapping has been updated'));
         return $this->redirect($this->generateUrl('indexes'));
       } catch (Exception $ex) {
+        dump($ex->getTrace());
         $this->addSessionMessage('error', $this->get('translator')->trans('An error as occured: ') . $ex->getMessage());
       }
     }
@@ -206,16 +213,14 @@ class IndexController extends AdimeoDataSuiteController {
   }
 
   public function mappingStatAction(Request $request, $index_name, $mapping_name) {
-    $mapping = $this->getIndexManager()->getMapping($index_name, $mapping_name);
+    $mapping = $this->getIndexManager()->getMapping($index_name, $this->getIndexManager()->isLegacy() ? $mapping_name : null);
     $data = array(
       'docs' => 0,
       'fields' => 0
     );
     if ($mapping != null) {
-      $res = $this->getIndexManager()->search($index_name, json_decode('{"query":{"match_all":{"boost":1}}}', TRUE), 0, 0, $mapping_name);
-      if (isset($res['hits']['total']) && $res['hits']['total'] > 0) {
-        $data['docs'] = $res['hits']['total'];
-      }
+      $res = $this->getIndexManager()->search($index_name, json_decode('{"query":{"match_all":{"boost":1}}}', TRUE), 0, 0, $this->getIndexManager()->isLegacy() ? $mapping_name : null);
+      $data['docs'] = $res['hits']['total'];
       $data['fields'] = count(array_keys($mapping['properties']));
     }
     return new Response(json_encode($data), 200, array('Content-type' => 'application/json'));

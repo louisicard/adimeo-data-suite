@@ -19,13 +19,18 @@ use Symfony\Component\HttpFoundation\Request;
     $indexes = $this->getIndexManager()->getIndicesList($this->buildSecurityContext());
     $targetChoices = array();
     foreach ($indexes as $indexName => $info) {
-      $choices = array();
-      if(isset($info['mappings'])){
-        foreach ($info['mappings'] as $mappingName => $mapping) {
-          $choices[$indexName . '.' . $mappingName] = $indexName . '.' . $mappingName;
+      if($this->getIndexManager()->isLegacy()) {
+        $choices = array();
+        if (isset($info['mappings'])) {
+          foreach ($info['mappings'] as $mappingName => $mapping) {
+            $choices[$indexName . '.' . $mappingName] = $indexName . '.' . $mappingName;
+          }
         }
+        $targetChoices[$indexName] = $choices;
       }
-      $targetChoices[$indexName] = $choices;
+      else {
+        $targetChoices[$indexName] = $indexName . '._doc';
+      }
     }
     $listener = function(FormEvent $event) {
       $data = $event->getData();
@@ -94,7 +99,7 @@ use Symfony\Component\HttpFoundation\Request;
             $params['clone_url'] = $this->generateUrl('console-save', $saveUrlParams);
           }
         } else {
-          $this->getIndexManager()->deleteByQuery($index, $mapping, $query_r);
+          $this->getIndexManager()->deleteByQuery($index, $query_r, $mapping);
         }
       } catch (\Exception $ex) {
         $params['exception'] = $ex->getMessage() . ', Line ' . $ex->getLine() . ' in ' . $ex->getFile();

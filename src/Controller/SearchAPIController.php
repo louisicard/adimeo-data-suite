@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use AdimeoDataSuite\Exception\ServerClientException;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
@@ -32,17 +33,13 @@ class SearchAPIController extends AdimeoDataSuiteController
 
         if ($request->get('doc_id') != null) {
 
-          $res = $this->getIndexManager()->getClient()->search(array(
-            'index' => $indexName,
-            'type' => $mappingName,
-            'body' => array(
-              'query' => array(
-                'ids' => array(
-                  'values' => array($request->get('doc_id'))
-                )
+          $res = $this->getIndexManager()->getServerClient()->search($indexName, array(
+            'query' => array(
+              'ids' => array(
+                'values' => array($request->get('doc_id'))
               )
             )
-          ));
+          ), $this->getIndexManager()->isLegacy() ? $mappingName : NULL);
           return new Response(json_encode($res, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json;charset=utf-8'));
         }
 
@@ -558,7 +555,7 @@ class SearchAPIController extends AdimeoDataSuiteController
                 }
               }
             }
-            catch(Missing404Exception $ex) {
+            catch(ServerClientException $ex) {
               //No autopromote index
             }
           }
@@ -648,11 +645,7 @@ class SearchAPIController extends AdimeoDataSuiteController
 
   private function analyze($indexName, $analyzer, $text)
   {
-    return $this->getIndexManager()->getClient()->indices()->analyze(array(
-      'index' => $indexName,
-      'analyzer' => $analyzer,
-      'text' => $text,
-    ));
+    return $this->getIndexManager()->analyze($indexName, $analyzer, $text);
   }
 
   public function seeMoreLikeThisAction(Request $request)

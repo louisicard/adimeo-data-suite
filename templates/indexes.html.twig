@@ -35,7 +35,11 @@
                   <ul>
                   {%for mapping in stat.mappings%}
                     <li class="index-mapping">
+                      {% if is_legacy %}
                       <i class="fas fa-table"></i><a href="{{path('index-edit-mapping', {'index_name': index_name, 'mapping_name': mapping.name})}}">{{mapping.name}}</a>
+                      {% else %}
+                        <i class="fas fa-table"></i><a href="{{path('index-edit-mapping', {'index_name': index_name, 'mapping_name': null})}}">_doc</a>
+                      {% endif %}
                       <div class="mapping-stat"><ul><li>0<span> documents</span></li><li>0<span> fields</span></li></ul></div>
                     </li>
                   {%endfor%}
@@ -46,7 +50,9 @@
                   <ul>
                     {% if is_granted('ROLE_INDEX_MANAGER') %}
                     <li><a href="{{path('index-edit', {'index_name': index_name})}}" class="index-edit-settings">{{'Edit settings'|trans}}</a></li>
-                    <li><a href="{{path('index-add-mapping', {'index_name': index_name})}}" class="index-add-mapping">{{'Add mapping'|trans}}</a></li>
+                      {% if is_legacy or stat.mappings is not defined%}
+                      <li><a href="{{path('index-add-mapping', {'index_name': index_name})}}" class="index-add-mapping">{{'Add mapping'|trans}}</a></li>
+                      {% endif %}
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                     <li><a href="{{path('index-delete', {'index_name': index_name})}}" class="index-delete action-delete">{{'Delete index'|trans}}</a></li>

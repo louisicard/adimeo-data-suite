@@ -53,8 +53,13 @@ class BoostQueryController extends AdimeoDataSuiteController
       'Select >' => ''
     );
     foreach($info as $index => $data){
-      foreach($data['mappings'] as $mappingName => $mapping) {
-        $mappingChoices[$index . '.' . $mappingName] = $index . '.' . $mappingName;
+      if($this->getIndexManager()->isLegacy()) {
+        foreach ($data['mappings'] as $mappingName => $mapping) {
+          $mappingChoices[$index . '.' . $mappingName] = $index . '.' . $mappingName;
+        }
+      }
+      else {
+        $mappingChoices[$index] = $index . '._doc';
       }
     }
     $form = $this->createFormBuilder($boostQuery)

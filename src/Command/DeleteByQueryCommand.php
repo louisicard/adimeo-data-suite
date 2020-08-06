@@ -38,7 +38,7 @@ class DeleteByQueryCommand extends AdimeoDataSuiteCommand {
         if(isset($r['hits']['total'])){
           $output->writeln('Found ' . $r['hits']['total'] . ' matching record(s)');
         }
-        $this->getIndexManager()->deleteByQuery($index, $mapping, json_decode($query->getDefinition(), true));
+        $this->getIndexManager()->deleteByQuery($index, json_decode($query->getDefinition(), true), $this->getIndexManager()->isLegacy() ? $mapping : null);
         $output->writeln('Query has been executed for deletion');
       }
       else{

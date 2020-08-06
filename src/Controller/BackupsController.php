@@ -157,7 +157,7 @@ class BackupsController extends AdimeoDataSuiteController
         foreach (array_keys($repos) as $repo) {
             $repoChoices[$repo] = $repo;
         }
-        $info = $this->getIndexManager()->getElasticInfo($this->buildSecurityContext());
+        $info = $this->getIndexManager()->getIndicesInfo($this->buildSecurityContext());
         $indexChoices = array();
         foreach ($info as $k => $data) {
             $indexChoices[$k] = $k;
