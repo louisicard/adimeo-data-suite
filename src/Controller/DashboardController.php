@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
+use AdimeoDataSuite\Exception\ServerClientException;
 use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AdimeoDataSuiteController
@@ -16,7 +16,7 @@ class DashboardController extends AdimeoDataSuiteController
 
       $serverInfo = $this->getIndexManager()->getServerInfo()['server_info'];
 
-    } catch (NoNodesAvailableException $ex) {
+    } catch (ServerClientException $ex) {
       $info = null;
       $serverInfo = null;
       $noMenu = true;

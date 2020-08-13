@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use AdimeoDataSuite\Bundle\ADSSecurityBundle\Security\User;
-use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
+use AdimeoDataSuite\Exception\ServerClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +54,7 @@ class SecurityController extends AdimeoDataSuiteController
 
       $noCluster = false;
 
-    } catch (NoNodesAvailableException $ex) {
+    } catch (ServerClientException $ex) {
       $lastUsername = '';
       $error = true;
       $noCluster = true;

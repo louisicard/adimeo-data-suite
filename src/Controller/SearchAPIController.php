@@ -6,7 +6,6 @@ use AdimeoDataSuite\Exception\ServerClientException;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

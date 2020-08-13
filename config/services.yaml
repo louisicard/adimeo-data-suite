@@ -39,11 +39,11 @@ services:
     public: true
   adimeo_data_suite_stat_es_server:
     class: AdimeoDataSuite\Index\StatIndexManager
-    arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_STAT_INDEX_NB_SHARDS)%", "%env(ADS_STAT_INDEX_NB_REPLICAS)%"]
+    arguments: ["%env(STAT_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_STAT_INDEX_NB_SHARDS)%", "%env(ADS_STAT_INDEX_NB_REPLICAS)%", "%env(IS_LEGACY)%"]
     public: true
   adimeo_data_suite_reco_es_server:
     class: AdimeoDataSuite\Index\RecoIndexManager
-    arguments: ["%env(RECO_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_RECO_INDEX_NB_SHARDS)%", "%env(ADS_RECO_INDEX_NB_REPLICAS)%"]
+    arguments: ["%env(RECO_ELASTICSEARCH_SERVER_URL)%", "%env(ADS_RECO_INDEX_NB_SHARDS)%", "%env(ADS_RECO_INDEX_NB_REPLICAS)%", "%env(IS_LEGACY)%"]
     public: true
   adimeo_data_suite_backups_es_server:
     class: AdimeoDataSuite\Index\BackupsManager
