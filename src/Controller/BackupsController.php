@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use Elasticsearch\Common\Exceptions\BadRequest400Exception;
-use Elasticsearch\Common\Exceptions\ServerErrorResponseException;
+use AdimeoDataSuite\Exception\ServerClientException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -105,7 +104,7 @@ class BackupsController extends AdimeoDataSuiteController
                 $this->addSessionMessage('status',
                     $this->get('translator')->trans('Repository has been ' . ($repositoryName == null ? 'created' : 'updated')));
                 return $this->redirect($this->generateUrl('backups'));
-            } catch (ServerErrorResponseException $ex) {
+            } catch (ServerClientException $ex) {
                 $this->addSessionMessage('error',
                     $this->get('translator')->trans('Repository could not be created please check your settings'));
             }
@@ -134,7 +133,7 @@ class BackupsController extends AdimeoDataSuiteController
             $this->getBackupsManager()->deleteRepository($repositoryName);
             $this->addSessionMessage('status', $this->get('translator')->trans('Repository has deleted'));
 
-        } catch (ServerErrorResponseException $ex) {
+        } catch (ServerClientException $ex) {
             $this->addSessionMessage('error',
                 $this->get('translator')->trans('Repository could not be deleted please check your settings'));
         }
@@ -201,9 +200,7 @@ class BackupsController extends AdimeoDataSuiteController
                 $this->getBackupsManager()->createSnapshot($data['repo'], $data['name'], $data['indexes'], $data['ignoreUnavailable'], $data['includeGlobalState']);
                 $this->addSessionMessage('status', $this->get('translator')->trans('Snapshot has been created'));
                 return $this->redirect($this->generateUrl('backups'));
-            } catch (ServerErrorResponseException $ex) {
-                $this->addSessionMessage('error', $this->get('translator')->trans('Snapshot could not be created please check your settings'));
-            } catch (BadRequest400Exception $ex2) {
+            } catch (ServerClientException $ex2) {
                 $this->addSessionMessage('error', $this->get('translator')->trans('Snapshot could not be created : ' . $ex2->getMessage()));
             }
         }
@@ -229,7 +226,7 @@ class BackupsController extends AdimeoDataSuiteController
             $this->getBackupsManager()->deleteSnapshot($repositoryName, $snapshotName);
             $this->addSessionMessage('status', $this->get('translator')->trans('Snapshot has deleted'));
 
-        } catch (ServerErrorResponseException $ex) {
+        } catch (ServerClientException $ex) {
             $this->addSessionMessage('error', $this->get('translator')->trans('Snapshot could not be deleted please check your settings'));
         }
         return $this->redirect($this->generateUrl('backups'));
@@ -291,9 +288,7 @@ class BackupsController extends AdimeoDataSuiteController
             try {
                 $this->getBackupsManager()->restoreSnapshot($repositoryName, $snapshotName, $data);
                 $this->addSessionMessage('status', $this->get('translator')->trans('Snapshot has been restored'));
-            } catch (ServerErrorResponseException $ex) {
-                $this->addSessionMessage('error', $this->get('translator')->trans('Snapshot could not be restored : ' . $ex->getMessage()));
-            } catch (BadRequest400Exception $ex2) {
+            } catch (ServerClientException $ex2) {
                 $this->addSessionMessage('error', $this->get('translator')->trans('Snapshot could not be restored : ' . $ex2->getMessage()));
             }
         }
