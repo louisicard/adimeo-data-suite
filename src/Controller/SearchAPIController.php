@@ -25,7 +25,7 @@ class SearchAPIController extends AdimeoDataSuiteController
   public function searchAPIV2Action(Request $request)
   {
     if ($request->get('mapping') != null) {
-      if (count(explode('.', $request->get('mapping'))) >= 2) {
+      if (count(explode('.', $request->get('mapping'))) >= 2 || !$this->getIndexManager()->isLegacy()) {
 
         $indexName = strpos($request->get('mapping'), '.') === 0 ? ('.' . explode('.', $request->get('mapping'))[1]) : explode('.', $request->get('mapping'))[0];
         if($this->getIndexManager()->isLegacy()) {
