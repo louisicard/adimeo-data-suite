@@ -6,9 +6,10 @@ use AdimeoDataSuite\Exception\ServerClientException;
 use AdimeoDataSuite\Model\Autopromote;
 use AdimeoDataSuite\Model\BoostQuery;
 use AdimeoDataSuite\Model\PersistentObject;
-use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class SearchAPIController extends AdimeoDataSuiteController
 {
@@ -47,12 +48,20 @@ class SearchAPIController extends AdimeoDataSuiteController
           return new Response(json_encode($res, JSON_PRETTY_PRINT), 200, array('Content-type' => 'application/json;charset=utf-8'));
         }
 
-        $cache = new FilesystemCache();
-        $mapping = $cache->get('ads_search_' . $indexName);
-        if($mapping == null) {
-          $mapping = $this->getIndexManager()->getMapping($indexName, $mappingName);
-          $cache->set('ads_search_' . $indexName, $mapping);
-        }
+        $cache = new FilesystemAdapter();
+        global $cacheIndexName;
+        global $cacheMappingName;
+        $cacheIndexName = $indexName;
+        $cacheMappingName = $mappingName;
+        $mapping = $cache->get('ads_search_' . $indexName, function (ItemInterface $item) {
+          global $cacheIndexName;
+          global $cacheMappingName;
+          $item->expiresAfter(3600);
+
+          $mapping = $this->getIndexManager()->getMapping($cacheIndexName, $cacheMappingName);
+
+          return $mapping;
+        });
         $definition = is_array($mapping['properties']) ? $mapping['properties'] : [];
         $analyzed_fields = array();
         $nested_analyzed_fields = array();

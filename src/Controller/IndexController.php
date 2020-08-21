@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use AdimeoDataSuite\Exception\DictionariesPathNotDefinedException;
 use AdimeoDataSuite\Index\SynonymsDictionariesManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -179,7 +178,8 @@ class IndexController extends AdimeoDataSuiteController {
       $mapping = $form->getData();
 
       //Clear search API cache
-      $cache = new FilesystemCache();
+      //$cache = new FilesystemCache();
+      $cache = new FilesystemAdapter();
       $cache->delete('ads_search_' . $request->get('index_name'));
 
       if($mapping['dynamicTemplates'] == ''){
