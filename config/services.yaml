@@ -117,11 +117,6 @@ services:
       public: true
       tags:
         - { name: adimeodatasuite.datasource }
-  adimeodatasource.datasource.legifrancecodebrowser:
-      class: AdimeoDataSuite\Datasource\LegifranceCodeBrowser
-      public: true
-      tags:
-        - { name: adimeodatasuite.datasource }
 
   adimeodatasource.filters.concatenatefilter:
       class: AdimeoDataSuite\ProcessorFilter\ConcatenateFilter
