@@ -1291,6 +1291,11 @@
 
           results.append(result_mapping_container);
         }
+        results.append($('<label for="sp-def-res-custom-tpl">Curstom template (Twig) / Overrides above mapping</label>'));
+        results.append($('<textarea id="sp-def-res-custom-tpl"></textarea>'));
+        if(typeof def.results !== 'undefined' && typeof def.results.customTpl !== 'undefined'){
+          $('#sp-def-res-custom-tpl').val(def.results.customTpl);
+        }
 
         var suggest_container = $('<div id="suggest-container"></div>');
         var multiSelectLabel = $('<label for="">Fields for suggestions:</label>');
@@ -1431,9 +1436,9 @@
   }
 
   function bindEventsOnSearchPageConfigurator(){
-    $('#search-page-configurator').find('select, input').unbind('change');
+    $('#search-page-configurator').find('select, input, textarea').unbind('change');
     $('#search-page-configurator').find('.sortable-option a').unbind('click');
-    $('#search-page-configurator').find('select, input').change(function(){
+    $('#search-page-configurator').find('select, input, textarea').change(function(){
       var config = getSearchPageConfiguration();
       $('#form_definition').val(JSON.stringify(config));
     });
@@ -1476,7 +1481,8 @@
         title: $('#sp-def-res-title').val(),
         thumbnail: $('#sp-def-res-thumbnail').val(),
         url: $('#sp-def-res-url').val(),
-        excerp: $('#sp-def-res-excerp').val()
+        excerp: $('#sp-def-res-excerp').val(),
+        customTpl: $('#sp-def-res-custom-tpl').val()
       },
       suggest:[],
       more_like_this:[]
