@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17ed343fd8ab8bebff188a89aa106cf3",
+    "content-hash": "dba4794940470cda2225ed183250282c",
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
-            "version": "dev-master",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "c199b08cf642036bf523faa11da3305ade28e824"
+                "reference": "4f4da37765b26ba466b77137beb3f392524a735f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/c199b08cf642036bf523faa11da3305ade28e824",
-                "reference": "c199b08cf642036bf523faa11da3305ade28e824",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/4f4da37765b26ba466b77137beb3f392524a735f",
+                "reference": "4f4da37765b26ba466b77137beb3f392524a735f",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-08-15T10:25:40+00:00"
+            "time": "2020-08-22T17:10:09+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
@@ -62,20 +62,20 @@
         },
         {
             "name": "adimeo-data-suite/filters",
-            "version": "dev-master",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-filters.git",
-                "reference": "f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef"
+                "reference": "6bf600a7c03922bf040082503167edf1c097b0bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef",
-                "reference": "f8dc97fcad7ad8d960fbfcc9e05a0c93276c8cef",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-filters/zipball/6bf600a7c03922bf040082503167edf1c097b0bc",
+                "reference": "6bf600a7c03922bf040082503167edf1c097b0bc",
                 "shasum": ""
             },
             "require": {
-                "adimeo-data-suite/commons": "dev-master",
+                "adimeo-data-suite/commons": "*",
                 "guzzlehttp/guzzle": "*",
                 "symfony/css-selector": "*"
             },
@@ -86,7 +86,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-08-06T18:28:14+00:00"
+            "time": "2021-03-01T12:30:45+00:00"
         },
         {
             "name": "adimeo-data-suite/search-client",
@@ -4261,10 +4261,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "adimeo-data-suite/commons": 20,
-        "adimeo-data-suite/filters": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
