@@ -90,16 +90,16 @@
         },
         {
             "name": "adimeo-data-suite/search-client",
-            "version": "1.0",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-search-client.git",
-                "reference": "65cde64a4e730235741470bf60930a4395521d98"
+                "reference": "bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/65cde64a4e730235741470bf60930a4395521d98",
-                "reference": "65cde64a4e730235741470bf60930a4395521d98",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232",
+                "reference": "bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2018-11-13T12:07:46+00:00"
+            "time": "2021-03-01T11:10:27+00:00"
         },
         {
             "name": "adimeo-data-suite/security",
@@ -3829,6 +3829,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
