@@ -3,9 +3,17 @@
 {%block main_content%}
   {% if server_info != null and info is defined %}
     <p class="server-version">
-      <strong>{%trans%}Server version{%endtrans%}:</strong>
+      <strong>{%trans%}Elasticsearch server version{%endtrans%}:</strong>
       <span>{{server_info.version.number}}</span>
     </p>
+    {% if cluster_health != null %}
+      <h2>Cluster health</h2>
+      <ul>
+        <li>Status: <strong class="color-{{ cluster_health.status }}">{{ cluster_health.status }}</strong></li>
+        <li>Cluster name: <strong>{{ cluster_health.cluster_name }}</strong></li>
+        <li>Number of nodes: <strong>{{ cluster_health.number_of_nodes }}</strong></li>
+      </ul>
+    {% endif %}
     {%if info|length > 0%}
       <div class="indices-table widget">
         <div class="widget-title">{%trans%}Indexes on the server{%endtrans%}</div>

@@ -33,8 +33,20 @@ body {
     color: #333; }
   body h1 {
     font-weight: 400; }
+  body h2 {
+    font-weight: 400;
+    margin: 1rem 0 0 0; }
   body button, body input, body select, body textarea {
     font-size: 100%; }
+  body textarea#datasource-output {
+    width: 100%;
+    min-height: 300px; }
+  body .color-green {
+    color: green; }
+  body .color-yellow {
+    color: orange; }
+  body .color-red {
+    color: red; }
 
 /*  LOGIN  */
 #login-container {

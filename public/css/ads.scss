@@ -54,8 +54,25 @@ body{
   h1 {
     font-weight:400;
   }
+  h2 {
+    font-weight: 400;
+    margin: 1rem 0 0 0;
+  }
   button, input, select, textarea {
     font-size: 100%;
+  }
+  textarea#datasource-output {
+    width: 100%;
+    min-height: 300px;
+  }
+  .color-green {
+    color: green;
+  }
+  .color-yellow {
+    color: orange;
+  }
+  .color-red {
+    color: red;
   }
 }
 
