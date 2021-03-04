@@ -85,14 +85,27 @@ class MigrateCommand extends AdimeoDataSuiteCommand
 
   private function upgradeMapping(&$mapping) {
     foreach($mapping as $i => $field) {
-      if(isset($field['type']) && $field['type'] == 'string') {
-        if(isset($field['analyzer'])) {
-          $mapping[$i]['type'] = 'text';
+        if (isset($field['index'])) {
+            //since elastic 5 the field index is a boolean
+            //before this version, index was used to determinate
+            //if a field was a keyword or text field
+            //So remove the field index if it's not a bool
+            if (!in_array($field['index'], [true, false, 'true', 'false'], true)) {
+                unset($mapping[$i]['index']);
+            }
         }
-        else {
-          $mapping[$i]['type'] = 'keyword';
+        $fieldType = $field['type'] ?? null;
+        if (null !== $fieldType) {
+            if ('string' === $fieldType) {
+                if(isset($field['analyzer'])) {
+                    $mapping[$i]['type'] = 'text';
+                } else {
+                    $mapping[$i]['type'] = 'keyword';
+                }
+            } elseif ('nested' === $fieldType) {
+                $this->upgradeMapping($mapping[$i]['properties']);
+            }
         }
-      }
       if(isset($field['fields'])) {
         $this->upgradeMapping($mapping[$i]['fields']);
       }
