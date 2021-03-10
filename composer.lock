@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "8b87de2353bda162d61167db3ad9f557cf7574b2"
+                "reference": "b6be2f91fd232e78e8403b5c96f5a70d5ba8706e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/8b87de2353bda162d61167db3ad9f557cf7574b2",
-                "reference": "8b87de2353bda162d61167db3ad9f557cf7574b2",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/b6be2f91fd232e78e8403b5c96f5a70d5ba8706e",
+                "reference": "b6be2f91fd232e78e8403b5c96f5a70d5ba8706e",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2021-03-03T15:17:33+00:00"
+            "time": "2021-03-10T14:38:37+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",

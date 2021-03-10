@@ -45,7 +45,7 @@ class DrupalCtExportController extends AdimeoDataSuiteController
 
             $indexName = strpos($target_mapping, '.') === 0 ? ('.' . explode('.', $target_mapping)[1]) : explode('.', $target_mapping)[0];
             $mappingName = strpos($target_mapping, '.') === 0 ? ('.' . explode('.', $target_mapping)[2]) : explode('.', $target_mapping)[1];
-            $this->getIndexManager()->deleteByQuery($indexName, $mappingName, json_decode('{"query":{"ids":{"values":["' . $item_id . '"]}}}', true));
+            $this->getIndexManager()->deleteByQuery($indexName, json_decode('{"query":{"ids":{"values":["' . $item_id . '"]}}}', true), $mappingName);
 
             break;
         }
