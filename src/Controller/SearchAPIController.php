@@ -53,7 +53,7 @@ class SearchAPIController extends AdimeoDataSuiteController
         global $cacheMappingName;
         $cacheIndexName = $indexName;
         $cacheMappingName = $mappingName;
-        $mapping = $cache->get('ads_search_' . $indexName, function (ItemInterface $item) {
+        $mapping = $cache->get('ads_search_' . $indexName . '_' . $mappingName, function (ItemInterface $item) {
           global $cacheIndexName;
           global $cacheMappingName;
           $item->expiresAfter(3600);
