@@ -26,7 +26,7 @@ class DeleteByQueryCommand extends AdimeoDataSuiteCommand {
         putenv("http_proxy=");
       }
       $id = $input->getArgument('id');
-      if($input->hasArgument('maxResults')) {
+      if($input->getArgument('maxResults') != null) {
         $maxResults = (integer)$input->getArgument('maxResults');
       }
       /** @var SavedQuery $query */
