@@ -15,6 +15,7 @@ class DeleteByQueryCommand extends AdimeoDataSuiteCommand {
         ->setName('ads:delete-by-query')
         ->setDescription('Delete records by query')
         ->addArgument('id', InputArgument::REQUIRED, 'Saved query id')
+        ->addArgument('maxResults', InputArgument::OPTIONAL, 'Maximum number of results matching the query to execute deletion')
         ->addOption('no-proxy', null, InputOption::VALUE_NONE, 'Bypass proxy to connect to ES server')
     ;
   }
@@ -25,6 +26,9 @@ class DeleteByQueryCommand extends AdimeoDataSuiteCommand {
         putenv("http_proxy=");
       }
       $id = $input->getArgument('id');
+      if($input->hasArgument('maxResults')) {
+        $maxResults = (integer)$input->getArgument('maxResults');
+      }
       /** @var SavedQuery $query */
       $query = $this->getIndexManager()->findObject('saved_query', $id);
       if($query != null) {
@@ -37,9 +41,14 @@ class DeleteByQueryCommand extends AdimeoDataSuiteCommand {
         $r = $this->getIndexManager()->search($index, json_decode($query->getDefinition(), true), 0, 0, $mapping);
         if(isset($r['hits']['total'])){
           $output->writeln('Found ' . $r['hits']['total'] . ' matching record(s)');
+          if(isset($maxResults) && $r['hits']['total'] > $maxResults) {
+            $output->writeln('Query results count exceeds the maximum specified. Query aborted.');
+          }
+          else {
+            $this->getIndexManager()->deleteByQuery($index, json_decode($query->getDefinition(), true), $this->getIndexManager()->isLegacy() ? $mapping : null);
+            $output->writeln('Query has been executed for deletion');
+          }
         }
-        $this->getIndexManager()->deleteByQuery($index, json_decode($query->getDefinition(), true), $this->getIndexManager()->isLegacy() ? $mapping : null);
-        $output->writeln('Query has been executed for deletion');
       }
       else{
         $output->writeln('ERROR : Query could not be found');
