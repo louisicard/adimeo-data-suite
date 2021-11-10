@@ -32,6 +32,32 @@ class MigrateCommand extends AdimeoDataSuiteCommand
         unset($json['index']['settings']['legacy']);
       }
       $out['index'][$json['index']['name']]['settings']['index'] = $json['index']['settings'];
+//      foreach($json['mapping']['definition'] as $k => $def) {
+//        if(isset($def['index'])) {
+//          unset($json['mapping']['definition'][$k]['index']);
+//        }
+//        if(isset($def['fields'])) {
+//          foreach($def['fields'] as $kk => $field) {
+//            if(isset($field['index'])) {
+//              unset($json['mapping']['definition'][$k]['fields'][$kk]['index']);
+//            }
+//          }
+//        }
+//        if(isset($def['properties'])) {
+//          foreach($def['properties'] as $kk => $field) {
+//            if(isset($field['index'])) {
+//              unset($json['mapping']['definition'][$k]['properties'][$kk]['index']);
+//            }
+//            if(isset($field['fields'])) {
+//              foreach($field['fields'] as $kkk => $subfield) {
+//                if(isset($subfield['index'])) {
+//                  unset($json['mapping']['definition'][$k]['properties'][$kk]['fields'][$kkk]['index']);
+//                }
+//              }
+//            }
+//          }
+//        }
+//      }
       $out['mapping'][$json['mapping']['name']]['properties'] = $json['mapping']['definition'];
       if($this->getIndexManager()->getServerMajorVersionNumber() >= 5) {
         $this->upgradeMapping($out['mapping'][$json['mapping']['name']]['properties']);
@@ -93,8 +119,14 @@ class MigrateCommand extends AdimeoDataSuiteCommand
           $mapping[$i]['type'] = 'keyword';
         }
       }
+      if(isset($field['index'])) {
+        unset($mapping[$i]['index']);
+      }
       if(isset($field['fields'])) {
         $this->upgradeMapping($mapping[$i]['fields']);
+      }
+      if(isset($field['properties'])) {
+        $this->upgradeMapping($mapping[$i]['properties']);
       }
     }
   }
