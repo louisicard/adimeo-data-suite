@@ -41,7 +41,7 @@ class OAICommand extends AdimeoDataSuiteCommand
     else{
       $code = 0;
       $out = '';
-      exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' NULL run', $out, $code);
+      exec(PHP_BINARY . ' bin/console ads:oai ' . $id . ' ' . ($input->getArgument('token') != null ? '"' . $input->getArgument('token') . '"' : 'NULL') . ' run', $out, $code);
       while($code == 9){
         $token  = $out[count($out) - 1];
         $retry = 10;
