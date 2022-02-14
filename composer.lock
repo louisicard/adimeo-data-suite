@@ -35,16 +35,16 @@
         },
         {
             "name": "adimeo-data-suite/datasources",
-            "version": "1.1.9",
+            "version": "1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-datasources.git",
-                "reference": "a49b3f24b490a48306ce5af642d5f2d2c814ec0f"
+                "reference": "14e2f77c419670f4d6b18dd2743336f157c1109d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/a49b3f24b490a48306ce5af642d5f2d2c814ec0f",
-                "reference": "a49b3f24b490a48306ce5af642d5f2d2c814ec0f",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-datasources/zipball/14e2f77c419670f4d6b18dd2743336f157c1109d",
+                "reference": "14e2f77c419670f4d6b18dd2743336f157c1109d",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,11 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2021-03-10T15:09:45+00:00"
+            "support": {
+                "issues": "https://github.com/louisicard/adimeo-data-suite-datasources/issues",
+                "source": "https://github.com/louisicard/adimeo-data-suite-datasources/tree/1.1.10"
+            },
+            "time": "2022-02-14T15:39:19+00:00"
         },
         {
             "name": "adimeo-data-suite/filters",
@@ -4269,5 +4273,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }
