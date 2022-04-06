@@ -1136,6 +1136,12 @@
           $('#sp-def-size').val(def.size);
         }
 
+        var searchFields = $('<div class="form-item"><label for="sp-def-searchFields">Search fields (leave blank for default)</label><input type="text" id="sp-def-searchFields" /></div>');
+        container.find('.content').append(searchFields);
+        if (typeof def.searchFields !== 'undefined') {
+          $('#sp-def-searchFields').val(def.searchFields);
+        }
+
         var facets = $('<div id="sp-def-facets" class="sub-widget"></div>');
         facets.append($('<h3>Facets</h3>'));
         container.find('.content').append(facets);
@@ -1469,6 +1475,7 @@
     var config = {
       analyzer: $('#sp-def-analyzer').val(),
       size: $('#sp-def-size').val(),
+      searchFields: $('#sp-def-searchFields').val(),
       facets: [],
       sorting: {
         default: {

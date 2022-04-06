@@ -106,12 +106,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-search-client.git",
-                "reference": "496bfb1d0ed98636971683393e024f602d9249f2"
+                "reference": "2dc657d1f7c672b0b9ae2716da6fe824b0e6c759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/496bfb1d0ed98636971683393e024f602d9249f2",
-                "reference": "496bfb1d0ed98636971683393e024f602d9249f2",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/2dc657d1f7c672b0b9ae2716da6fe824b0e6c759",
+                "reference": "2dc657d1f7c672b0b9ae2716da6fe824b0e6c759",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +129,7 @@
                 "issues": "https://github.com/louisicard/adimeo-data-suite-search-client/issues",
                 "source": "https://github.com/louisicard/adimeo-data-suite-search-client/tree/1.2"
             },
-            "time": "2022-04-06T13:00:13+00:00"
+            "time": "2022-04-06T13:47:03+00:00"
         },
         {
             "name": "adimeo-data-suite/security",
