@@ -102,16 +102,16 @@
         },
         {
             "name": "adimeo-data-suite/search-client",
-            "version": "1.1",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-search-client.git",
-                "reference": "bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232"
+                "reference": "496bfb1d0ed98636971683393e024f602d9249f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232",
-                "reference": "bcb41ed49fa21f4bf6a3ec1724cd52d7a585f232",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-search-client/zipball/496bfb1d0ed98636971683393e024f602d9249f2",
+                "reference": "496bfb1d0ed98636971683393e024f602d9249f2",
                 "shasum": ""
             },
             "require": {
@@ -127,9 +127,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/louisicard/adimeo-data-suite-search-client/issues",
-                "source": "https://github.com/louisicard/adimeo-data-suite-search-client/tree/1.1"
+                "source": "https://github.com/louisicard/adimeo-data-suite-search-client/tree/1.2"
             },
-            "time": "2021-03-01T11:10:27+00:00"
+            "time": "2022-04-06T13:00:13+00:00"
         },
         {
             "name": "adimeo-data-suite/security",
