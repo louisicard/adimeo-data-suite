@@ -196,7 +196,6 @@ class IndexController extends AdimeoDataSuiteController {
         $this->addSessionMessage('status', $this->get('translator')->trans('Mapping has been updated'));
         return $this->redirect($this->generateUrl('indexes'));
       } catch (Exception $ex) {
-        dump($ex->getTrace());
         $this->addSessionMessage('error', $this->get('translator')->trans('An error as occured: ') . $ex->getMessage());
       }
     }

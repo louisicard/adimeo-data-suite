@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "adimeo-data-suite/commons",
-            "version": "1.2.4",
+            "version": "1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/louisicard/adimeo-data-suite-commons.git",
-                "reference": "b5b1d5040114cd945c37b2e3395291f9eeb4e0c6"
+                "reference": "d1f341e63be579a76d2818b99aff81787d5b44b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/b5b1d5040114cd945c37b2e3395291f9eeb4e0c6",
-                "reference": "b5b1d5040114cd945c37b2e3395291f9eeb4e0c6",
+                "url": "https://api.github.com/repos/louisicard/adimeo-data-suite-commons/zipball/d1f341e63be579a76d2818b99aff81787d5b44b7",
+                "reference": "d1f341e63be579a76d2818b99aff81787d5b44b7",
                 "shasum": ""
             },
             "require": {
@@ -33,9 +33,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/louisicard/adimeo-data-suite-commons/issues",
-                "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/1.2.4"
+                "source": "https://github.com/louisicard/adimeo-data-suite-commons/tree/1.2.5"
             },
-            "time": "2022-04-06T12:02:38+00:00"
+            "time": "2022-04-07T09:12:13+00:00"
         },
         {
             "name": "adimeo-data-suite/datasources",
